@@ -57,8 +57,8 @@ num_siblings=(
     ('5','5')
 )
 
-class StudentRegistration(models.Model):
-    sid = models.CharField(max_length=15)
+class StudentDetails(models.Model):
+    sid = models.AutoField(primary_key=True)
     nsp_id_radio = models.BooleanField(default=False)
     nsp_id = models.CharField(max_length = 20)
     pms_benificiary_id_radio = models.BooleanField(default=False)
