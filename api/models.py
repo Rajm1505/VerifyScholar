@@ -6,7 +6,7 @@ castecategory = (
     ('SC','SC'),
     ('OBC','OBC')
 )
-passingstates = (
+states = (
         ('Andhra Pradesh','Andhra Pradesh'),
         ('Arunachal Pradesh','Arunachal Pradesh'),
         ('Assam','Assam'),
@@ -38,8 +38,8 @@ passingstates = (
         ('West Bengal','West Bengal'),
         ('Other','Other') )
 
-class StudentRegistration(models.Model):
-    sid = models.CharField(max_length=15)
+class StudentDetails(models.Model):
+    sid = models.AutoField(primary_key=True)
     nsp_id_radio = models.BooleanField(default=False)
     nsp_id = models.CharField(max_length = 20)
     pms_benificiary_id_radio = models.BooleanField(default=False)
@@ -52,7 +52,7 @@ class StudentRegistration(models.Model):
     emailid =  models.CharField(max_length=100)
     dob = models.DateField()
     password = models.CharField(max_length=100)
-    state_of_passing_10th_exam = models.CharField(max_length=50, choices = passingstates)
+    state_of_passing_10th_exam = models.CharField(max_length=50, choices = states)
     board_10th_certificate_number = models.CharField(max_length=10)
     year_of_passing_10th_board = models.IntegerField()
     date_of_registration = models.DateField(auto_now_add=True)

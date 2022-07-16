@@ -19,5 +19,6 @@ from api import views
 
 urlpatterns = [
     path('', views.index),
+    path('register/', views.register),
 
 ]
