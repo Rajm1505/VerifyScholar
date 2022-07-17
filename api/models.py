@@ -10,7 +10,7 @@ marital_status = (
     ('Married','Married'),
     ('Unmarried','Unmarried'),
     ('Divorced','Divorced'),
-    ('Seprated','Seprated')
+    ('Separated','Separated')
 )
 states = (
         ('Andhra Pradesh','Andhra Pradesh'),
@@ -56,6 +56,11 @@ num_siblings=(
     ('5','5')
 )
 
+qualification_status=(
+    ('Appearing','Appearing'),
+    ('Passed','Passed')
+)
+
 
 
 class StudentDetails(models.Model):
@@ -90,7 +95,7 @@ class FormDetails(models.Model):
     # mobile_number= models.CharField(max_length=10)
     # emailid =  models.CharField(max_length=100)
     plus18 = models.BooleanField(default=False)
-    aadhaar = models.CharField(max_length = 20)
+    aadhaar = models.CharField(max_length = 12)
     minority_category = models.BooleanField(default=False)
     disablity = models.BooleanField(default=False)
     marital_status = models.CharField(max_length = 10,choices=marital_status)
@@ -100,7 +105,7 @@ class FormDetails(models.Model):
     pincode = models.CharField(max_length=6)
     coaching_required = models.CharField(max_length=70)
     qualification = models.CharField(max_length=70)
-    qualification_status = models.BooleanField(default=False)
+    qualification_status = models.CharField(max_length=10,choices=qualification_status)
     instituteName_10 = models.CharField(max_length = 20)
     district_10 = models.CharField(max_length=30)
     address_institute_10 = models.CharField(max_length=200)
