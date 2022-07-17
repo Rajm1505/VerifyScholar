@@ -1,0 +1,18 @@
+{   
+    "sid":"S1",
+    "nsp_id_radio": false,
+    "nsp_id" : "hello",
+    "pms_benificiary_id_radio" : false,
+    "pms_benificiary_id": "hello",
+    "caste_category" : "SC",
+    "name":"Raj Mandaviya",
+    "fname":"Jayesh",
+    "gender":"M",
+    "mobile_number": "9724197043",
+    "emailid" : "rajm150503@gmail.com",
+    "dob": "2022-07-16",
+    "password": "hello123456",
+    "state_of_passing_10th_exam":"Gujarat",
+    "board_10th_certificate_number":"A1B2C3",
+        "year_of_passing_10th_board":2018
+}
