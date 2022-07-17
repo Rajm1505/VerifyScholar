@@ -74,7 +74,7 @@ function Register() {
         <div>
           <Form.Group >
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
+          <Form.Control type="email" name="emailid" placeholder="Enter email" />
         </Form.Group>
         </div>
     );
@@ -122,15 +122,15 @@ function Register() {
                 <br/>
                 <Form.Text id="passwordHelpBlock" muted>
                 (For Post/Pre Matric Scholarship for SCs, Post/Pre Matric Scholarship for OBCs, or Top-Class Scholarship Schemes for SCs and OBCs (TCS) in the immediately preceding year)</Form.Text><br/>
-                <div className={`form-check form-check-inline ${errors.npsid && "invalid"}`}
-                {...register("npsid", {
+                <div className={`form-check form-check-inline ${errors.nsp_id_radio && "invalid"}`}
+                {...register("nsp_id_radio", {
                   required: "NSP id is Required" })}>
                 
                 <input
                   className="form-check-input"
                   type="radio"
                   value={true}
-                  name="nspid" 
+                  name="nsp_id_radio" 
                   />
                 
                 <label className="form-check-label">Yes</label>
@@ -140,17 +140,18 @@ function Register() {
                   className="form-check-input"
                   type="radio"
                   value={false}
-                  name="nspid"
+                  name="nsp_id_radio"
                 />
                 <label className="form-check-label">No</label>
               </div>
                 <div className="form-check form-check-inline mb-3" >
                      <Form.Label className="form-check-label-inline" >Enter Your NSP ID:  </Form.Label>
-                    <Form.Control type="text"  className="form-input-inline" />
+                    <Form.Control type="text"  className="form-input-inline" 
+                    {...register("nsp_id",{ required: "nsp is Required" })} />
                 </div>
                 <div>
-                {errors.npsid && (
-                    <small className="text-danger">{errors.npsid.message}</small>
+                {errors.nsp_id && (
+                    <small className="text-danger">{errors.nsp_id.message}</small>
                     )}
                 </div>
             </Form.Group>
@@ -161,15 +162,15 @@ function Register() {
                 <Form.Label>Do you have State PMS Beneficiary ID:</Form.Label>
                 </div>
            
-                <div className={`form-check form-check-inline ${errors.pmsid && "invalid"}`}
-                {...register("pmsid", {
+                <div className={`form-check form-check-inline ${errors.pms_benificiary_id_radio && "invalid"}`}
+                {...register("pms_benificiary_id_radio", {
                   required: "State PMS Beneficiary ID is Required" })}>
                 
                 <input
                   className="form-check-input"
                   type="radio"
-                  value="yes"
-                  name="pmsid" 
+                  value="true"
+                  name="pms_benificiary_id_radio" 
                   />
                 
                 <label className="form-check-label">Yes</label>
@@ -178,25 +179,27 @@ function Register() {
                 <input
                   className="form-check-input"
                   type="radio"
-                  value="no"
-                  name="pmsid"
+                  value="false"
+                  name="pms_benificiary_id_radio"
                 />
                 <label className="form-check-label">No</label>
               </div>
-                <div className="float-right form-check " >
+                <div className="float-right form-check ">
                      <Form.Label className="form-check-label-inline float-right" >Enter Your State PMS Beneficiary ID:</Form.Label>
-                    <Form.Control type="text"  className="form-input-inline float-right" />
+                    <Form.Control type="text"  className="form-input-inline float-right"
+                    {...register("pms_benificiary_id", { required: "pms is Required" })}  />
                 </div>
-                {errors.pmsid && (
-                <small className="text-danger">{errors.pmsid.message}</small>
+                {errors.pms_benificiary_id && (
+                <small className="text-danger">{errors.pms_benificiary_id.message}</small>
               )}
             </Form.Group>
-
+                  
 
             <div className="form-group">
               <label className="col-form-label">Category :</label>
+
               <Form.Select
-                className={`${errors.category && "invalid"}`}
+                className={`form-control ${errors.category && "invalid"}`}
                 {...register("category", { required: "Category is Required" })}
                 >
                 <option value="">-- Select -- </option>
@@ -206,11 +209,14 @@ function Register() {
                   </option>
                 ))}
               </Form.Select>
-              {errors.name && (
-                <small className="text-danger">{errors.category.message}</small>
+              {errors.Category && (
+                <small className="text-danger">{errors.Category.message}</small>
               )}
             </div>
-            <div className="form-group">
+            &nbsp;
+
+              <Form.Group>
+                
               <label className="col-form-label">Name:</label>
               <input
                 type="text"
@@ -219,23 +225,24 @@ function Register() {
                 onKeyUp={() => {
                   trigger("name");
                 }}
-              />
+                />
               {errors.name && (
                 <small className="text-danger">{errors.name.message}</small>
-              )}
-            </div>
+                )}
+                </Form.Group>
+           
 
             <div className="form-group">
               <label className="col-form-label">Father Name:</label>
               <input
                 type="text"
-                className={`form-control ${errors.name && "invalid"}`}
+                className={`form-control ${errors.fname && "invalid"}`}
                 {...register("fname", { required: "Father Name is Required" })}
                 onKeyUp={() => {
                   trigger("fname");
                 }}
               />
-              {errors.name && (
+              {errors.fname && (
                 <small className="text-danger">{errors.fname.message}</small>
               )}
             </div>
@@ -250,7 +257,7 @@ function Register() {
                 <input
                   className="form-check-input"
                   type="radio"
-                  value="Male"
+                  value="M"
                   name="gender"
                   
                 />
@@ -260,7 +267,7 @@ function Register() {
                 <input
                   className="form-check-input"
                   type="radio"
-                  value="Female"
+                  value="F"
                   name="gender"
                 />
                 <label className="form-check-label">Female </label>
@@ -269,7 +276,7 @@ function Register() {
                 <input
                   className="form-check-input"
                   type="radio"
-                  value="Other"
+                  value="O"
                   name="gender"
                 />
                 <label className="form-check-label">Other </label>
@@ -284,7 +291,7 @@ function Register() {
               <input
                 type="text"
                 className={`form-control ${errors.email && "invalid"}`}
-                {...register("email", {
+                {...register("emailid", {
                   required: "Email is Required",
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -292,7 +299,7 @@ function Register() {
                   },
                 })}
                 onKeyUp={() => {
-                  trigger("email");
+                  trigger("emailid");
                 }}
               />
               {errors.email && (
@@ -304,7 +311,7 @@ function Register() {
               <input
                 type="text"
                 className={`form-control ${errors.phone && "invalid"}`}
-                {...register("phone", {
+                {...register("mobile_number", {
                   required: "Phone is Required",
                   pattern: {
                     value:
@@ -313,7 +320,7 @@ function Register() {
                   },
                 })}
                 onKeyUp={() => {
-                  trigger("phone");
+                  trigger("mobile_number");
                 }}
               />
               {errors.phone && (
@@ -372,7 +379,7 @@ function Register() {
             <Form.Group>
               <Form.Label>State of Passing 10th Exam:</Form.Label>
               <Form.Select className={`${errors.state && "invalid"}`}
-                {...register("state", { required: "State is Required" })}
+                {...register("state_of_passing_10th_exam", { required: "State is Required" })}
               >
                 <option value="">-- Select -- </option>
                 {states.map((state) => (
@@ -381,8 +388,8 @@ function Register() {
                   </option>
                 ))}
               </Form.Select>
-              {errors.state && (
-                <small className="text-danger">{errors.state.message}</small>
+              {errors.state_of_passing_10th_exam && (
+                <small className="text-danger">{errors.state_of_passing_10th_exam.message}</small>
               )}
             </Form.Group>
             &nbsp;
@@ -390,7 +397,7 @@ function Register() {
                 <Form.Label>10th Board Certificate Number: </Form.Label>
                 <Form.Control type="text"
                 className={`form-control ${errors.certificateno && "invalid"}`}
-                {...register("certificateno", {
+                {...register("board_10th_certificate_number", {
                   required: "Cerificate number is Required" , pattern: {
                     value: /^[0-9]*$/,
                     message: "Only numbers are allowed",
@@ -403,8 +410,8 @@ function Register() {
             <Form.Group>
                 <Form.Label>Year of passing 10th Board: </Form.Label>
                 <Form.Control type="number"
-                className={`form-control ${errors.passing_year && "invalid"}`}
-                {...register("passing_year", {
+                className={`form-control ${errors.year_of_passing_10th_board && "invalid"}`}
+                {...register("year_of_passing_10th_board", {
                   required: "passing year is Required" , 
                   pattern: {
                             value: /^[0-9]*$/,
@@ -418,8 +425,8 @@ function Register() {
                          value: 2022,
                          message: "not valid year",
                   }})} />
-                  {errors.passing_year && (
-                <small className="text-danger">{errors.passing_year.message}</small>
+                  {errors.year_of_passing_10th_board && (
+                <small className="text-danger">{errors.year_of_passing_10th_board.message}</small>
               )}
             </Form.Group>
 
