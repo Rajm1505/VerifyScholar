@@ -1,6 +1,5 @@
-from pyexpat import model
-from tkinter import CASCADE
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 castecategory = (
@@ -57,8 +56,10 @@ num_siblings=(
     ('5','5')
 )
 
+
+
 class StudentDetails(models.Model):
-    sid = models.AutoField(primary_key=True)
+    sid = models.CharField(max_length = 10, primary_key=True)
     nsp_id_radio = models.BooleanField(default=False)
     nsp_id = models.CharField(max_length = 20)
     pms_benificiary_id_radio = models.BooleanField(default=False)
@@ -74,10 +75,8 @@ class StudentDetails(models.Model):
     state_of_passing_10th_exam = models.CharField(max_length=50, choices = states)
     board_10th_certificate_number = models.CharField(max_length=10)
     year_of_passing_10th_board = models.IntegerField()
-    date_of_registration = models.DateField(auto_now_add=True)
-    date_of_lastupdate = models.DateField(auto_now = True)
-
-
+    date_of_registration = models.DateTimeField(default=timezone.now)
+    date_of_lastupdate = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -91,10 +90,10 @@ class FormDetails(models.Model):
     # mobile_number= models.CharField(max_length=10)
     # emailid =  models.CharField(max_length=100)
     plus18 = models.BooleanField(default=False)
-    adhar = models.CharField(max_length = 20)
+    aadhaar = models.CharField(max_length = 20)
     minority_category = models.BooleanField(default=False)
     disablity = models.BooleanField(default=False)
-    matiral_status = models.CharField(max_length = 10,choices=marital_status)
+    marital_status = models.CharField(max_length = 10,choices=marital_status)
     state = models.CharField(max_length=20,choices=states)
     district = models.CharField(max_length=30)
     address = models.CharField(max_length=300)
@@ -102,13 +101,13 @@ class FormDetails(models.Model):
     coaching_required = models.CharField(max_length=70)
     qualification = models.CharField(max_length=70)
     qualification_status = models.BooleanField(default=False)
-    instituatName_10 = models.CharField(max_length = 20)
+    instituteName_10 = models.CharField(max_length = 20)
     district_10 = models.CharField(max_length=30)
-    address_instituat_10 = models.CharField(max_length=200)
-    subject_teken = models.CharField(max_length=10)
+    address_institute_10 = models.CharField(max_length=200)
+    subject_taken = models.CharField(max_length=10)
     scoring_system = models.CharField(max_length=10,choices= scoring_system)
     availed_benefit = models.BooleanField(default=False)
-    num_siblings_availd_benefit = models.CharField(2,choices=num_siblings)
+    num_siblings_availd_benefit = models.CharField(max_length=2,choices=num_siblings)
     bank_accountholder_name = models.CharField(max_length=30)
     bank_name = models.CharField(max_length=30)
     bank_account_no = models.CharField(max_length=20)
@@ -116,17 +115,17 @@ class FormDetails(models.Model):
     declaration_action = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
+        return self.aadhaar
     
 class family_income(models.Model):
 
-    sid = models.ForeignKey(StudentRegistration.sid,on_delete=CASCADE)
+    sid = models.ForeignKey(StudentDetails,on_delete=models.CASCADE)
     relation = models.CharField(max_length=10)
     name = models.CharField(max_length=30)
     age = models.CharField(max_length=3)
-    Employeement = models.CharField(max_length=15)
+    employment = models.CharField(max_length=15)
     yearly_income = models.CharField(max_length=10)
-    ITR_status = models.BooleanField(default=False)
+    itr_status = models.BooleanField(default=False)
 
 
     def __str__(self):

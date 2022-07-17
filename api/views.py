@@ -3,7 +3,7 @@ from .models import StudentDetails
 from .Serializers import StudentDetailsSerializer
 from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
-from django.views.decorators import csrf_exempt 
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -15,17 +15,28 @@ def index(request):
 def register(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        no = StudentDetails.objects.latest('sid')
+        
+        # Inserting Date
+
+
+
+        # Adding Sid
+        no = StudentDetails.objects.latest('date_of_registration').sid 
+        print(no)
         if no == '':
-            context = {'sid' : 'S1'}
+            data['sid'] = 'S1'
         else:
-            no = sid[1:]
-            no = int(no)
-            no+=1
-            sid = 'S' + str(no)
-            context = {'sid' : sid} 
-            
-        serializer = StudentDetailsSerializer(data=data,context=context)
+            temp = no[1:]
+            number = int(temp)
+            number+=1
+            sid = 'S' + str(number)
+            data['sid'] = sid
+
+
+        print(data)
+        
+        
+        serializer = StudentDetailsSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
