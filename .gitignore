@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+VerifyScholar/__pycache__/__init__.cpython-310.pyc
+*.pyc
+*.pyc
