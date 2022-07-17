@@ -85,7 +85,9 @@ function Register() {
 
   const onSubmit = (data) => {
     console.log(data);
-    const Data = JSON.stringify(data);
+    const Data1 = JSON.stringify(data);
+    console.log(Data1);
+
     // try {
     //     const resp =await axios.post("", Data)
     //     console.log(resp.data);
@@ -93,7 +95,7 @@ function Register() {
     //     consol.log(error.response);
 
     // }
-    axios.post('/user', Data)
+    axios.post('http://127.0.0.1:8000/api/register/', Data1)
       .then(function (response) {
         console.log(response);
       })
@@ -127,7 +129,7 @@ function Register() {
                 <input
                   className="form-check-input"
                   type="radio"
-                  value="yes"
+                  value={true}
                   name="nspid" 
                   />
                 
@@ -137,7 +139,7 @@ function Register() {
                 <input
                   className="form-check-input"
                   type="radio"
-                  value="no"
+                  value={false}
                   name="nspid"
                 />
                 <label className="form-check-label">No</label>
@@ -167,7 +169,7 @@ function Register() {
                   className="form-check-input"
                   type="radio"
                   value="yes"
-                  name="nspid" 
+                  name="pmsid" 
                   />
                 
                 <label className="form-check-label">Yes</label>
@@ -177,7 +179,7 @@ function Register() {
                   className="form-check-input"
                   type="radio"
                   value="no"
-                  name="nspid"
+                  name="pmsid"
                 />
                 <label className="form-check-label">No</label>
               </div>
@@ -400,7 +402,7 @@ function Register() {
             &nbsp;
             <Form.Group>
                 <Form.Label>Year of passing 10th Board: </Form.Label>
-                <Form.Control type="text"
+                <Form.Control type="number"
                 className={`form-control ${errors.passing_year && "invalid"}`}
                 {...register("passing_year", {
                   required: "passing year is Required" , 
