@@ -10,12 +10,7 @@ import Contact_Us from './login/Contact_us';
 
 function App() {
   return (
-<<<<<<< HEAD
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //   </header>
-    // </div>
+
     <>
     <Routes>
       <Route path='/' element={<Home />} />
@@ -24,12 +19,7 @@ function App() {
       <Route path='/Contact Us' element={<Contact_Us/>} />
     </Routes>
     </>
-=======
-    <div className="App">
-      <h1>Hello this is VerifyScholar</h1>
-      <h3>Our website opop</h3>
-    </div>
->>>>>>> master
+
   );
 }
 
