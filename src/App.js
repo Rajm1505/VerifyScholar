@@ -1,5 +1,17 @@
+<<<<<<< HEAD
 import "./App.css";
 import { useForm } from "react-hook-form";
+=======
+import logo from './logo.svg';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Routes,Route} from 'react-router-dom';
+import Home from './Home';
+import Login from './login/Login';
+import Register from './login/Register';
+import Contact_Us from './login/Contact_us';
+
+>>>>>>> a63f8f51825b30114c522f01114356b32fbc0c34
 
 function App() {
   const {
@@ -71,6 +83,7 @@ function App() {
   // console.log(errors.name)
 
   return (
+<<<<<<< HEAD
     <div className="container pt-5">
       <div className="row justify-content-sm-center pt-5">
         <h1 className="text-center pt-3 text-secondary">Application Form</h1>
@@ -837,6 +850,18 @@ function App() {
         </div>
       </div>
     </div>
+=======
+
+    <>
+    <Routes>
+      <Route path='/' element={<Home />} />
+      <Route path='/login/' element={<Login /> } />
+      <Route path='/register' element={<Register/>} />
+      <Route path='/Contact Us' element={<Contact_Us/>} />
+    </Routes>
+    </>
+
+>>>>>>> a63f8f51825b30114c522f01114356b32fbc0c34
   );
 }
 
