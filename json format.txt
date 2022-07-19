@@ -1,3 +1,5 @@
+Student Details
+
 {   
     "sid":"S1",
     "nsp_id_radio": false,
@@ -15,4 +17,34 @@
     "state_of_passing_10th_exam":"Gujarat",
     "board_10th_certificate_number":"A1B2C3",
         "year_of_passing_10th_board":2018
+}
+
+
+Form Details
+
+{
+    "plus18":true,
+    "aadhar":"123456789123",
+    "minority_category":false,
+    "disablity":false,
+    "marital_status":"Unmarried",
+    "state":"Gujarat",
+    "district":"Porbandar",
+    "address":"Porbandar",
+    "pincode":"360575",
+    "coaching_required":"no",
+    "qualification":"B. Tech",
+    "qualification_status":"Appearing",
+    "instituteName_10":"RKU",
+    "district_10":"Porbandar",
+    "address_institute_10":"Porbandar",
+    "subject_taken":"GATE",
+    "scoring_system":"CGPA/OGPA",
+    "availed_benefit":false,
+    "num_siblings_availd_benefit":0,
+    "bank_accountholder_name":"Om Thanki",
+    "bank_name":"SBI",
+    "bank_account_no":"12345678910",
+    "bank_IFSC_code":"SBI001",
+    "declaration_action":false
 }
