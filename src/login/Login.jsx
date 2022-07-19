@@ -1,17 +1,34 @@
-import React from "react";
+import React ,{useState} from "react";
 import { useForm } from "react-hook-form";
+import { Form } from "react-bootstrap";
+import ReCAPTCHA from "react-google-recaptcha";
+import Header from "./Header";
 
 function Login ({ login }) {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    
+    const [captchaResult , setCaptchaResult] = useState(); 
+    const { register, handleSubmit, formState: { errors }, reset ,trigger, } = useForm();
     const onSubmit = async data => {
-        await login(data.email, data.password);
+        data.preventDefault();
+        // await login(data.email, data.password);
         reset();
     };
 
     return (
+      <>
+
+      <Header /> 
+        <div className="container pt-5">
+      <div className="row justify-content-sm-center pt-5">
+        <div className="col-sm-6 shadow round pb-3">
+          <h1 className="text-center pt-3 text-secondary">
+            Student Login Form
+          </h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="email">email</label>
+        <Form.Group>
+            <label className="col-form-label" htmlFor="email">email</label>
             <input
+            className="form-control"
                 id="email"
                 {...register("email", {
                     required: "required",
@@ -21,10 +38,17 @@ function Login ({ login }) {
                     }
                 })}
                 type="email"
+                onKeyUp={() => {
+                  trigger("email");
+                }}
             />
-            {errors.email && <span role="alert">{errors.email.message}</span>}
-            <label htmlFor="password">password</label>
+            {errors.email && <span className="text-danger" role="alert">{errors.email.message}</span>}
+
+            </Form.Group>
+            <Form.Group >
+            <label className="col-form-label" htmlFor="password">password</label>
             <input
+            className="form-control"
                 id="password"
                 {...register("password", {
                     required: "required",
@@ -34,10 +58,27 @@ function Login ({ login }) {
                     }
                 })}
                 type="password"
+                onKeyUp={() => {
+                  trigger("password");
+                }}
             />
-            {errors.password && <span role="alert">{errors.password.message}</span>}
-            <button type="submit">SUBMIT</button>
+            {errors.password && <span className="text-danger" role="alert">{errors.password.message}</span>}
+            </Form.Group>
+            <Form.Group className="cta">
+            <ReCAPTCHA 
+                sitekey="YOUR SITE KEY"
+                onChange={handleSubmit}/>
+            </Form.Group>
+
+            {   captchaResult }
+                {/* && */}
+            <button type="submit" className="btn btn-primary my-3">SUBMIT</button>
+            {/* } */}
         </form>
+        </div>
+      </div>
+    </div>
+      </>
     );
 }
 

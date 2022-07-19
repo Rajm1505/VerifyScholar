@@ -2,7 +2,7 @@
 import React ,{useState} from "react";
 import { Form } from "react-bootstrap";
 import axios from 'axios';
-
+import Header from "./Header";
 import { useForm } from "react-hook-form";
 // import * as Yup from 'yup'
 // import { yupResolver } from '@hookform/resolvers/yup'
@@ -110,6 +110,8 @@ function Register() {
   // console.log(errors.name)
 
   return (
+    <>
+    <Header />
     <div className="container pt-5">
       <div className="row justify-content-sm-center pt-5">
         <div className="col-sm-6 shadow round pb-3">
@@ -439,6 +441,7 @@ function Register() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
