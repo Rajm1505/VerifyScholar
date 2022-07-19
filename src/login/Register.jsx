@@ -250,16 +250,42 @@ function Register() {
             </div>
 
             <div className="form-group">
-                <label className="col-form-label">Gender:</label><br/>
-                  <div className={`form-check-inline ${errors.gender && "invalid"}`} 
-                    {...register("gender", {required: "Gender is Required" })}>
-                          <input className="form-check-input" type="radio" value="M" name="gender" {...register("gender", {required: "Gender is Required" })} /> Male &nbsp;
-                          <input className="form-check-input" type="radio" value="F" name="gender" {...register("gender", {required: "Gender is Required" })} /> Female &nbsp;
-                          <input className="form-check-input" type="radio" value="O" name="gender" {...register("gender", {required: "Gender is Required" })} /> Other &nbsp;
-                  </div>
-               <div>
-                  {errors.gender && ( <small className="text-danger">{errors.gender.message}</small>)}
-                </div>
+              <div>
+                <label className="col-form-label">Gender:</label>
+              </div>
+              <div className={`form-check form-check-inline ${errors.gender && "invalid"}`}
+                {...register("gender", {
+                  required: "Gender is Required" })}>
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  value="M"
+                  name="gender"
+                  
+                />
+                <label className="form-check-label">Male</label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  value="F"
+                  name="gender"
+                />
+                <label className="form-check-label">Female </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  value="O"
+                  name="gender"
+                />
+                <label className="form-check-label">Other </label>
+              </div>
+                <div>
+                    {errors.gender && ( <small className="text-danger">{errors.gender.message}</small>)}
+                 </div>
             </div>
 
             <div className="form-group">
