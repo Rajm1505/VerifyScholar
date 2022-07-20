@@ -20,5 +20,7 @@ from api import views
 urlpatterns = [
     path('', views.index),
     path('register/', views.register),
+    path('registerfetch/<str:pk>/', views.register_fetch),
+    path('registerall/', views.registerall)
 
 ]
