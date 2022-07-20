@@ -1,10 +1,9 @@
 import "../../App.css";
-import react , {useState } from "react";
 import { useForm } from "react-hook-form";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import s_d from '../../state&disctrict.json';
+import "bootstrap/dist/css/bootstrap.min.css";
+import s_d from "../../state&disctrict.json";
 import { Form } from "react-bootstrap";
-
+import React, { useState } from "react";
 
 function StuApp() {
   const {
@@ -28,11 +27,7 @@ function StuApp() {
     { label: "Divorsed", value: "Divorsed" },
     { label: "Seperated", value: "Seperated" },
   ];
-const [value ,setValue] =useState('');
-const handleSelect = (e) => {
-  console.log(e.target.value);
-  setValue(e.target.value);
-};
+  const [value, setValue] = useState("");
 
   const states = [
     { value: "Andhra Pradesh", label: "Andhra Pradesh" },
@@ -165,7 +160,7 @@ const handleSelect = (e) => {
                     className="form-check-input"
                     type="radio"
                     value="Yes"
-                    name="18+"
+                    name="plus18"
                   />
                   <label className="form-check-label">Yes</label>
                 </div>
@@ -174,7 +169,7 @@ const handleSelect = (e) => {
                     className="form-check-input"
                     type="radio"
                     value="No"
-                    name="18+"
+                    name="plus18"
                   />
                   <label className="form-check-label">No</label>
                 </div>
@@ -185,16 +180,18 @@ const handleSelect = (e) => {
                 </label>
                 <input
                   type="text"
-                  className={`form-control ${errors.Ano && "invalid"}`}
-                  {...register("Ano", {
+                  className={`form-control ${errors.aadhaar && "invalid"}`}
+                  {...register("aadhaar", {
                     required: "Adhaar No./Application ID is Required",
                   })}
                   onKeyUp={() => {
-                    trigger("Ano");
+                    trigger("aadhaar");
                   }}
                 />
-                {errors.Ano && (
-                  <small className="text-danger">{errors.Ano.message}</small>
+                {errors.aadhaar && (
+                  <small className="text-danger">
+                    {errors.aadhaar.message}
+                  </small>
                 )}
               </div>
               <div className="form-group">
@@ -208,7 +205,7 @@ const handleSelect = (e) => {
                     className="form-check-input"
                     type="radio"
                     value="Yes"
-                    name="minority"
+                    name="minority_category"
                   />
                   <label className="form-check-label">Yes</label>
                 </div>
@@ -217,15 +214,15 @@ const handleSelect = (e) => {
                     className="form-check-input"
                     type="radio"
                     value="No"
-                    name="minority"
+                    name="minority_category"
                   />
                   <label className="form-check-label">No</label>
                 </div>
               </div>
               <div className="form-group">
                 <div>
-                  <label className="col-form-label">s
-                    Are you "Differently abled" ?
+                  <label className="col-form-label">
+                    s Are you "Differently abled" ?
                   </label>
                 </div>
                 <div className="form-check form-check-inline">
@@ -233,7 +230,7 @@ const handleSelect = (e) => {
                     className="form-check-input"
                     type="radio"
                     value="Yes"
-                    name="differently abled"
+                    name="disablity"
                   />
                   <label className="form-check-label">Yes</label>
                 </div>
@@ -242,7 +239,7 @@ const handleSelect = (e) => {
                     className="form-check-input"
                     type="radio"
                     value="No"
-                    name="differently abled"
+                    name="disablity"
                   />
                   <label className="form-check-label">No</label>
                 </div>
@@ -252,8 +249,10 @@ const handleSelect = (e) => {
                   <label className="col-form-label">Marital Status</label>
                 </div>
                 <select
-                  className={`form-control ${errors.mstatus && "invalid"}`}
-                  {...register("mstatus", {
+                  className={`form-control ${
+                    errors.marital_status && "invalid"
+                  }`}
+                  {...register("marital_status", {
                     required: "Marital status is Required",
                   })}
                 >
@@ -264,68 +263,59 @@ const handleSelect = (e) => {
                     </option>
                   ))}
                 </select>
-                {errors.mstatus && (
+                {errors.marital_status && (
                   <small className="text-danger">
-                    {errors.mstatus.message}
+                    {errors.marital_status.message}
                   </small>
                 )}
               </div>
-              {/* ---------------------------------------------------------------------------------------------------------- */}
-              <div className="form-group">
-              
-              {/* ---------------------------------------------------------------------------------------------------------- */}
               <Form.Group>
                 <Form.Label>Domicile State</Form.Label>
                 <select
-                    className={` form-control ${errors.state && "invalid"}`}
-                    {...register("state", { required: "State is Required" })}
-                    onChange={(e) => {
-                      console.log(e.target.value)
-                      setValue(e.target.value)}}
-                    //  onSelect={handleSelect}
-                     >
-                       <option value="">-- Select State -- </option>
-                        {s_d.states.map((state) => (
-                      <option value={state.state} >{state.state}</option>
-                    ))}
-                      </select>
-              </Form.Group>
-              {/* ---------------------------------------------------------------------------------------------------------- */}
-
-                <div>
-                  <label className="col-form-label">Domicile District</label>
-                </div>
-                <select
                   className={`form-control ${errors.state && "invalid"}`}
                   {...register("state", { required: "State is Required" })}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                    setValue(e.target.value);
+                  }}
+                  value={value}
                 >
-                  <option value="">-- Select District -- </option>
-                  {states.map((state) => (
-                    <option key={state.value} value={state.value}>
-                      {state.label}
+                  <option value="">-- Select State -- </option>
+                  {s_d.states.map((State) => (
+                    <option value={State.state} key={State.state}>
+                      {State.state}
                     </option>
                   ))}
-
-                  {/* {s_d.states.filter(s_d => s_d.states.state === value).map((disct) => (
-                      <option key={disct.districts} value={disct.districts}>
-                        {disct.districts}
-                      </option>
-                    ))}
-                  {s_d.states.map((state) => {
-
-                    if (state.state == value){
-
+                </select>
+              </Form.Group>
+              {/* ---------------------------------------------------------------------------------------------------------- */}
+              <div className="form-group">
+                <div>
+                  <label className="col-form-label">Domicile district</label>
+                </div>
+                <select
+                  className={`form-control ${errors.district && "invalid"}`}
+                  {...register("district", {
+                    required: "district is Required",
+                  })}
+                >
+                  <option value="">-- Select district -- </option>
+                  {s_d.states.map((State) => {
+                    if (State.state == value) {
                       return (
                         <>
-                        <option value={state.districts}>
-                        {state.districts}
-                      </option></>);
+                          {State.districts.map((disct) => (
+                            <option value={disct}>{disct}</option>
+                          ))}
+                        </>
+                      );
                     }
-                  }
-                    )} */}
+                  })}
                 </select>
-                {errors.state && (
-                  <small className="text-danger">{errors.state.message}</small>
+                {errors.district && (
+                  <small className="text-danger">
+                    {errors.district.message}
+                  </small>
                 )}
               </div>
             </div>
@@ -381,13 +371,13 @@ const handleSelect = (e) => {
                   <small className="text-danger">{errors.state.message}</small>
                 )}
                 <div>
-                  <label className="col-form-label">District</label>
+                  <label className="col-form-label">state</label>
                 </div>
                 <select
                   className={`${errors.state && "invalid"}`}
                   {...register("state", { required: "State is Required" })}
                 >
-                  <option value="">-- Select District -- </option>
+                  <option value="">-- Select state -- </option>
                   {states.map((state) => (
                     <option key={state.value} value={state.value}>
                       {state.label}
@@ -402,17 +392,17 @@ const handleSelect = (e) => {
                 <label className="col-form-label">PIN Code</label>
                 <input
                   type="text"
-                  className={`form-control ${errors.Pincode && "invalid"}`}
-                  {...register("Pincode", {
+                  className={`form-control ${errors.pincode && "invalid"}`}
+                  {...register("pincode", {
                     required: "Pincode is Required",
                   })}
                   onKeyUp={() => {
-                    trigger("Pincode");
+                    trigger("pincode");
                   }}
                 />
-                {errors.Pincode && (
+                {errors.pincode && (
                   <small className="text-danger">
-                    {errors.Pincode.message}
+                    {errors.pincode.message}
                   </small>
                 )}
               </div>
@@ -425,7 +415,7 @@ const handleSelect = (e) => {
                   className="form-check-input"
                   type="radio"
                   value="Yes"
-                  name="differently abled"
+                  name="sameascurrent"
                 />
                 <label className="form-check-label">Yes</label>
               </div>
@@ -434,7 +424,7 @@ const handleSelect = (e) => {
                   className="form-check-input"
                   type="radio"
                   value="No"
-                  name="differently abled"
+                  name="sameascurrent"
                 />
                 <label className="form-check-label">No</label>
               </div>
@@ -490,13 +480,13 @@ const handleSelect = (e) => {
                   <small className="text-danger">{errors.state.message}</small>
                 )}
                 <div>
-                  <label className="col-form-label">District</label>
+                  <label className="col-form-label">state</label>
                 </div>
                 <select
                   className={`${errors.state && "invalid"}`}
-                  {...register("state", { required: "State is Required" })}
+                  {...register("state", { required: "state is Required" })}
                 >
-                  <option value="">-- Select District -- </option>
+                  <option value="">-- Select state -- </option>
                   {states.map((state) => (
                     <option key={state.value} value={state.value}>
                       {state.label}
@@ -511,17 +501,17 @@ const handleSelect = (e) => {
                 <label className="col-form-label">PIN Code</label>
                 <input
                   type="text"
-                  className={`form-control ${errors.Pincode && "invalid"}`}
-                  {...register("Pincode", {
+                  className={`form-control ${errors.pincode && "invalid"}`}
+                  {...register("pincode", {
                     required: "Pincode is Required",
                   })}
                   onKeyUp={() => {
-                    trigger("Pincode");
+                    trigger("pincode");
                   }}
                 />
-                {errors.Pincode && (
+                {errors.pincode && (
                   <small className="text-danger">
-                    {errors.Pincode.message}
+                    {errors.pincode.message}
                   </small>
                 )}
               </div>
@@ -534,8 +524,10 @@ const handleSelect = (e) => {
                 </label>
                 <div>
                   <select
-                    className={`${errors.state && "invalid"}`}
-                    {...register("state", { required: "State is Required" })}
+                    className={`${errors.coaching_required && "invalid"}`}
+                    {...register("coaching_required", {
+                      required: "Coaching is Required",
+                    })}
                   >
                     <option value="">-- Select State -- </option>
                     {states.map((state) => (
@@ -556,16 +548,20 @@ const handleSelect = (e) => {
                 </label>
                 <input
                   type="text"
-                  className={`form-control ${errors.Course && "invalid"}`}
-                  {...register("Course", {
-                    required: "Course is Required",
+                  className={`form-control ${
+                    errors.qualification && "invalid"
+                  }`}
+                  {...register("qualification", {
+                    required: "Qualification is Required",
                   })}
                   onKeyUp={() => {
-                    trigger("Course");
+                    trigger("qualification");
                   }}
                 />
-                {errors.Course && (
-                  <small className="text-danger">{errors.Course.message}</small>
+                {errors.qualification && (
+                  <small className="text-danger">
+                    {errors.qualification.message}
+                  </small>
                 )}
                 <div>
                   <label className="col-form-label">Status</label>
@@ -575,7 +571,7 @@ const handleSelect = (e) => {
                     className="form-check-input"
                     type="radio"
                     value="Yes"
-                    name="differently abled"
+                    name="qualification_status"
                   />
                   <label className="form-check-label">Appearing</label>
                 </div>
@@ -584,7 +580,7 @@ const handleSelect = (e) => {
                     className="form-check-input"
                     type="radio"
                     value="No"
-                    name="differently abled"
+                    name="qualification_status"
                   />
                   <label className="form-check-label">Passed</label>
                 </div>
@@ -599,17 +595,19 @@ const handleSelect = (e) => {
                 </label>
                 <input
                   type="text"
-                  className={`form-control ${errors.College && "invalid"}`}
-                  {...register("College", {
+                  className={`form-control ${
+                    errors.instituteName_10 && "invalid"
+                  }`}
+                  {...register("instituteName_10", {
                     required: "College/ Institute name is Required",
                   })}
                   onKeyUp={() => {
-                    trigger("College");
+                    trigger("instituteName_10");
                   }}
                 />
-                {errors.College && (
+                {errors.instituteName_10 && (
                   <small className="text-danger">
-                    {errors.College.message}
+                    {errors.instituteName_10.message}
                   </small>
                 )}
               </div>
@@ -632,21 +630,23 @@ const handleSelect = (e) => {
                   <small className="text-danger">{errors.state.message}</small>
                 )}
                 <div>
-                  <label className="col-form-label">District</label>
+                  <label className="col-form-label">state</label>
                 </div>
                 <select
-                  className={`${errors.state && "invalid"}`}
-                  {...register("state", { required: "State is Required" })}
+                  className={`${errors.state_10 && "invalid"}`}
+                  {...register("state_10", { required: "state is Required" })}
                 >
-                  <option value="">-- Select District -- </option>
+                  <option value="">-- Select state -- </option>
                   {states.map((state) => (
                     <option key={state.value} value={state.value}>
                       {state.label}
                     </option>
                   ))}
                 </select>
-                {errors.state && (
-                  <small className="text-danger">{errors.state.message}</small>
+                {errors.state_10 && (
+                  <small className="text-danger">
+                    {errors.state_10.message}
+                  </small>
                 )}
               </div>
               <div className="form-group">
@@ -655,17 +655,19 @@ const handleSelect = (e) => {
                 </label>
                 <input
                   type="text"
-                  className={`form-control ${errors.Addcollege && "invalid"}`}
-                  {...register("Addcollege", {
+                  className={`form-control ${
+                    errors.address_institute_10 && "invalid"
+                  }`}
+                  {...register("address_institute_10", {
                     required: "Address of College/ Institute is Required",
                   })}
                   onKeyUp={() => {
-                    trigger("Addcollege");
+                    trigger("address_institute_10");
                   }}
                 />
-                {errors.Addcollege && (
+                {errors.address_institute_10 && (
                   <small className="text-danger">
-                    {errors.Addcollege.message}
+                    {errors.address_institute_10.message}
                   </small>
                 )}
               </div>
@@ -673,40 +675,44 @@ const handleSelect = (e) => {
                 <label className="col-form-label">Subject/ Course Taken</label>
                 <input
                   type="text"
-                  className={`form-control ${errors.Cname && "invalid"}`}
-                  {...register("Cname", {
+                  className={`form-control ${
+                    errors.subject_taken && "invalid"
+                  }`}
+                  {...register("subject_taken", {
                     required: "Subject/ Course name is Required",
                   })}
                   onKeyUp={() => {
-                    trigger("Cname");
+                    trigger("subject_taken");
                   }}
                 />
-                {errors.Cname && (
-                  <small className="text-danger">{errors.Cname.message}</small>
+                {errors.subject_taken && (
+                  <small className="text-danger">
+                    {errors.subject_taken.message}
+                  </small>
                 )}
               </div>
               <div className="form-group">
                 <label className="col-form-label">Year of Passing</label>
                 <input
                   type="text"
-                  className={`form-control ${errors.Ypass && "invalid"}`}
-                  {...register("Ypass", {
+                  className={`form-control ${errors.ypass && "invalid"}`}
+                  {...register("ypass", {
                     required: "Year of Passing is Required",
                   })}
                   onKeyUp={() => {
-                    trigger("Ypass");
+                    trigger("ypass");
                   }}
                 />
-                {errors.Ypass && (
-                  <small className="text-danger">{errors.Ypass.message}</small>
+                {errors.ypass && (
+                  <small className="text-danger">{errors.ypass.message}</small>
                 )}
               </div>
               <div className="form-group">
                 <label className="col-form-label">Scoring System</label>
                 <div>
                   <select
-                    className={`${errors.ScrSystem && "invalid"}`}
-                    {...register("ScrSystem", {
+                    className={`${errors.scoring_system && "invalid"}`}
+                    {...register("scoring_system", {
                       required: "Score system is Required",
                     })}
                   >
@@ -718,9 +724,9 @@ const handleSelect = (e) => {
                     ))}
                   </select>
                 </div>
-                {errors.ScrSystem && (
+                {errors.scoring_system && (
                   <small className="text-danger">
-                    {errors.ScrSystem.message}
+                    {errors.scoring_system.message}
                   </small>
                 )}
               </div>
@@ -728,17 +734,17 @@ const handleSelect = (e) => {
                 <label className="col-form-label">Percentage</label>
                 <input
                   type="text"
-                  className={`form-control ${errors.Percentage && "invalid"}`}
-                  {...register("Percentage", {
+                  className={`form-control ${errors.percentage && "invalid"}`}
+                  {...register("percentage", {
                     required: "Percentage is Required",
                   })}
                   onKeyUp={() => {
-                    trigger("Percentage");
+                    trigger("percentage");
                   }}
                 />
-                {errors.Percentage && (
+                {errors.percentage && (
                   <small className="text-danger">
-                    {errors.Percentage.message}
+                    {errors.percentage.message}
                   </small>
                 )}
               </div>
@@ -749,8 +755,8 @@ const handleSelect = (e) => {
                 Coaching Scheme of the State/UT
               </h4>
               <select
-                className={`${errors.benefit && "invalid"}`}
-                {...register("benefit")}
+                className={`${errors.availed_benefit && "invalid"}`}
+                {...register("availed_benefit")}
               >
                 <option value="">-- Select -- </option>
                 {benefits.map((benefit) => (
@@ -759,8 +765,10 @@ const handleSelect = (e) => {
                   </option>
                 ))}
               </select>
-              {errors.benefit && (
-                <small className="text-danger">{errors.benefit.message}</small>
+              {errors.availed_benefit && (
+                <small className="text-danger">
+                  {errors.availed_benefit.message}
+                </small>
               )}
               <h4 className="mt-5">
                 7 b. Number of siblings who availed benefit under such schemes
@@ -768,17 +776,19 @@ const handleSelect = (e) => {
               <div className="form-group">
                 <input
                   type="text"
-                  className={`form-control ${errors.siblings && "invalid"}`}
-                  {...register("siblings", {
+                  className={`form-control ${
+                    errors.num_siblings_availd_benefit && "invalid"
+                  }`}
+                  {...register("num_siblings_availd_benefit", {
                     required: "Siblings is Required",
                   })}
                   onKeyUp={() => {
-                    trigger("siblings");
+                    trigger("num_siblings_availd_benefit");
                   }}
                 />
-                {errors.siblings && (
+                {errors.num_siblings_availd_benefit && (
                   <small className="text-danger">
-                    {errors.siblings.message}
+                    {errors.num_siblings_availd_benefit.message}
                   </small>
                 )}
               </div>
@@ -788,20 +798,24 @@ const handleSelect = (e) => {
                   <h6>
                     Please provide details of account which is adhaar seeded
                   </h6>
-                  <label className="col-form-label">Name of Account Holder</label>
+                  <label className="col-form-label">
+                    Name of Account Holder
+                  </label>
                   <input
                     type="text"
-                    className={`form-control ${errors.Aholder && "invalid"}`}
-                    {...register("Aholder", {
+                    className={`form-control ${
+                      errors.bank_accountholder_name && "invalid"
+                    }`}
+                    {...register("bank_accountholder_name", {
                       required: "Account Holder Name is Required",
                     })}
                     onKeyUp={() => {
-                      trigger("Aholder");
+                      trigger("bank_accountholder_name");
                     }}
                   />
-                  {errors.Aholder && (
+                  {errors.bank_accountholder_name && (
                     <small className="text-danger">
-                      {errors.Aholder.message}
+                      {errors.bank_accountholder_name.message}
                     </small>
                   )}
                 </div>
@@ -809,17 +823,17 @@ const handleSelect = (e) => {
                   <label className="col-form-label">Bank Name</label>
                   <input
                     type="text"
-                    className={`form-control ${errors.BankName && "invalid"}`}
-                    {...register("BankName", {
+                    className={`form-control ${errors.bank_name && "invalid"}`}
+                    {...register("bank_name", {
                       required: "Bank Name is Required",
                     })}
                     onKeyUp={() => {
-                      trigger("BankName");
+                      trigger("bank_name");
                     }}
                   />
-                  {errors.BankName && (
+                  {errors.bank_name && (
                     <small className="text-danger">
-                      {errors.BankName.message}
+                      {errors.bank_name.message}
                     </small>
                   )}
                 </div>
@@ -827,17 +841,19 @@ const handleSelect = (e) => {
                   <label className="col-form-label">Account Number</label>
                   <input
                     type="text"
-                    className={`form-control ${errors.Anumber && "invalid"}`}
-                    {...register("Anumber", {
+                    className={`form-control ${
+                      errors.bank_account_no && "invalid"
+                    }`}
+                    {...register("bank_account_no", {
                       required: "Account Number is Required",
                     })}
                     onKeyUp={() => {
-                      trigger("Anumber");
+                      trigger("bank_account_no");
                     }}
                   />
-                  {errors.Anumber && (
+                  {errors.bank_account_no && (
                     <small className="text-danger">
-                      {errors.Anumber.message}
+                      {errors.bank_account_no.message}
                     </small>
                   )}
                 </div>
@@ -845,19 +861,435 @@ const handleSelect = (e) => {
                   <label className="col-form-label">IFSC Code</label>
                   <input
                     type="text"
-                    className={`form-control ${errors.IFSC && "invalid"}`}
-                    {...register("IFSC", {
+                    className={`form-control ${
+                      errors.bank_IFSC_code && "invalid"
+                    }`}
+                    {...register("bank_IFSC_code", {
                       required: "IFSC Code is Required",
                     })}
                     onKeyUp={() => {
-                      trigger("IFSC");
+                      trigger("bank_IFSC_code");
                     }}
                   />
-                  {errors.IFSC && (
+                  {errors.bank_IFSC_code && (
                     <small className="text-danger">
-                      {errors.IFSC.message}
+                      {errors.bank_IFSC_code.message}
                     </small>
                   )}
+                </div>
+              </div>
+              <div className="mt-5">
+                <h4>
+                  9.Total Income from all sources of family members contributing
+                  to the household during the Financial Year 2020-21.
+                </h4>
+                <div className="form-group">
+                  <table className="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Relationship</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Nature of Employment</th>
+                        <th>Income in Rs.(yearly)</th>
+                        <th>ITR Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Father</td>
+                        <td>
+                          <input
+                            type="text"
+                            className={`form-control ${
+                              errors.bank_account_no && "invalid"
+                            }`}
+                            {...register("bank_account_no", {
+                              required: "Account Number is Required",
+                            })}
+                            onKeyUp={() => {
+                              trigger("bank_account_no");
+                            }}
+                          />
+                          {errors.bank_account_no && (
+                            <small className="text-danger">
+                              {errors.bank_account_no.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            className={`form-control ${
+                              errors.bank_account_no && "invalid"
+                            }`}
+                            {...register("bank_account_no", {
+                              required: "Account Number is Required",
+                            })}
+                            onKeyUp={() => {
+                              trigger("bank_account_no");
+                            }}
+                          />
+                          {errors.bank_account_no && (
+                            <small className="text-danger">
+                              {errors.bank_account_no.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <select
+                            className={`${errors.availed_benefit && "invalid"}`}
+                            {...register("availed_benefit")}
+                          >
+                            <option value="">-- Select -- </option>
+                            {benefits.map((benefit) => (
+                              <option key={benefit.value} value={benefit.value}>
+                                {benefit.label}
+                              </option>
+                            ))}
+                          </select>
+                          {errors.availed_benefit && (
+                            <small className="text-danger">
+                              {errors.availed_benefit.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            className={`form-control ${
+                              errors.bank_account_no && "invalid"
+                            }`}
+                            {...register("bank_account_no", {
+                              required: "Account Number is Required",
+                            })}
+                            onKeyUp={() => {
+                              trigger("bank_account_no");
+                            }}
+                          />
+                          {errors.bank_account_no && (
+                            <small className="text-danger">
+                              {errors.bank_account_no.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              value="Yes"
+                              name="qualification_status"
+                            />
+                            <label className="form-check-label">Yes</label>
+                          </div>
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              value="No"
+                              name="qualification_status"
+                            />
+                            <label className="form-check-label">No</label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Father</td>
+                        <td>
+                          <input
+                            type="text"
+                            className={`form-control ${
+                              errors.bank_account_no && "invalid"
+                            }`}
+                            {...register("bank_account_no", {
+                              required: "Account Number is Required",
+                            })}
+                            onKeyUp={() => {
+                              trigger("bank_account_no");
+                            }}
+                          />
+                          {errors.bank_account_no && (
+                            <small className="text-danger">
+                              {errors.bank_account_no.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            className={`form-control ${
+                              errors.bank_account_no && "invalid"
+                            }`}
+                            {...register("bank_account_no", {
+                              required: "Account Number is Required",
+                            })}
+                            onKeyUp={() => {
+                              trigger("bank_account_no");
+                            }}
+                          />
+                          {errors.bank_account_no && (
+                            <small className="text-danger">
+                              {errors.bank_account_no.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <select
+                            className={`${errors.availed_benefit && "invalid"}`}
+                            {...register("availed_benefit")}
+                          >
+                            <option value="">-- Select -- </option>
+                            {benefits.map((benefit) => (
+                              <option key={benefit.value} value={benefit.value}>
+                                {benefit.label}
+                              </option>
+                            ))}
+                          </select>
+                          {errors.availed_benefit && (
+                            <small className="text-danger">
+                              {errors.availed_benefit.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            className={`form-control ${
+                              errors.bank_account_no && "invalid"
+                            }`}
+                            {...register("bank_account_no", {
+                              required: "Account Number is Required",
+                            })}
+                            onKeyUp={() => {
+                              trigger("bank_account_no");
+                            }}
+                          />
+                          {errors.bank_account_no && (
+                            <small className="text-danger">
+                              {errors.bank_account_no.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              value="Yes"
+                              name="qualification_status"
+                            />
+                            <label className="form-check-label">Yes</label>
+                          </div>
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              value="No"
+                              name="qualification_status"
+                            />
+                            <label className="form-check-label">No</label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Father</td>
+                        <td>
+                          <input
+                            type="text"
+                            className={`form-control ${
+                              errors.bank_account_no && "invalid"
+                            }`}
+                            {...register("bank_account_no", {
+                              required: "Account Number is Required",
+                            })}
+                            onKeyUp={() => {
+                              trigger("bank_account_no");
+                            }}
+                          />
+                          {errors.bank_account_no && (
+                            <small className="text-danger">
+                              {errors.bank_account_no.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            className={`form-control ${
+                              errors.bank_account_no && "invalid"
+                            }`}
+                            {...register("bank_account_no", {
+                              required: "Account Number is Required",
+                            })}
+                            onKeyUp={() => {
+                              trigger("bank_account_no");
+                            }}
+                          />
+                          {errors.bank_account_no && (
+                            <small className="text-danger">
+                              {errors.bank_account_no.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <select
+                            className={`${errors.availed_benefit && "invalid"}`}
+                            {...register("availed_benefit")}
+                          >
+                            <option value="">-- Select -- </option>
+                            {benefits.map((benefit) => (
+                              <option key={benefit.value} value={benefit.value}>
+                                {benefit.label}
+                              </option>
+                            ))}
+                          </select>
+                          {errors.availed_benefit && (
+                            <small className="text-danger">
+                              {errors.availed_benefit.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            className={`form-control ${
+                              errors.bank_account_no && "invalid"
+                            }`}
+                            {...register("bank_account_no", {
+                              required: "Account Number is Required",
+                            })}
+                            onKeyUp={() => {
+                              trigger("bank_account_no");
+                            }}
+                          />
+                          {errors.bank_account_no && (
+                            <small className="text-danger">
+                              {errors.bank_account_no.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              value="Yes"
+                              name="qualification_status"
+                            />
+                            <label className="form-check-label">Yes</label>
+                          </div>
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              value="No"
+                              name="qualification_status"
+                            />
+                            <label className="form-check-label">No</label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Father</td>
+                        <td>
+                          <input
+                            type="text"
+                            className={`form-control ${
+                              errors.bank_account_no && "invalid"
+                            }`}
+                            {...register("bank_account_no", {
+                              required: "Account Number is Required",
+                            })}
+                            onKeyUp={() => {
+                              trigger("bank_account_no");
+                            }}
+                          />
+                          {errors.bank_account_no && (
+                            <small className="text-danger">
+                              {errors.bank_account_no.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            className={`form-control ${
+                              errors.bank_account_no && "invalid"
+                            }`}
+                            {...register("bank_account_no", {
+                              required: "Account Number is Required",
+                            })}
+                            onKeyUp={() => {
+                              trigger("bank_account_no");
+                            }}
+                          />
+                          {errors.bank_account_no && (
+                            <small className="text-danger">
+                              {errors.bank_account_no.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <select
+                            className={`${errors.availed_benefit && "invalid"}`}
+                            {...register("availed_benefit")}
+                          >
+                            <option value="">-- Select -- </option>
+                            {benefits.map((benefit) => (
+                              <option key={benefit.value} value={benefit.value}>
+                                {benefit.label}
+                              </option>
+                            ))}
+                          </select>
+                          {errors.availed_benefit && (
+                            <small className="text-danger">
+                              {errors.availed_benefit.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            className={`form-control ${
+                              errors.bank_account_no && "invalid"
+                            }`}
+                            {...register("bank_account_no", {
+                              required: "Account Number is Required",
+                            })}
+                            onKeyUp={() => {
+                              trigger("bank_account_no");
+                            }}
+                          />
+                          {errors.bank_account_no && (
+                            <small className="text-danger">
+                              {errors.bank_account_no.message}
+                            </small>
+                          )}
+                        </td>
+                        <td>
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              value="Yes"
+                              name="qualification_status"
+                            />
+                            <label className="form-check-label">Yes</label>
+                          </div>
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              value="No"
+                              name="qualification_status"
+                            />
+                            <label className="form-check-label">No</label>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -870,8 +1302,6 @@ const handleSelect = (e) => {
         </div>
       </div>
     </div>
-
-
   );
 }
 
