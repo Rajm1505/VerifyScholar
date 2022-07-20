@@ -24,7 +24,10 @@ def register(request):
 
 
         # Adding Sid
-        no = StudentDetails.objects.latest('date_of_registration').sid 
+        try:
+            no = StudentDetails.objects.latest('date_of_registration').sid
+        except  StudentDetails.DoesNotExist:
+            no = ''     
         print(no)
         if no == '':
             data['sid'] = 'S1'
