@@ -1,12 +1,14 @@
-import re
+import requests
 from django.shortcuts import render 
 from .models import StudentDetails
 from .models import FormDetails
 from .Serializers import StudentDetailsSerializer
 from .Serializers import FormDetailsSerializer
 from django.http import JsonResponse
+from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
 
 # Create your views here.
 
@@ -72,4 +74,16 @@ def registerall(request):
     
     return JsonResponse(serializer.errors, status=400)
 
+
+@api_view(['POST'])
+def recaptcha(request):
+    r = requests.post(
+      'https://www.google.com/recaptcha/api/siteverify',
+      data={
+        'secret': '6Ld7UwUhAAAAAJdj0n7BaOTyPVr4PJvEhkT19Aw4',
+        'response': request.data['captcha_value'],
+      }
+    )
+
+    return Response({'captcha': r.json()})
     

@@ -1,5 +1,5 @@
-// import "./App.css";
-import React ,{useState} from "react";
+
+import React  from "react";
 import { Form } from "react-bootstrap";
 import axios from 'axios';
 import Header from "./Header";
@@ -68,33 +68,11 @@ function Register() {
 
   ];
 
- const nspinput = () => {
-    return (
-        
-        <div>
-          <Form.Group >
-          <Form.Label>Email</Form.Label>
-          <Form.Control type="email" name="emailid" placeholder="Enter email" />
-        </Form.Group>
-        </div>
-    );
-    
- };
- 
-
 
   const onSubmit = (data) => {
     console.log(data);
     const Data1 = JSON.stringify(data);
     console.log(Data1);
-
-    // try {
-    //     const resp =await axios.post("", Data)
-    //     console.log(resp.data);
-    // }catch (error){
-    //     consol.log(error.response);
-
-    // }
     axios.post('http://127.0.0.1:8000/api/register/', Data1)
       .then(function (response) {
         console.log(response);
