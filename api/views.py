@@ -4,7 +4,7 @@ from .models import StudentDetails
 from .models import FormDetails
 from .Serializers import StudentDetailsSerializer
 from .Serializers import FormDetailsSerializer
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 
@@ -24,7 +24,10 @@ def register(request):
 
 
         # Adding Sid
-        no = StudentDetails.objects.latest('date_of_registration').sid 
+        try:
+            no = StudentDetails.objects.latest('date_of_registration').sid 
+        except Exception:
+            no = ''
         print(no)
         if no == '':
             data['sid'] = 'S1'
@@ -69,4 +72,7 @@ def registerall(request):
     
     return JsonResponse(serializer.errors, status=400)
 
-    
+@csrf_exempt
+def demo(request):
+    if request.method == 'GET':
+        return HttpResponse(StudentDetails.objects.all())
