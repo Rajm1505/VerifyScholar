@@ -24,5 +24,4 @@ urlpatterns = [
     path('registerall/', views.registerall),
     # path('callback/', views.callback),
     # path('recaptcha/', views.recaptcha)
-
 ]
