@@ -3,8 +3,8 @@ from django.utils import timezone
 
 # Create your models here.
 castecategory = (
-    ('SC','SC'),
-    ('OBC','OBC')
+    ('sc','SC'),
+    ('obc','OBC')
 )
 marital_status = (
     ('Married','Married'),
