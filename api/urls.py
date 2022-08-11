@@ -22,5 +22,6 @@ urlpatterns = [
     path('register/', views.register),
     path('registerfetch/<str:pk>/', views.register_fetch),
     path('registerall/', views.registerall),
-    path('demo/', views.demo)
+    # path('callback/', views.callback),
+    # path('recaptcha/', views.recaptcha)
 ]

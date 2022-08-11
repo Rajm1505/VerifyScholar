@@ -1,12 +1,16 @@
-import re
+import requests
 from django.shortcuts import render 
 from .models import StudentDetails
 from .models import FormDetails
 from .Serializers import StudentDetailsSerializer
 from .Serializers import FormDetailsSerializer
 from django.http import HttpResponse, JsonResponse
+from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from rest_framework.decorators import api_view
 
 # Create your views here.
 
@@ -18,16 +22,11 @@ def index(request):
 def register(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        
-        # Inserting Date
-
-
-
         # Adding Sid
         try:
-            no = StudentDetails.objects.latest('date_of_registration').sid 
-        except Exception:
-            no = ''
+            no = StudentDetails.objects.latest('date_of_registration').sid
+        except  StudentDetails.DoesNotExist:
+
         print(no)
         if no == '':
             data['sid'] = 'S1'
@@ -71,8 +70,20 @@ def registerall(request):
         return JsonResponse(serializer.data, status=201)
     
     return JsonResponse(serializer.errors, status=400)
+    
+def login(request):
+    if(request.method == 'POST'):
+        user = authenticate(user = "", )
 
-@csrf_exempt
-def demo(request):
-    if request.method == 'GET':
-        return HttpResponse(StudentDetails.objects.all())
+@api_view(['POST'])
+def recaptcha(request):
+    r = requests.post(
+      'https://www.google.com/recaptcha/api/siteverify',
+      data={
+        'secret': '6Ld7UwUhAAAAAJdj0n7BaOTyPVr4PJvEhkT19Aw4',
+        'response': request.data['captcha_value'],
+      }
+    )
+
+    return Response({'captcha': r.json()})
+   

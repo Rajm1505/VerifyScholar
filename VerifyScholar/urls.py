@@ -21,5 +21,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
     path('', views.index,name='index'),
+    path('login',views.index,name='login'),
     path('register',views.index,name='register'),
+    path('StuApp',views.index,name='StuApp'),
+    path('StuDoc',views.index,name='StuDoc'),
+    path('DigiDemo',views.index,name='DigiDemo'),
+    path('callback/', views.callback),
+
+    
 ]

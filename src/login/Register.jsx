@@ -1,8 +1,8 @@
-// import "./App.css";
-import React ,{useState} from "react";
+
+import React  from "react";
 import { Form } from "react-bootstrap";
 import axios from 'axios';
-
+import Header from "./Header";
 import { useForm } from "react-hook-form";
 // import * as Yup from 'yup'
 // import { yupResolver } from '@hookform/resolvers/yup'
@@ -68,33 +68,11 @@ function Register() {
 
   ];
 
- const nspinput = () => {
-    return (
-        
-        <div>
-          <Form.Group >
-          <Form.Label>Email</Form.Label>
-          <Form.Control type="email" name="emailid" placeholder="Enter email" />
-        </Form.Group>
-        </div>
-    );
-    
- };
- 
-
 
   const onSubmit = (data) => {
     console.log(data);
     const Data1 = JSON.stringify(data);
     console.log(Data1);
-
-    // try {
-    //     const resp =await axios.post("", Data)
-    //     console.log(resp.data);
-    // }catch (error){
-    //     consol.log(error.response);
-
-    // }
     axios.post('http://127.0.0.1:8000/api/register/', Data1)
       .then(function (response) {
         console.log(response);
@@ -110,6 +88,8 @@ function Register() {
   // console.log(errors.name)
 
   return (
+    <>
+    <Header />
     <div className="container pt-5">
       <div className="row justify-content-sm-center pt-5">
         <div className="col-sm-6 shadow round pb-3">
@@ -248,42 +228,16 @@ function Register() {
             </div>
 
             <div className="form-group">
-              <div>
-                <label className="col-form-label">Gender:</label>
-              </div>
-              <div className={`form-check form-check-inline ${errors.gender && "invalid"}`}
-                {...register("gender", {
-                  required: "Gender is Required" })}>
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  value="M"
-                  name="gender"
-                  
-                />
-                <label className="form-check-label">Male</label>
-              </div>
-              <div className="form-check form-check-inline">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  value="F"
-                  name="gender"
-                />
-                <label className="form-check-label">Female </label>
-              </div>
-              <div className="form-check form-check-inline">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  value="O"
-                  name="gender"
-                />
-                <label className="form-check-label">Other </label>
-              </div>
-                <div>
-                    {errors.gender && ( <small className="text-danger">{errors.gender.message}</small>)}
-                 </div>
+                <label className="col-form-label">Gender:</label><br/>
+                  <div className={`form-check-inline ${errors.gender && "invalid"}`} 
+                    {...register("gender", {required: "Gender is Required" })}>
+                          <input className="form-check-input" type="radio" value="M" name="gender" {...register("gender", {required: "Gender is Required" })} /> Male &nbsp;
+                          <input className="form-check-input" type="radio" value="F" name="gender" {...register("gender", {required: "Gender is Required" })} /> Female &nbsp;
+                          <input className="form-check-input" type="radio" value="O" name="gender" {...register("gender", {required: "Gender is Required" })} /> Other &nbsp;
+                  </div>
+               <div>
+                  {errors.gender && ( <small className="text-danger">{errors.gender.message}</small>)}
+                </div>
             </div>
 
             <div className="form-group">
@@ -439,6 +393,7 @@ function Register() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
