@@ -8,6 +8,8 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from rest_framework.decorators import api_view
 
 # Create your views here.
@@ -74,6 +76,11 @@ def registerall(request):
     
     return JsonResponse(serializer.errors, status=400)
 
+
+    
+def login(request):
+    if(request.method == 'POST'):
+        user = authenticate(user = "", )
 
 @api_view(['POST'])
 def recaptcha(request):

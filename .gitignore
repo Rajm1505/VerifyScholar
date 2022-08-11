@@ -4,7 +4,7 @@ db.sqlite3
 api/__pycache__ 
 api/migrations/__pycache__ 
 VerifyScholar/__pycache__ 
-
+Rough/
 
 # dependencies
 /node_modules
