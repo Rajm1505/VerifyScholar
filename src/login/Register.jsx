@@ -4,6 +4,7 @@ import { Form } from "react-bootstrap";
 import axios from 'axios';
 import Header from "./Header";
 import { useForm } from "react-hook-form";
+import Footer from "./Footer";
 // import * as Yup from 'yup'
 // import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -92,7 +93,7 @@ function Register() {
     <Header />
     <div className="container pt-5">
       <div className="row justify-content-sm-center pt-5">
-        <div className="col-sm-6 shadow round pb-3">
+        <div className="col-sm-8 shadow round pb-3">
           <h1 className="text-center pt-3 text-secondary">
             Student Registration Form
           </h1>
@@ -197,8 +198,8 @@ function Register() {
 
               <Form.Group>
                 
-              <label className="col-form-label">Name:</label>
-              <input
+              <Form.Label className="col-form-label">Name:</Form.Label>
+              <Form.Control
                 type="text"
                 className={`form-control ${errors.name && "invalid"}`}
                 {...register("name", { required: "Name is Required" })}
@@ -393,6 +394,7 @@ function Register() {
         </div>
       </div>
     </div>
+    <Footer/>
     </>
   );
 }

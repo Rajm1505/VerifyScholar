@@ -4,6 +4,7 @@ import { Form } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import Header from "./Header";
 import axios from 'axios';
+import Footer from "./Footer";
 
 function Login() {
 
@@ -101,14 +102,15 @@ return (
                 onChange={handleRecaptcha} />
             </Form.Group>
 
-            {captchaResult
-             && 
+            {/* {captchaResult
+             &&  */}
             <button type="submit" className="btn btn-primary my-3" >SUBMIT</button>
-             } 
+             {/* }  */}
           </form>
         </div>
       </div>
     </div>
+    <Footer/>
   </>
 );
               }

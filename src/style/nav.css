@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@300&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing:border-box ;
+    font-family:  sans-serif;
+}
+
+:root{
+    --mainColor :#064578;
+    --mainColorLight: #5767aa;
+    --secondaryColor : #d1b920;
+    --textColor : #eee;
+}
+.bg-yellow {
+    background: #f4bb19;
+}
+.fw-bold {
+    font-weight: 600!important;
+}
+.fs-7 {
+    font-size: 13px;
+}
+.rounded-pill {
+    border-radius: 50rem!important;
+}
+
+.fw-bold {
+    font-weight: 700!important;
+}
+.py-2 {
+    padding-top: 0.5rem!important;
+    padding-bottom: 0.5rem!important;
+}
+.px-4 {
+    padding-right: 1.5rem!important;
+    padding-left: 1.5rem!important;
+}
+
+header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:80px;
+    padding:0 2rem;
+    background-color: var(--mainColor);
+    color:var(--textColor);
+    font-family: "Josefin Slab", sans-serif;
+
+}
+
+nav .navlink {
+    margin : 0 2rem;
+    color:var(--textColor);
+    text-decoration:none;
+}
+nav .navlink:hover{
+    color:var(--secondaryColor);
+}
+
+header .nav-btn{
+    padding: 5px;
+    cursor: pointer;
+    background: transparent;
+    border:none;
+    color : var(--textColor);
+    visibility: hidden;
+    opacity: 0;
+    font-size: 1.8rem;
+}
+
+@media only screen and (max-width: 1024px){
+    header .nav-btn{
+        visibility: visible;
+        opacity: 1;
+
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        height:80px;
+        padding:0 2rem;
+        background-color: var(--mainColor);
+        color:var(--textColor);
+        font-family: "Josefin Slab", sans-serif;
+
+    }
+    header nav{
+        position: fixed;
+        top: 0;
+        left: 0;
+        /* max-height: 9999px; */
+        height: 100%;
+        width:100%;
+        display:flex;
+        flex-direction: column;
+        align-items: left;
+        justify-content: center;
+        gap:1.5rem;
+        background-color: var(--mainColor);
+        transition: 1s;
+        transform: translateY(-100vh);
+    }
+    header .responsive_nav{
+        transform:none;
+    }
+
+    nav .nav-close-btn{
+             position:absolute;
+             top :2rem;
+             right:2rem;
+
+    }
+    nav .navlink{
+        font-size: 1.5rem;
+    }
+}
