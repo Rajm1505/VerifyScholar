@@ -8,6 +8,7 @@ import Register from './login/Register';
 import Contact_Us from './login/Contact_us';
 import StuApp from './innerPage/App_model/StuApp';
 import StuDoc from './innerPage/App_model/StuDoc';
+import DigiDemo from './DigiDemo'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path='/contact' element={<Contact_Us/>} />
       <Route path='/StuApp' element={<StuApp />} />
       <Route path='/StuDoc' element={<StuDoc />} />
+      <Route path='/digidemo' element={<DigiDemo />} />
 
     </Routes>
     </>

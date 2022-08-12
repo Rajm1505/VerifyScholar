@@ -26,5 +26,8 @@ urlpatterns = [
     path('contact', views.index,name='contact_us'),
     path('StuApp',views.index,name='StuApp'),
     path('StuDoc',views.index,name='StuDoc'),
+    path('DigiDemo',views.index,name='DigiDemo'),
+    path('callback/', views.callback),
+
     
 ]
