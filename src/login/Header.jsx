@@ -42,19 +42,19 @@ const Header = () => {
 					<NavLink className="nav-link p-0 py-1 me-4 d-inline-block active" to="/">Home</NavLink>
 				 </li>
 				 <li className="nav-item">
-					<NavLink className="nav-link p-0 py-1 me-4 d-inline-block" to="docs/gui2023.pdf" target="_blank" >Scheme Guidelines</NavLink>
+					<NavLink className="nav-link p-0 py-1 me-4 d-inline-block"  to="#" >Scheme Guidelines</NavLink>
 				 </li>
 				 <li className="nav-item">
-					<NavLink className="nav-link p-0 py-1 me-4 d-inline-block" to="docs/faq.pdf">FaQ's</NavLink>
+					<NavLink className="nav-link p-0 py-1 me-4 d-inline-block"  to="#" >FaQ's</NavLink>
 				 </li>
 				<li className="nav-item">
-					<NavLink className="nav-link p-0 py-1 me-4 d-inline-block" to="#">Register</NavLink>
+					<NavLink className="nav-link p-0 py-1 me-4 d-inline-block" to="/register">Register</NavLink>
 				 </li>
 				 <li className="nav-item">
-					<NavLink className="nav-link p-0 py-1 me-0 d-inline-block" to="contact">Contact Us</NavLink>
+					<NavLink className="nav-link p-0 py-1 me-0 d-inline-block" to="/contact">Contact Us</NavLink>
 				 </li>
 			</ul>
-			<NavLink to="login.aspx" className="btn rounded-pill bg-yellow py-2 px-4 fs-7 fw-bold">Login</NavLink>
+			<NavLink to="/login" className="btn rounded-pill bg-yellow py-2 px-4 fs-7 fw-bold">Login</NavLink>
 		   </div>
 		 </div>
 	</nav>	
