@@ -1,8 +1,9 @@
-import React ,{useState} from "react";
+import React,{useState} from "react";
 import { Form } from "react-bootstrap";
 import axios from 'axios';
 import digi from "../../images/digilocker.png"
 import { useForm } from "react-hook-form";
+// import { useState } from "react";
 // import Header from "./Header";
 // import Footer from "./Footer";
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
@@ -17,8 +18,10 @@ function StuDoc() {
         reset,
         trigger,
     } = useForm();
+
 const doc1=true;
 const doc2=false;
+
     return (
         <>
             {/* <Header /> */}
@@ -28,6 +31,9 @@ const doc2=false;
                         <h1 className="text-center pt-3 text-secondary">
                             Student Documentation Form
                         </h1>
+                        <div>
+                            <a className="btn btn-success" href="https://api.digitallocker.gov.in/public/oauth2/1/authorize?response_type=code&client_id=2407FC9F&redirect_uri=http://localhost:8000/callback&state=hello">Authorize Digilocker</a>
+                        </div>
                         <div className="">
                             <Form.Label></Form.Label>
                             <a href=""></a>
