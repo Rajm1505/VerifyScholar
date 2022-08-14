@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React ,{useState} from "react";
 import { Form } from "react-bootstrap";
 import axios from 'axios';
 import digi from "../../images/digilocker.png"
@@ -18,8 +18,10 @@ function StuDoc() {
         reset,
         trigger,
     } = useForm();
+
 const doc1=true;
 const doc2=false;
+
     return (
         <>
             {/* <Header /> */}
