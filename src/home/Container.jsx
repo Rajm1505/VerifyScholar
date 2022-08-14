@@ -36,7 +36,7 @@ const Container = () => {
 				</div>
 			</div> */}
 
-			<Carousel interval="3000" touch="true" fade="true">
+			<Carousel interval="2000" touch="true" fade="true">
 				<Carousel.Item touch="true">
 					<img
 						className="d-block w-100"

@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import s_d from "../../state&disctrict.json";
 import { Form } from "react-bootstrap";
 import React, { useState } from "react";
+import $ from 'jquery';
 
 function StuApp() {
   const {
@@ -20,14 +21,31 @@ function StuApp() {
     console.log(JSON.stringify(data));
     reset();
   };
-
+  
   const MStatus = [
     { label: "Married", value: "Married" },
     { label: "Unmarried", value: "Unmarried" },
     { label: "Divorsed", value: "Divorsed" },
     { label: "Seperated", value: "Seperated" },
   ];
-  const [value, setValue] = useState("");
+  const [d_value, setDvalue] = useState("");
+  const [c_value, setCvalue] = useState("");
+  const [p_value, setPvalue] = useState("");
+  const [h_value, setHvalue] = useState("");
+  
+  const [address, setAddress] = useState(false);
+ if (address == true){
+     $("#yes").click(function() {
+       $('#paddress1').text($('#caddress1').text());
+       // $('#address2').val("GeeksForGeeks");
+      //  s
+       // $('#pdistrict').val("GeeksForGeeks");
+       $('#ppin').val($('#cpin').val());
+      //  $('#ppin').val("746837465");
+      });
+  }
+
+     
 
   const ScrSystems = [
     { label: "CGPA/ OGPA", value: "CGPA/ OGPA" },
@@ -49,11 +67,12 @@ function StuApp() {
         <h1 className="text-center pt-3 text-secondary">Application Form</h1>
         <div className="col-sm-8 shadow round pb-3">
           <form onSubmit={handleSubmit(onSubmit)}>
+                    {/*  ################################################################################################################## */}
             <div className="mt-5">
               <h4>1.Personal Details</h4>
               <div className="form-group">
                 <label className="col-form-label">Full Name</label>
-                <input
+                <input 
                   type="text"
                   className={`form-control ${errors.name && "invalid"}`}
                   {...register("name", { required: "Name is Required" })}
@@ -272,9 +291,9 @@ function StuApp() {
                         {...register("state", { required: "State is Required" })}
                         onChange={(e) => {
                           console.log(e.target.value);
-                          setValue(e.target.value);
+                          setDvalue(e.target.value);
                         }}
-                        value={value}
+                        value={d_value}
                       >
                         <option value="">-- Select State -- </option>
                         {s_d.states.map((State) => (
@@ -301,7 +320,7 @@ function StuApp() {
                       >
                         <option value="">-- Select district -- </option>
                         {s_d.states.map((State) => {
-                          if (State.state == value) {
+                          if (State.state == d_value) {
                             return (
                               <>
                                 {State.districts.map((disct) => (
@@ -322,12 +341,12 @@ function StuApp() {
                 </tbody>
               </table>
             </div>
-            <hr />
+            <hr />  {/*  ################################################################################################################## */}
             <div className="mt-5">
               <h4>2.Current Address</h4>
               <div className="form-group">
                 <label className="col-form-label">Address(Line 1)</label>
-                <textarea
+                <textarea id="caddress1"
                   className={`form-control ${errors.address1 && "invalid"}`}
                   {...register("address1", { required: "Address is Required" })}
                   onKeyUp={() => {
@@ -342,7 +361,7 @@ function StuApp() {
               </div>
               <div className="form-group">
                 <label className="col-form-label">Address(Line 2)</label>
-                <textarea
+                <textarea id="caddress2"
                   className={`form-control ${errors.address2 && "invalid"}`}
                   {...register("address2", { required: "Address is Required" })}
                   onKeyUp={() => {
@@ -364,14 +383,14 @@ function StuApp() {
                         <Form.Label>State</Form.Label>
                       </td>
                       <td>
-                        <select
-                          className={`form-control ${errors.state && "invalid"}`}
-                          {...register("state", { required: "State is Required" })}
+                        <select id="cstate"
+                          className={`form-control ${errors.cstate && "invalid"}`}
+                          {...register("cstate", { required: "State is Required" })}
                           onChange={(e) => {
                             console.log(e.target.value);
-                            setValue(e.target.value);
+                            setCvalue(e.target.value);
                           }}
-                          value={value}
+                          value={c_value}
                         >
                           <option value="">-- Select State -- </option>
                           {s_d.states.map((State) => (
@@ -380,9 +399,9 @@ function StuApp() {
                             </option>
                           ))}
                         </select>
-                        {errors.state && (
+                        {errors.cstate && (
                           <small className="text-danger">
-                            {errors.state.message}
+                            {errors.cstate.message}
                           </small>
                         )}
                       </td>
@@ -390,15 +409,15 @@ function StuApp() {
                         <label className="col-form-label"> District</label>
                       </td>
                       <td>
-                        <select
-                          className={`form-control ${errors.district && "invalid"}`}
-                          {...register("district", {
+                        <select id="cdistrict"
+                          className={`form-control ${errors.cdistrict && "invalid"}`}
+                          {...register("cdistrict", {
                             required: "district is Required",
                           })}
                         >
                           <option value="">-- Select district -- </option>
                           {s_d.states.map((State) => {
-                            if (State.state == value) {
+                            if (State.state == c_value) {
                               return (
                                 <>
                                   {State.districts.map((disct) => (
@@ -409,9 +428,9 @@ function StuApp() {
                             }
                           })}
                         </select>
-                        {errors.district && (
+                        {errors.cdistrict && (
                           <small className="text-danger">
-                            {errors.district.message}
+                            {errors.cdistrict.message}
                           </small>
                         )}
                       </td>
@@ -421,7 +440,7 @@ function StuApp() {
               </div>
               <div className="form-group">
                 <label className="col-form-label">PIN Code</label>
-                <input
+                <input id="cpin"
                   type="text"
                   className={`form-control ${errors.pincode && "invalid"}`}
                   {...register("pincode", {
@@ -438,34 +457,37 @@ function StuApp() {
                 )}
               </div>
             </div>
-            <hr />
+            <hr />   {/*  ################################################################################################################## */}
             <div className="mt-5">
               <h4>3.Is Permanent Address Same as Current Address</h4>
               <div className="form-check form-check-inline">
-                <input
+                <input id="address"
                   className="form-check-input"
                   type="radio"
-                  value="Yes"
+                  value={true}
                   name="sameascurrent"
+                  onClick={() => { setAddress(true); }}
                 />
                 <label className="form-check-label">Yes</label>
               </div>
               <div className="form-check form-check-inline">
-                <input
+                <input id="address"
                   className="form-check-input"
                   type="radio"
-                  value="No"
+                  value={false}
                   name="sameascurrent"
+                  onClick={() => { setAddress(false); }}
                 />
+
                 <label className="form-check-label">No</label>
               </div>
             </div>
-            <hr />
+            <hr />    {/*  ################################################################################################################## */}
             <div className="mt-5">
               <h4>4.Permanent Address</h4>
               <div className="form-group">
                 <label className="col-form-label">Address(Line 1)</label>
-                <textarea
+                <textarea id="paddress1"
                   className={`form-control ${errors.address1 && "invalid"}`}
                   {...register("address1", { required: "Address is Required" })}
                   onKeyUp={() => {
@@ -480,7 +502,7 @@ function StuApp() {
               </div>
               <div className="form-group">
                 <label className="col-form-label">Address(Line 2)</label>
-                <textarea
+                <textarea id="paddress2"
                   className={`form-control ${errors.address2 && "invalid"}`}
                   {...register("address2", { required: "Address is Required" })}
                   onKeyUp={() => {
@@ -502,14 +524,14 @@ function StuApp() {
                         <Form.Label>State</Form.Label>
                       </td>
                       <td>
-                        <select
-                          className={`form-control ${errors.state && "invalid"}`}
-                          {...register("state", { required: "State is Required" })}
+                        <select id="pstate"
+                          className={`form-control ${errors.pstate && "invalid"}`}
+                          {...register("pstate", { required: "State is Required" })}
                           onChange={(e) => {
                             console.log(e.target.value);
-                            setValue(e.target.value);
+                            setPvalue(e.target.value);
                           }}
-                          value={value}
+                          value={p_value}
                         >
                           <option value="">-- Select State -- </option>
                           {s_d.states.map((State) => (
@@ -518,9 +540,9 @@ function StuApp() {
                             </option>
                           ))}
                         </select>
-                        {errors.state && (
+                        {errors.pstate && (
                           <small className="text-danger">
-                            {errors.state.message}
+                            {errors.pstate.message}
                           </small>
                         )}
                       </td>
@@ -528,15 +550,15 @@ function StuApp() {
                         <label className="col-form-label"> District</label>
                       </td>
                       <td>
-                        <select
-                          className={`form-control ${errors.district && "invalid"}`}
-                          {...register("district", {
+                        <select id="pdistrict"
+                          className={`form-control ${errors.pdistrict && "invalid"}`}
+                          {...register("pdistrict", {
                             required: "district is Required",
                           })}
                         >
                           <option value="">-- Select district -- </option>
                           {s_d.states.map((State) => {
-                            if (State.state == value) {
+                            if (State.state == p_value) {
                               return (
                                 <>
                                   {State.districts.map((disct) => (
@@ -547,9 +569,9 @@ function StuApp() {
                             }
                           })}
                         </select>
-                        {errors.district && (
+                        {errors.pdistrict && (
                           <small className="text-danger">
-                            {errors.district.message}
+                            {errors.pdistrict.message}
                           </small>
                         )}
                       </td>
@@ -559,7 +581,7 @@ function StuApp() {
               </div>
               <div className="form-group">
                 <label className="col-form-label">PIN Code</label>
-                <input
+                <input id="ppin"
                   type="text"
                   className={`form-control ${errors.pincode && "invalid"}`}
                   {...register("pincode", {
@@ -576,7 +598,7 @@ function StuApp() {
                 )}
               </div>
             </div>
-            <hr />
+            <hr />   {/*  ################################################################################################################## */}
             <div className="mt-5">
               <h4>5.Examination Details for which coaching is required</h4>
               <div className="form-group">
@@ -605,7 +627,7 @@ function StuApp() {
                 </div>
               </div>
             </div>
-            <hr />
+            <hr /> {/*  ################################################################################################################## */}
             <div className="mt-5">
               <h4>6.Qualifying Examination Details.</h4>
               <div className="form-group">
@@ -659,7 +681,7 @@ function StuApp() {
                 </table>
               </div>
             </div>
-            <hr />
+            <hr />  {/*  ################################################################################################################## */}
             <div className="mt-5">
               <h4>High school (10th) Examination Details</h4>
               <div className="form-group">
@@ -694,13 +716,13 @@ function StuApp() {
                       </td>
                       <td>
                         <select
-                          className={`form-control ${errors.state && "invalid"}`}
-                          {...register("state", { required: "State is Required" })}
+                          className={`form-control ${errors.hstate && "invalid"}`}
+                          {...register("hstate", { required: "State is Required" })}
                           onChange={(e) => {
                             console.log(e.target.value);
-                            setValue(e.target.value);
+                            setHvalue(e.target.value);
                           }}
-                          value={value}
+                          value={h_value}
                         >
                           <option value="" className="text-center">- -  Select State  - - </option>
                           {s_d.states.map((State) => (
@@ -709,9 +731,9 @@ function StuApp() {
                             </option>
                           ))}
                         </select>
-                        {errors.state && (
+                        {errors.hstate && (
                           <small className="text-danger">
-                            {errors.state.message}
+                            {errors.hstate.message}
                           </small>
                         )}
                       </td>
@@ -720,14 +742,14 @@ function StuApp() {
                       </td>
                       <td>
                         <select
-                          className={`form-control ${errors.district && "invalid"}`}
-                          {...register("district", {
+                          className={`form-control ${errors.hdistrict && "invalid"}`}
+                          {...register("hdistrict", {
                             required: "district is Required",
                           })}
                         >
                           <option value="" className="text-center">- -  Select  - - </option>
                           {s_d.states.map((State) => {
-                            if (State.state == value) {
+                            if (State.state == h_value) {
                               return (
                                 <>
                                   {State.districts.map((disct) => (
@@ -738,9 +760,9 @@ function StuApp() {
                             }
                           })}
                         </select>
-                        {errors.district && (
+                        {errors.hdistrict && (
                           <small className="text-danger">
-                            {errors.district.message}
+                            {errors.hdistrict.message}
                           </small>
                         )}
                       </td>
@@ -864,7 +886,7 @@ function StuApp() {
                 </table>
               </div>
             </div>
-            <hr />
+            <hr />  {/*  ################################################################################################################## */}
             <div className="mt-5">
               <table className="table table-striped table-bordered">
                 <tbody>
@@ -922,7 +944,7 @@ function StuApp() {
                 </tbody>
               </table>
             </div>
-            <hr />
+            <hr />  {/*  ################################################################################################################## */}
             <div className="mt-5">
               <h4>8.Bank Account details of candidates.</h4>
               <div className="form-group">
@@ -1025,7 +1047,7 @@ function StuApp() {
                 </table>
               </div>
             </div>
-            <hr />
+            <hr />   {/*  ################################################################################################################## */}
             <div className="mt-5">
               <h4>
                 9.Total Income from all sources of family members contributing
@@ -1427,7 +1449,7 @@ function StuApp() {
                   </tbody>
                 </table>
               </div>
-            </div>
+            </div>    {/*  ################################################################################################################## */}
             <input
               type="submit"
               className="btn btn-primary my-3"
