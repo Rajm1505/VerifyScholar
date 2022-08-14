@@ -23,22 +23,18 @@ def register(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
         # Adding Sid
-        try:
-            no = StudentDetails.objects.latest('date_of_registration').sid
-        except  StudentDetails.DoesNotExist:
-
-        print(no)
-        if no == '':
-            data['sid'] = 'S1'
-        else:
-            temp = no[1:]
-            number = int(temp)
-            number+=1
-            sid = 'S' + str(number)
-            data['sid'] = sid
-
-
-        print(data)
+        # try:
+        #     no = StudentDetails.objects.latest('date_of_registration').sid
+        # except  StudentDetails.DoesNotExist:
+        #     no = ''
+        # if no == '':
+        #     data['sid'] = 'S1'
+        # else:
+        #     temp = no[1:]
+        #     number = int(temp)
+        #     number+=1
+        #     sid = 'S' + str(number)
+        #     data['sid'] = sid
         
         
         serializer = StudentDetailsSerializer(data=data)

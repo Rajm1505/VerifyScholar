@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 from django.utils import timezone
 
@@ -64,10 +65,8 @@ qualification_status=(
 
 
 class StudentDetails(models.Model):
-    sid = models.CharField(max_length = 10, primary_key=True)
-    nsp_id_radio = models.BooleanField(default=False)
+    sid = models.AutoField(primary_key=True)
     nsp_id = models.CharField(max_length = 20)
-    pms_benificiary_id_radio = models.BooleanField(default=False)
     pms_benificiary_id = models.CharField(max_length = 20)
     caste_category = models.CharField(max_length=20, choices=castecategory, default = '--Select--')
     name = models.CharField(max_length=50)
@@ -131,7 +130,18 @@ class family_income(models.Model):
     employment = models.CharField(max_length=15)
     yearly_income = models.CharField(max_length=10)
     itr_status = models.BooleanField(default=False)
-
-
+    
     def __str__(self):
         return self.name
+    
+    
+class StudentDocuments(models.Model):
+   
+    sid = models.ForeignKey(StudentDetails,on_delete=models.CASCADE)
+    aadhar = models.FileField(upload_to='uploads/')
+    
+    def __str__(self):
+        return self.sid
+
+
+
