@@ -83,7 +83,7 @@ class StudentDetails(models.Model):
     date_of_lastupdate = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return str(self.sid)
 
 class FormDetails(models.Model):
 
@@ -93,6 +93,7 @@ class FormDetails(models.Model):
     # dob = models.DateField()
     # mobile_number= models.CharField(max_length=10)
     # emailid =  models.CharField(max_length=100)
+    sid = models.ForeignKey(StudentDetails,on_delete=models.CASCADE, primary_key=True)
     plus18 = models.BooleanField(default=False)
     aadhaar = models.CharField(max_length = 12)
     minority_category = models.BooleanField(default=False)
@@ -137,11 +138,12 @@ class family_income(models.Model):
     
 class StudentDocuments(models.Model):
    
-    sid = models.ForeignKey(StudentDetails,on_delete=models.CASCADE)
-    aadhar = models.FileField(upload_to='uploads/')
+    sid = models.ForeignKey(StudentDetails,on_delete=models.CASCADE, primary_key=True)
+    aadhar = models.FileField(upload_to='',max_length=250,null = True, default=True)
+    incomecertificate = models.FileField(upload_to='',max_length=250,null = True, default=True)
     
     def __str__(self):
-        return self.sid
+        return str(self.sid)
 
 
 
