@@ -3,6 +3,7 @@ import { Form } from "react-bootstrap";
 import axios from 'axios';
 import digi from "../../images/digilocker.png"
 import { useForm } from "react-hook-form";
+// import { useState } from "react";
 // import Header from "./Header";
 // import Footer from "./Footer";
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
@@ -17,9 +18,8 @@ function StuDoc() {
         reset,
         trigger,
     } = useForm();
-    const [txtbox, setTxtbox] = useState(false);
-    const doc1 = true;
-    const doc2 = false;
+const doc1=true;
+const doc2=false;
     return (
         <>
             {/* <Header /> */}

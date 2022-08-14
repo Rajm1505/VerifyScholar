@@ -5,6 +5,7 @@ api/__pycache__
 api/migrations/__pycache__ 
 VerifyScholar/__pycache__ 
 Rough/
+uploads/
 
 # dependencies
 /node_modules
