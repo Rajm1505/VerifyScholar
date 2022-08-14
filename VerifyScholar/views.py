@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 import requests, json, xmltodict
+import os
+
+from api.models import StudentDocuments
 
 # from ..api.models import StudentDocuments
 
@@ -25,8 +28,7 @@ def callback(request):
         }
         # API call for obtaining accesstoken
 
-        accesstokencall = requests.post(url, json = myobj, headers = {"Content-Type": "application/json"})
-        accesstoken = accesstokencall.json().get('access_token')
+        accesstoken = requests.post(url, json = myobj, headers = {"Content-Type": "application/json"}).json().get('access_token')
         print(accesstoken)
 
         # API call for obtaining list of files in user's digilocker
@@ -67,11 +69,17 @@ def callback(request):
                     dob = content['KycRes']['UidData']['Poi']['@dob']
                     gender = content['KycRes']['UidData']['Poi']['@gender']
                     print(uid,studentname,dob,gender)
+                    
                 
                 if 'INCER' in fileuri:
-                    file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})
-                    
-                    open("income certificate.pdf", "wb").write(file.content)
+                    file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
+                    sid = "1"
+                    path = "media/"+sid+'/'
+                    os.chdir(path)
+                    filename = sid + '_income certificate.pdf'
+                    open(filename, "wb").write(file.content)
+                    doc = StudentDocuments(incomecertificate = path+filename)
+                    doc.save()
                     # StudentDocuments.objects.create()
                     #OCR CODE HERE
                     print(fileuri)
@@ -82,6 +90,7 @@ def callback(request):
             for file in requiredfiles:
                 print("These file does not exist: " + file)
 
+        # return render(request, 'index.html',resdict)
         return JsonResponse(resdict)
     
     # {'access_token': 'cfc7cfa52b5eb2d24d861ef3100008b4013d39ee', 'expires_in': 3600, 'token_type': 'Bearer', 'scope': None, 'refresh_token': 'c9241729f73eb2b0026718d16e62e9b72837b50c', 'digilockerid': '1f80c52d-d4a2-11e9-ae46-9457a564506c', 'name': 'Mandaviya Raj Jayesh', 'dob': '15052003', 'gender': 'M', 'eaadhaar': 'Y', 'reference_key': '', 'mobile': '9724197043', 'new_account': 'N'}

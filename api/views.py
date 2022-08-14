@@ -2,7 +2,7 @@ import requests
 from django.shortcuts import render 
 from .models import StudentDetails
 from .models import FormDetails
-from .Serializers import StudentDetailsSerializer
+from .Serializers import StudentDetailsSerializer,StudentDetailsFetchSerializer
 from .Serializers import FormDetailsSerializer
 from django.http import HttpResponse, JsonResponse
 from rest_framework.response import Response
@@ -51,11 +51,11 @@ def register_fetch(request,pk):
             return JsonResponse(studentdetails.errors, status=404)
     
         if request.method == 'GET':   
-            serializer = StudentDetailsSerializer(studentdetails)
+            serializer = StudentDetailsFetchSerializer(studentdetails)
             return JsonResponse(serializer.data)
 
 @csrf_exempt
-def registerall(request):
+def formregister(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
 

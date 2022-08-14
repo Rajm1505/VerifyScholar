@@ -6,6 +6,7 @@ api/migrations/__pycache__
 VerifyScholar/__pycache__ 
 Rough/
 uploads/
+media/
 
 # dependencies
 /node_modules
