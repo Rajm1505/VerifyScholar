@@ -1,13 +1,30 @@
 from rest_framework import serializers
 from .models import StudentDetails
-from .models import FormDetails
+from .models import FormDetails, User
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['sid','name','email','password']
+        extra_kwargs = {
+            'password':{'write_only':True}
+        }
+        
+    def create(self,validated_data):
+        password = validated_data.pop('password',None)
+        instance = self.Meta.model(**validated_data)
+        if password is not None:
+            instance.set_password(password)
+        instance.save()
+        return instance    
+    
 
 class StudentDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentDetails
         fields = ['sid','nsp_id',
         'pms_benificiary_id','caste_category','name','fname','gender','mobile_number',
-        'emailid','dob','password','state_of_passing_10th_exam','board_10th_certificate_number',
+        'email','dob','password','state_of_passing_10th_exam','board_10th_certificate_number',
         'year_of_passing_10th_board']
         
 class StudentDetailsFetchSerializer(serializers.ModelSerializer):

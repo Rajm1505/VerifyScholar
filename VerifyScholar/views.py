@@ -58,7 +58,7 @@ def callback(request):
                 resdict[i] = True
         print(resdict)
 
-    # Requesting XML of files from digilocker
+    # Requesting XML of files from digilocker 
         try:
             for fileuri in fileuris:
                 if 'ADHAR' in fileuri:
@@ -70,6 +70,7 @@ def callback(request):
                     gender = content['KycRes']['UidData']['Poi']['@gender']
                     print(uid,studentname,dob,gender)
                     
+    # Downloading files from digilocker 
                 
                 if 'INCER' in fileuri:
                     file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
