@@ -14,19 +14,19 @@ import DigiDemo from './DigiDemo'
 function App() {
   const [sid, setSid] = useState();
 
-  useEffect(() => {
-    (
-      async () => {
-        const response = await fetch('http://127.0.0.1:8000/api/user/', {
-          headers: { 'Content-Type': 'appliction/json' },
-          credentials: 'include',
+  // useEffect(() => {
+  //   (
+  //     async () => {
+  //       const response = await fetch('http://127.0.0.1:8000/api/user/', {
+  //         headers: { 'Content-Type': 'appliction/json' },
+  //         credentials: 'include',
           
-        });
-        const content = await response.json();
-        setSid(content.sid);
-      }
-    )();
-  });
+  //       });
+  //       const content = await response.json();
+  //       setSid(content.sid);
+  //     }
+  //   )();
+  // });
 
   return (
 

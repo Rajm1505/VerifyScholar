@@ -1,10 +1,12 @@
+from asyncio.windows_events import NULL
+from pydoc import doc
 import requests
 from django.shortcuts import render 
 import jwt,datetime
-from .models import StudentDetails,User,FormDetails
+from .models import StudentDetails,User,FormDetails,StudentDocuments
 from rest_framework.views import APIView
 
-from .Serializers import StudentDetailsSerializer,FormDetailsSerializer,StudentDetailsFetchSerializer,UserSerializer
+from .Serializers import StudentDetailsSerializer,FormDetailsSerializer,StudentDetailsFetchSerializer,UserSerializer,StudentDocumentsSerializer
 from django.http import HttpResponse, JsonResponse
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
@@ -135,6 +137,7 @@ def register(request):
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
 
+@api_view(['GET'])
 @csrf_exempt
 def register_fetch(request):
     if request.method == 'GET':
@@ -166,6 +169,27 @@ def formregister(request):
 def login(request):
     if(request.method == 'POST'):
         user = authenticate(user = "", )
+
+@api_view(['GET'])
+def userdoclist(request):
+    response = isAuth(request)
+    studentdetails = StudentDocuments.objects.filter(sid=response.data['sid']).first()
+    print(studentdetails)
+    serializer = StudentDocumentsSerializer(studentdetails)
+    serializer.data['hello'] = 'hello'
+    print(serializer.data)
+    doclist = {}
+    for i in serializer.data:
+        if serializer.data[i] == None:
+            doclist[i] = False
+        else:
+            doclist[i] = True
+    print(doclist)      
+    return JsonResponse(doclist)
+    
+    
+    
+    
 
 @api_view(['POST'])
 def recaptcha(request):

@@ -15,15 +15,15 @@ function Login() {
   const [redirect, setRedirect] = useState(false);
   
   const onSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();s
     const Data = JSON.stringify(e);
     console.log(Data);
 
     fetch('http://127.0.0.1:8000/api/login/', {
       method: "POST",
-      headers: { 'Content-Type': 'appliction/json' },
+      headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body: { Data }
+      body:  Data 
     });
     setRedirect(true);
 
