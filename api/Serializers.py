@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import StudentDetails
+from .models import StudentDetails, StudentDocuments
 from .models import FormDetails, User
 
 class UserSerializer(serializers.ModelSerializer):
@@ -40,3 +40,9 @@ class FormDetailsSerializer(serializers.ModelSerializer):
         'coaching_required', 'qualification', 'qualification_status', 'instituteName_10', 'district_10', 'address_institute_10',
         'subject_taken', 'scoring_system', 'availed_benefit', 'num_siblings_availd_benefit',
         'bank_accountholder_name', 'bank_name', 'bank_account_no', 'bank_IFSC_code', 'declaration_action']
+        
+        
+class StudentDocumentsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentDocuments
+        fields = ['sid','aadhar','incomecertificate']

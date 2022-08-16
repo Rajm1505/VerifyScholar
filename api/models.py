@@ -73,6 +73,10 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+    
+    def __str__(self):
+        return str(self.sid)
+    ()
 
 class StudentDetails(models.Model):
     sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
@@ -148,9 +152,9 @@ class family_income(models.Model):
     
 class StudentDocuments(models.Model):
    
-    sid = models.ForeignKey(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
-    aadhar = models.FileField(upload_to='',max_length=250,null = True, default=True)
-    incomecertificate = models.FileField(upload_to='',max_length=250,null = True, default=True)
+    sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
+    aadhar = models.FileField(upload_to='',max_length=250,null=False, default=True)
+    incomecertificate = models.FileField(upload_to='',max_length=250,null=False, default=True)
     
     def __str__(self):
         return str(self.sid)

@@ -1,4 +1,4 @@
-import React ,{useState} from "react";
+import React, { useState, useEffect} from "react";
 import { Form } from "react-bootstrap";
 import axios from 'axios';
 import digi from "../../images/digilocker.png"
@@ -11,6 +11,10 @@ import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 
 
 function StuDoc() {
+    const doc1 = true;
+    const doc2 = true;
+    const [aadhar, setAadhar] = useState();
+    const [incomecertificate, setIncomecertificate] = useState();
     const {
         register,
         handleSubmit,
@@ -19,9 +23,22 @@ function StuDoc() {
         trigger,
     } = useForm();
 
-const doc1=true;
-const doc2=false;
-const [txtbox, setTxtbox] = useState(false);
+    const [txtbox, setTxtbox] = useState(false);
+    useEffect(() => {
+        (async () => {
+            const response = await fetch('http://127.0.0.1:8000/api/userdoclist/', {
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+            });
+            let content = await response.json();
+            setAadhar(content.aadhar)
+            setIncomecertificate(content.incomecertificate)
+            console.log(content);
+        }
+        )();
+    });
+
+
 
     return (
         <>
@@ -71,7 +88,7 @@ const [txtbox, setTxtbox] = useState(false);
                                                     <a href="https://api.digitallocker.gov.in/public/oauth2/1/authorize?response_type=code&client_id=2407FC9F&redirect_uri=http://localhost:8000/callback&state=hello">
                                                         <img src={digi}></img><br />
                                                         <span>please authorize digilocker account</span>
-                                                    </a>) : (<a href="#">
+                                                    </a>) : (<a href="https://accounts.digilocker.gov.in/signup/smart_v2">
                                                         <img src={digi}></img><br />
                                                         <span>make digilocker account</span>
                                                     </a>)
@@ -88,15 +105,15 @@ const [txtbox, setTxtbox] = useState(false);
                                         <tr>
                                             <td><Form.Label>Category/Cast Certificate </Form.Label></td>
                                             <td>
-                                                {doc1 ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
-                                                    <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
+                                                {aadhar ? (<Form.Label className="text-success">&#10004; (your Document is successfully submitted)</Form.Label>) : (
+                                                    <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in DigiLocker )</Form.Label>)}
                                                 {/* <BootstrapSwitchButton checked={true} onstyle="warning" offstyle="danger" size="sm" onlabel="Yes" offlabel="No"/> */}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td><Form.Label>10th MarkSheet</Form.Label></td>
                                             <td>
-                                                {doc2 ? (<h2 className="text-success">&#10004;</h2>) : (
+                                                {incomecertificate ? (<h2 className="text-success">&#10004;</h2>) : (
                                                     <Form.Label className="text-danger"> &#10008;(Please Upload this document in Digi Locker )</Form.Label>)}
                                             </td>
                                         </tr>
@@ -104,7 +121,7 @@ const [txtbox, setTxtbox] = useState(false);
                                         <tr>
                                             <td><Form.Label>12th MarkSheet (if 12th completed)</Form.Label></td>
                                             <td>
-                                                {doc1 ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
+                                                {aadhar ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
                                                     <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
                                             </td>
                                         </tr>
@@ -114,7 +131,7 @@ const [txtbox, setTxtbox] = useState(false);
                                                 <Form.Text id="passwordHelpBlock" muted>(Please upload certificate in given format, In Case of ITR of family members please merge them in a single file and upload)</Form.Text>
                                             </td>
                                             <td>
-                                                {doc1 ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
+                                                {incomecertificate ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
                                                     <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
                                             </td>
                                         </tr>
@@ -138,7 +155,7 @@ const [txtbox, setTxtbox] = useState(false);
                                         <tr>
                                             <td><Form.Label>Permanent Address Proof</Form.Label></td>
                                             <td>
-                                                {doc1 ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
+                                                {aadhar ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
                                                     <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
                                             </td>
                                         </tr>
