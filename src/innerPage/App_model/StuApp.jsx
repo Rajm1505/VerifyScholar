@@ -3,10 +3,32 @@ import { useForm } from "react-hook-form";
 import "bootstrap/dist/css/bootstrap.min.css";
 import s_d from "../../state&disctrict.json";
 import { Form } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import $ from 'jquery';
 
+// function StuApp(props: {sid : string}) {
 function StuApp() {
+  // #------------------------------------------------------------------------------------------
+  const [sid, setSid] = useState();
+
+  useEffect(() => {
+    (
+      async () => {
+        const response = await fetch('http://127.0.0.1:8000/api/user/', {
+          headers: { 'Content-Type': 'appliction/json' },
+          credentials: 'include',
+          
+        });
+        const content = await response.json();
+        setSid(content.sid);
+      }
+    )();
+  });
+  // #------------------------------------------------------------------------------------------
+
+
+
+
   const {
     register,
     handleSubmit,
@@ -21,7 +43,7 @@ function StuApp() {
     console.log(JSON.stringify(data));
     reset();
   };
-  
+
   const MStatus = [
     { label: "Married", value: "Married" },
     { label: "Unmarried", value: "Unmarried" },
@@ -32,20 +54,22 @@ function StuApp() {
   const [c_value, setCvalue] = useState("");
   const [p_value, setPvalue] = useState("");
   const [h_value, setHvalue] = useState("");
-  
+
   const [address, setAddress] = useState(false);
- if (address == true){
-     $("#yes").click(function() {
-       $('#paddress1').text($('#caddress1').text());
-       // $('#address2').val("GeeksForGeeks");
+  if (address == true) {
+    $("#yes").click(function () {
+      $('#paddress1').text($('#caddress1').text());
+      // $('#address2').val("GeeksForGeeks");
       //  s
-       // $('#pdistrict').val("GeeksForGeeks");
-       $('#ppin').val($('#cpin').val());
+      // $('#pdistrict').val("GeeksForGeeks");
+
+      $('#ppin').val($('#cpin').val());
+
       //  $('#ppin').val("746837465");
-      });
+    });
   }
 
-     
+
 
   const ScrSystems = [
     { label: "CGPA/ OGPA", value: "CGPA/ OGPA" },
@@ -64,15 +88,15 @@ function StuApp() {
   return (
     <div className="container pt-5">
       <div className="row justify-content-sm-center pt-5">
-        <h1 className="text-center pt-3 text-secondary">Application Form</h1>
+        <h1 className="text-center pt-3 text-secondary">Application Form { sid ? {sid} : ' # you are not logged in #'}</h1>
         <div className="col-sm-8 shadow round pb-3">
           <form onSubmit={handleSubmit(onSubmit)}>
-                    {/*  ################################################################################################################## */}
+            {/*  ################################################################################################################## */}
             <div className="mt-5">
               <h4>1.Personal Details</h4>
               <div className="form-group">
                 <label className="col-form-label">Full Name</label>
-                <input 
+                <input
                   type="text"
                   className={`form-control ${errors.name && "invalid"}`}
                   {...register("name", { required: "Name is Required" })}

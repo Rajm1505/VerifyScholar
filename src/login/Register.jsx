@@ -1,9 +1,11 @@
 import React, {useState} from "react";
+import  { useNavigate} from 'react-router-dom';
 import { Form } from "react-bootstrap";
 import axios from "axios";
 import Header from "./Header";
 import { useForm } from "react-hook-form";
 import Footer from "./Footer";
+import s_d from "../state&disctrict.json";
 // import * as Yup from 'yup'
 // import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -23,65 +25,14 @@ function Register() {
   // ---------------------------------------------------------------------------------
   const [txtbox, setTxtbox] = useState(false);
   const [txtbox1, setTxtbox1] = useState(false);
-  // const handlebox = (e) => {
-  //   if (e.currentTarget.value == true){
-  //     setTxtbox(true)
-
-  //   }else{
-  //     setTxtbox(false)
-  //   }
-  // }
-
-  // ---------------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------------
-
-  //     const formSchema = Yup.object().shape({
-  //         password: Yup.string()
-  //       .required('Password is mendatory')
-  //       .min(3, 'Password must be at 3 char long'),
-  //     confirmPwd: Yup.string()
-  //       .required('Password is mendatory')
-  //       .oneOf([Yup.ref('password')], 'Passwords does not match'),
-  //   })
-  //   const formOptions = { resolver: yupResolver(formSchema) }
-
   // ---------------------------------------------------------------------------------
   const Category = [
     { label: "SC", value: "sc" },
     { label: "OBC", value: "obc" },
   ];
-  const states = [
-    { value: "Andhra Pradesh", label: "Andhra Pradesh" },
-    { value: "Arunachal Pradesh", label: "Arunachal Pradesh" },
-    { value: "Assam", label: "Assam" },
-    { value: "Bihar", label: "Bihar" },
-    { value: "Chhattisgarh", label: "Chhattisgarh" },
-    { value: "Delhi", label: "Delhi" },
-    { value: "Goa", label: "Goa" },
-    { value: "Gujarat", label: "Gujarat" },
-    { value: "Haryana", label: "Haryana" },
-    { value: "Himachal Pradesh", label: "Himachal Pradesh" },
-    { value: "Jammu and Kashmir", label: "Jammu and Kashmir" },
-    { value: "Jharkhand", label: "Jharkhand" },
-    { value: "Karnataka", label: "Karnataka" },
-    { value: "Kerala", label: "Kerala" },
-    { value: "Madhya Pradesh", label: "Madhya Pradesh" },
-    { value: "Maharashtra", label: "Maharashtra" },
-    { value: "Manipur", label: "Manipur" },
-    { value: "Meghalaya", label: "Meghalaya" },
-    { value: "Mizoram", label: "Mizoram" },
-    { value: "Nagaland", label: "Nagaland" },
-    { value: "Orissa", label: "Orissa" },
-    { value: "Punjab", label: "Punjab" },
-    { value: "Rajasthan", label: "Rajasthan" },
-    { value: "Sikkim", label: "Sikkim" },
-    { value: "Tamil Nadu", label: "Tamil Nadu" },
-    { value: "Tripura", label: "Tripura" },
-    { value: "Uttar Pradesh", label: "Uttar Pradesh" },
-    { value: "Uttarakhand", label: "Uttarakhand" },
-    { value: "West Bengal", label: "West Bengal" },
-    { value: "Other", label: "Other" },
-  ];
+
+  const navigate = useNavigate();
+  const [redirect, setRedirect] = useState(false);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -96,11 +47,13 @@ function Register() {
         console.log(error);
       });
     reset();
+    setRedirect(true);
   };
 
-  //   console.log(watch());
-
-  // console.log(errors.name)
+  if(redirect){
+    return navigate('/login');;
+  }
+   
 
   return (
     <>
@@ -130,9 +83,7 @@ function Register() {
                 </tr>
                 <tr>
                   <td>
-                      <div className={`form-check form-check-inline ${errors.nsp_id_radio && "invalid"}`}
-                        {...register("nsp_id_radio", {
-                          required: "NSP id is Required",})}>
+                      <div className={`form-check form-check-inline ${errors.nsp_id_radio && "invalid"}`}>
                         <input
                           className="form-check-input"
                           type="radio"
@@ -190,9 +141,7 @@ function Register() {
                     <td>
                         <div className={`form-check form-check-inline ${
                             errors.pms_benificiary_id_radio && "invalid"}`}
-                          {...register("pms_benificiary_id_radio", {
-                            required: "State PMS Beneficiary ID is Required",
-                          })}>
+                          >
                           <input
                             className="form-check-input"
                             type="radio"
@@ -481,9 +430,9 @@ function Register() {
                         })}
                       >
                         <option value="">-- Select -- </option>
-                        {states.map((state) => (
-                          <option key={state.value} value={state.value}>
-                            {state.label}
+                        {s_d.states.map((State) => (
+                          <option value={State.state} key={State.state}>
+                            {State.state}
                           </option>
                         ))}
                       </Form.Select>
