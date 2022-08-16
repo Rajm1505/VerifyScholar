@@ -21,6 +21,7 @@ function StuDoc() {
 
 const doc1=true;
 const doc2=false;
+const [txtbox, setTxtbox] = useState(false);
 
     return (
         <>
