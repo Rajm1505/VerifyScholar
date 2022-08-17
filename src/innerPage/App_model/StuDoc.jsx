@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 // import Header from "./Header";
 // import Footer from "./Footer";
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
+import Header from "../../login/Header";
 
 
 
@@ -25,7 +26,7 @@ const [txtbox, setTxtbox] = useState(false);
 
     return (
         <>
-            {/* <Header /> */}
+            <Header />
             <div class="container pt-5">
                 <div className="row justify-content-sm-center pt-5">
                     <div className="col-sm-8 shadow round pb-3 ">

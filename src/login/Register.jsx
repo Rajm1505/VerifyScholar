@@ -517,7 +517,7 @@ function Register() {
               <input 
                 type="submit"
                 className="btn-lg btn-primary my-3 "
-                value="Submit"
+                value="Register"
               />
             </form>
           </div>

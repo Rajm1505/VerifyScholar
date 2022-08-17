@@ -5,6 +5,7 @@ import s_d from "../../state&disctrict.json";
 import { Form } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import $ from 'jquery';
+import Header from "../../login/Header";
 
 // function StuApp(props: {sid : string}) {
 function StuApp() {
@@ -14,7 +15,7 @@ function StuApp() {
   useEffect(() => {
     (
       async () => {
-        const response = await fetch('http://127.0.0.1:8000/api/user/', {
+        const response = await fetch('http://127.0.0.1:8000/api/registerfetch/', {
           headers: { 'Content-Type': 'appliction/json' },
           credentials: 'include',
           
@@ -86,6 +87,8 @@ function StuApp() {
   // console.log(errors.name)
 
   return (
+    <>
+    <Header />
     <div className="container pt-5">
       <div className="row justify-content-sm-center pt-5">
         <h1 className="text-center pt-3 text-secondary">Application Form { sid ? {sid} : ' # you are not logged in #'}</h1>
@@ -1483,6 +1486,7 @@ function StuApp() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
