@@ -10,22 +10,26 @@ import Header from "../../login/Header";
 // function StuApp(props: {sid : string}) {
 function StuApp() {
   // #------------------------------------------------------------------------------------------
-  const [sid, setSid] = useState();
+  const [name, setName] = useState();
+  const [gender, setGender] = useState();
+  const [phone, setPhone] = useState();
 
   useEffect(() => {
     (
       async () => {
         const response = await fetch('http://127.0.0.1:8000/api/registerfetch/', {
-          headers: { 'Content-Type': 'appliction/json' },
+          headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
-          
         });
         const content = await response.json();
-        setSid(content.sid);
+        setName(content.name);
+        setGender(content.gender);
+        setPhone(content.mobile_number);
+        console.log(content);
       }
     )();
   });
-  // #------------------------------------------------------------------------------------------
+
 
 
 
@@ -91,7 +95,7 @@ function StuApp() {
     <Header />
     <div className="container pt-5">
       <div className="row justify-content-sm-center pt-5">
-        <h1 className="text-center pt-3 text-secondary">Application Form { sid ? {sid} : ' # you are not logged in #'}</h1>
+        <h1 className="text-center pt-3 text-secondary">Application Form   {name}</h1>
         <div className="col-sm-8 shadow round pb-3">
           <form onSubmit={handleSubmit(onSubmit)}>
             {/*  ################################################################################################################## */}
@@ -105,7 +109,9 @@ function StuApp() {
                   {...register("name", { required: "Name is Required" })}
                   onKeyUp={() => {
                     trigger("name");
-                  }}
+                  }}  
+                  value={name}
+                  disabled
                 />
                 {errors.name && (
                   <small className="text-danger">{errors.name.message}</small>
@@ -122,11 +128,13 @@ function StuApp() {
                       <div
                         className={`form-check-inline ${errors.gender && "invalid"}`}
                         {...register("gender", { required: "Gender is Required" })}
+                        disabled
                       >
                         <input
                           className="form-check-input"
                           type="radio"
                           value="M"
+                          checked = {gender=="M"? true : false}
                           name="gender"
                           {...register("gender", { required: "Gender is Required" })}
                         />{" "}
@@ -135,6 +143,7 @@ function StuApp() {
                           className="form-check-input"
                           type="radio"
                           value="F"
+                          checked = {gender=="F"? true : false}
                           name="gender"
                           {...register("gender", { required: "Gender is Required" })}
                         />{" "}
@@ -143,6 +152,7 @@ function StuApp() {
                           className="form-check-input"
                           type="radio"
                           value="O"
+                          checked = {gender=="O"? true : false}
                           name="gender"
                           {...register("gender", { required: "Gender is Required" })}
                         />{" "}
@@ -199,9 +209,11 @@ function StuApp() {
                             message: "Invalid phone no",
                           },
                         })}
+                        value={phone}
                         onKeyUp={() => {
                           trigger("phone");
                         }}
+                        disabled
                       />
                       {errors.phone && (
                         <small className="text-danger">{errors.phone.message}</small>

@@ -11,5 +11,5 @@ admin.site.register(StudentDocuments)
 
 class AdminStudentDetails(admin.ModelAdmin):
     readonly_fields = ('date_of_registration','date_of_lastupdate')
-    list_display = ('sid','name','gender','emailid')
+    list_display = ('sid','name','gender','email')
 admin.site.register(StudentDetails, AdminStudentDetails)

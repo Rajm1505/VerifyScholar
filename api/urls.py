@@ -16,12 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path 
 from api import views
+from .views import LoginView, UserView, LogoutView
 
 urlpatterns = [
     path('', views.index),
+    path('login/', LoginView.as_view()),
+    path('user/', UserView.as_view()),
+    path('logout/', LogoutView.as_view()),
     path('register/', views.register),
-    path('registerfetch/<str:pk>/', views.register_fetch),
-    path('registerall/', views.registerall),
+    path('registerfetch/', views.register_fetch),
+    path('formregister/', views.formregister),
+    path('userdoclist/', views.userdoclist),
     # path('callback/', views.callback),
     path('recaptcha/', views.recaptcha)
 ]

@@ -96,7 +96,7 @@ DATABASES = {
         'USERNAME': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
-        'PORT': '3360',
+        'PORT': '3306',
     }
 }
 
@@ -141,7 +141,13 @@ STATICFILES_DIRS = [
     BASE_DIR / "build" / "static",
 ]
 
+MEDIA_ROOT = BASE_DIR / "media"
+
+MEDIA_URL = "/media/"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'api.User'

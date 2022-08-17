@@ -1,6 +1,7 @@
 from pyexpat import model
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 castecategory = (
@@ -63,9 +64,22 @@ qualification_status=(
 )
 
 
+class User(AbstractUser):
+    sid = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    email = models.CharField(max_length=255, unique=True)
+    password = models.CharField(max_length=255)
+    username = None
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+    
+    def __str__(self):
+        return str(self.sid)
+    ()
 
 class StudentDetails(models.Model):
-    sid = models.AutoField(primary_key=True)
+    sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
     nsp_id = models.CharField(max_length = 20)
     pms_benificiary_id = models.CharField(max_length = 20)
     caste_category = models.CharField(max_length=20, choices=castecategory, default = '--Select--')
@@ -73,7 +87,7 @@ class StudentDetails(models.Model):
     fname = models.CharField(max_length=50)
     gender = models.CharField(max_length=1)  
     mobile_number = models.CharField(max_length=10)
-    emailid =  models.CharField(max_length=100)
+    email =  models.CharField(max_length=100)
     dob = models.DateField()
     password = models.CharField(max_length=100)
     state_of_passing_10th_exam = models.CharField(max_length=50, choices = states)
@@ -83,7 +97,7 @@ class StudentDetails(models.Model):
     date_of_lastupdate = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return str(self.sid)
 
 class FormDetails(models.Model):
 
@@ -93,6 +107,7 @@ class FormDetails(models.Model):
     # dob = models.DateField()
     # mobile_number= models.CharField(max_length=10)
     # emailid =  models.CharField(max_length=100)
+    sid = models.ForeignKey(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
     plus18 = models.BooleanField(default=False)
     aadhaar = models.CharField(max_length = 12)
     minority_category = models.BooleanField(default=False)
@@ -123,7 +138,7 @@ class FormDetails(models.Model):
     
 class family_income(models.Model):
 
-    sid = models.ForeignKey(StudentDetails,on_delete=models.CASCADE)
+    sid = models.ForeignKey(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
     relation = models.CharField(max_length=10)
     name = models.CharField(max_length=30)
     age = models.CharField(max_length=3)
@@ -137,11 +152,12 @@ class family_income(models.Model):
     
 class StudentDocuments(models.Model):
    
-    sid = models.ForeignKey(StudentDetails,on_delete=models.CASCADE)
-    aadhar = models.FileField(upload_to='uploads/')
+    sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
+    aadhar = models.FileField(upload_to='',max_length=250,null=False, default=True)
+    incomecertificate = models.FileField(upload_to='',max_length=250,null=False, default=True)
     
     def __str__(self):
-        return self.sid
+        return str(self.sid)
 
 
 
