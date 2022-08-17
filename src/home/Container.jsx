@@ -85,14 +85,6 @@ const Container = () => {
 								</div>
 							</div>
 						</div>
-						{/* <div className="col-md-4 my-3">
-							<div className="bg-white p-2 rounded shadow-md social-tiles">
-								<div className="border">
-									<iframe className="twitter-timeline" href="https://twitter.com/MSJEGOI?ref_src=twsrc%5Etfw" ></iframe>
-									<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-								</div>
-							</div>
-						</div> */}
 					</div>
 				</div>
 			</div>

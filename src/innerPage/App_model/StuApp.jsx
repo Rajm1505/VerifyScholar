@@ -5,6 +5,7 @@ import s_d from "../../state&disctrict.json";
 import { Form } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import $ from 'jquery';
+import Header from "../../login/Header";
 
 // function StuApp(props: {sid : string}) {
 function StuApp() {
@@ -90,6 +91,8 @@ function StuApp() {
   // console.log(errors.name)
 
   return (
+    <>
+    <Header />
     <div className="container pt-5">
       <div className="row justify-content-sm-center pt-5">
         <h1 className="text-center pt-3 text-secondary">Application Form   {name}</h1>
@@ -1495,6 +1498,7 @@ function StuApp() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

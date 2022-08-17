@@ -12,7 +12,7 @@ import StuDoc from './innerPage/App_model/StuDoc';
 import DigiDemo from './DigiDemo'
 
 function App() {
-  const [sid, setSid] = useState();
+  // const [sid, setSid] = useState();
 
   // useEffect(() => {
   //   (
