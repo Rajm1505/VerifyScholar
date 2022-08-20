@@ -85,7 +85,7 @@ function StuDoc() {
                                             </td>
                                             <td>
                                                 {txtbox ? (
-                                                    <a href="https://api.digitallocker.gov.in/public/oauth2/1/authorize?response_type=code&client_id=2407FC9F&redirect_uri=http://localhost:8000/callback&state=hello">
+                                                    <a href="https://api.digitallocker.gov.in/public/oauth2/1/authorize?response_type=code&client_id=2407FC9F&redirect_uri=http://127.0.0.1:8000/api/callback&state=hello">
                                                         <img src={digi}></img><br />
                                                         <span>please authorize digilocker account</span>
                                                     </a>) : (<a href="https://accounts.digilocker.gov.in/signup/smart_v2">
