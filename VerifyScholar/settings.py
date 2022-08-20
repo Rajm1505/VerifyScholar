@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'requests',
-    'corsheaders'
+    'corsheaders',
+    'semiadmin'
 ]
 
 MIDDLEWARE = [
@@ -69,7 +70,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'build'
+            BASE_DIR / 'build',
+            BASE_DIR / 'api' / 'templates'
          ],
         'APP_DIRS': True,
         'OPTIONS': {

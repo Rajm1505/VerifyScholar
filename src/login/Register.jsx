@@ -305,7 +305,7 @@ function Register() {
                 <input
                   type="text"
                   className={`form-control ${errors.email && "invalid"}`}
-                  {...register("emailid", {
+                  {...register("email", {
                     required: "Email is Required",
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -313,7 +313,7 @@ function Register() {
                     },
                   })}
                   onKeyUp={() => {
-                    trigger("emailid");
+                    trigger("email");
                   }}
                 />
                 {errors.email && (
