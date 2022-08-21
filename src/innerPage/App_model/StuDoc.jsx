@@ -1,17 +1,17 @@
+import { Form, FormLabel } from "react-bootstrap";
+import axios from "axios";
+import digi from "../../images/digilocker.png";
 import React, { useState, useEffect} from "react";
-import { Form } from "react-bootstrap";
-import axios from 'axios';
-import digi from "../../images/digilocker.png"
 import { useForm } from "react-hook-form";
 // import { useState } from "react";
 // import Header from "./Header";
 // import Footer from "./Footer";
+
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 import Header from "../../login/Header";
 
-
-
 function StuDoc() {
+    const bgc = { backgroundColor: "#f2f2f2" };
     const doc1 = true;
     const doc2 = true;
     const [aadhar, setAadhar] = useState();
@@ -99,9 +99,20 @@ function StuDoc() {
                                         <br />
                                         <tr>
 
-                                            <td></td>
-                                            <td><Form.Label>your document is submited in digilocker or not !</Form.Label></td>
-                                        </tr>
+  const onSubmit = (data) => {
+    console.table(data);
+    const Data1 = JSON.stringify(data);
+    console.table(Data1);
+    // axios
+    //   .post("http://127.0.0.1:8000/api/register/", Data1)
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+    reset();
+  };
 
                                         <tr>
                                             <td><Form.Label>Category/Cast Certificate </Form.Label></td>
@@ -137,21 +148,47 @@ function StuDoc() {
                                             </td>
                                         </tr>
 
-                                        <tr>
-                                            <td><Form.Label>Self Photograph</Form.Label></td>
-                                            <td>
-                                                {doc1 ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
-                                                    <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
-                                            </td>
-                                        </tr>
+                    <tr>
+                      <td className="pt-4">
+                        <Form.Label>Income Certificate</Form.Label>
+                        <br />
+                        <Form.Text id="passwordHelpBlock" muted>
+                          (Please upload the certificate in a given format, In
+                          Case of ITR of family members please merge them into a
+                          single file and upload)
+                        </Form.Text>
+                      </td>
+                      <td className="pt-4">
+                        {doc1 ? (
+                          <Form.Label className="text-success">
+                            &#10004; (Your document is successfully submitted)
+                          </Form.Label>
+                        ) : (
+                          <Form.Label className="text-danger">
+                            <h2>&#10008;</h2> (Please upload this document in
+                            DigiLocker)
+                          </Form.Label>
+                        )}
+                      </td>
+                    </tr>
 
-                                        <tr>
-                                            <td><Form.Label>Self Signature</Form.Label></td>
-                                            <td>
-                                                {doc1 ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
-                                                    <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
-                                            </td>
-                                        </tr>
+                    <tr>
+                      <td className="pt-4">
+                        <Form.Label>Self Photograph</Form.Label>
+                      </td>
+                      <td className="pt-3">
+                        {doc1 ? (
+                          <Form.Label className="text-success">
+                            &#10004; (Your document is successfully submitted)
+                          </Form.Label>
+                        ) : (
+                          <Form.Label className="text-danger">
+                            <h2>&#10008;</h2> (Please upload this document in
+                            DigiLocker)
+                          </Form.Label>
+                        )}
+                      </td>
+                    </tr>
 
                                         <tr>
                                             <td><Form.Label>Permanent Address Proof</Form.Label></td>
@@ -161,34 +198,73 @@ function StuDoc() {
                                             </td>
                                         </tr>
 
-                                        <tr>
-                                            <td><Form.Label>Current Address Proof</Form.Label></td>
-                                            <td>
-                                                {doc1 ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
-                                                    <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
-                                            </td>
-                                        </tr>
+                    <tr>
+                      <td className="pt-4">
+                        <Form.Label>Permanent Address Proof</Form.Label>
+                      </td>
+                      <td className="pt-3">
+                        {doc1 ? (
+                          <Form.Label className="text-success">
+                            &#10004; (Your document is successfully submitted)
+                          </Form.Label>
+                        ) : (
+                          <Form.Label className="text-danger">
+                            <h2>&#10008;</h2> (Please upload this document in
+                            DigiLocker)
+                          </Form.Label>
+                        )}
+                      </td>
+                    </tr>
 
-                                        <tr>
-                                            <td><Form.Label>Disability Certificate(if Required)</Form.Label></td>
-                                            <td>
-                                                {doc1 ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
-                                                    <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </Form.Group>
-                            <input
-                                type="submit"
-                                className="btn btn-primary my-3"
-                                value="Submit"
-                            />
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+                    <tr>
+                      <td className="pt-4">
+                        <Form.Label>Current Address Proof</Form.Label>
+                      </td>
+                      <td className="pt-3">
+                        {doc1 ? (
+                          <Form.Label className="text-success">
+                            &#10004; (Your document is successfully submitted)
+                          </Form.Label>
+                        ) : (
+                          <Form.Label className="text-danger">
+                            <h2>&#10008;</h2> (Please upload this document in
+                            DigiLocker)
+                          </Form.Label>
+                        )}
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td className="pt-4">
+                        <Form.Label>
+                          Disability Certificate (If required)
+                        </Form.Label>
+                      </td>
+                      <td className="pt-3">
+                        {doc1 ? (
+                          <Form.Label className="text-success">
+                            &#10004; (Your document is successfully submitted)
+                          </Form.Label>
+                        ) : (
+                          <Form.Label className="text-danger">
+                            &#10008; (Please upload this document in DigiLocker)
+                          </Form.Label>
+                        )}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Form.Group>
+              <input
+                type="submit"
+                className="btn btn-primary btn-lg mt-3 mb-2"
+                value="Submit"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 export default StuDoc;

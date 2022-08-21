@@ -36,6 +36,7 @@ const Header = () => {
 		setRedirect(true);
 	}
 
+
 	if(redirect){
 		return navigate('/login');;
 	  }

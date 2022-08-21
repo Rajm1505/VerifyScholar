@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from "./Footer";
 import Header from "./Header";
-const Contact_us = () => {
+const ContactUs = () => {
   return (
     <>
     <Header/>
@@ -48,4 +48,4 @@ const Contact_us = () => {
 
   );
 };
-export default Contact_us;
+export default ContactUs;
