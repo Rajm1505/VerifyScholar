@@ -8,23 +8,26 @@ import  { useNavigate} from 'react-router-dom';
 
 const Header = () => {
 	const [sid, setSid] = useState('');
+	const [detail, setDetail] = useState('');
 	const navigate = useNavigate();
 	const [redirect, setRedirect] = useState(false);
 	
-	// useEffect(() => {
-	// 	(
-	// 		async () => {
-	// 			const response = await fetch('http://127.0.0.1:8000/api/registerfetch/', {
-	// 				headers: { 'Content-Type': 'appliction/json' },
-	// 				credentials: 'include',
+	useEffect(() => {
+		(
+			async () => {
+				const response = await fetch('http://127.0.0.1:8000/api/registerfetch/', {
+					headers: { 'Content-Type': 'appliction/json' },
+					credentials: 'include',
 
-	// 			});
-	// 			const content = await response.json();
-	// 			setSid(content.sid);
+				});
+				const content = await response.json();
+				console.log(content);
+				setSid(content.name);
+				setDetail(content.detail);
 				
-	// 		}
-	// 	)();
-	// });
+			}
+		)();
+	});
 
 	const logout = async () => {
 		fetch('http://127.0.0.1:8000/api/logout/', {
@@ -42,7 +45,7 @@ const Header = () => {
 	  }
 
 	let menu;
-	if (sid === '') {
+	if (detail == "Unauthenticated") {
 		menu = (
 			<div className="collapse navbar-collapse collapse show" id="navbarScroll">
 				<ul className="navbar-nav me-auto my-lg-0 navbar-nav-scroll">
@@ -70,7 +73,7 @@ const Header = () => {
 			<div className="collapse navbar-collapse collapse show" id="navbarScroll">
 				<ul className="navbar-nav me-auto my-lg-0 navbar-nav-scroll">
 					<li className="nav-item">
-						<NavLink className="nav-link p-0 py-1 me-4 d-inline-block active" to="/StuApp">tudent Application Form </NavLink>
+						<NavLink className="nav-link p-0 py-1 me-4 d-inline-block active" to="/StuApp">Student Application Form </NavLink>
 					</li>
 					<li className="nav-item">
 						<NavLink className="nav-link p-0 py-1 me-0 d-inline-block" to="/StuDoc">Student Documente Form </NavLink>
