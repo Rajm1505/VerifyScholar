@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
+import  { useNavigate} from 'react-router-dom';
 import { Form } from "react-bootstrap";
 import axios from "axios";
 import Header from "./Header";
@@ -23,33 +24,14 @@ function Register() {
   // ---------------------------------------------------------------------------------
   const [txtbox, setTxtbox] = useState(false);
   const [txtbox1, setTxtbox1] = useState(false);
-  // const handlebox = (e) => {
-  //   if (e.currentTarget.value == true){
-  //     setTxtbox(true)
-
-  //   }else{
-  //     setTxtbox(false)
-  //   }
-  // }
-
-  // ---------------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------------
-
-  //     const formSchema = Yup.object().shape({
-  //         password: Yup.string()
-  //       .required('Password is mendatory')
-  //       .min(3, 'Password must be at 3 char long'),
-  //     confirmPwd: Yup.string()
-  //       .required('Password is mendatory')
-  //       .oneOf([Yup.ref('password')], 'Passwords does not match'),
-  //   })
-  //   const formOptions = { resolver: yupResolver(formSchema) }
-
   // ---------------------------------------------------------------------------------
   const Category = [
     { label: "SC", value: "sc" },
     { label: "OBC", value: "obc" },
   ];
+
+  const navigate = useNavigate();
+  const [redirect, setRedirect] = useState(false);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -64,11 +46,13 @@ function Register() {
         console.log(error);
       });
     reset();
+    setRedirect(true);
   };
 
-  //   console.log(watch());
-
-  // console.log(errors.name)
+  if(redirect){
+    return navigate('/login');;
+  }
+   
 
   return (
     <>
@@ -113,6 +97,7 @@ function Register() {
                             onClick={() => {
                               setTxtbox(true);
                             }}
+
                           />
                           <label className="form-check-label">Yes</label>
                         </div>
@@ -135,46 +120,39 @@ function Register() {
                             Enter Your NSP ID:
                           </Form.Label>
 
-                          {/* <div className="form-check form-check-inline mb-3"> */}
-                          <Form.Control
-                            type="text"
-                            className="form-input-inline"
-                            {...register("nsp_id", {
-                              required: "nsp is Required",
-                            })}
-                          />
 
-                          {errors.nsp_id && (
-                            <small className="text-danger">
-                              {errors.nsp_id.message}
-                            </small>
-                          )}
-                        </td>
+                      <Form.Label className="form-check-label-inline">Enter Your NSP ID:</Form.Label>
+                        
+                    {/* <div className="form-check form-check-inline mb-3"> */}
+                      <Form.Control
+                        type="text"
+                        className="form-input-inline"
+                        {...register("nsp_id", )}
+                        />
+                    
+                      {errors.nsp_id && (
+                        <small className="text-danger">
+                          {errors.nsp_id.message}
+                        </small>
                       )}
                     </tr>
                   </tbody>
                 </table>
               </Form.Group>
               <Form.Group>
-                <table className="table table-hover table-bordered">
-                  <tbody>
-                    <tr>
-                      <td colspan="2">
-                        <Form.Label>
-                          Do you have State PMS Beneficiary ID:
-                        </Form.Label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div
-                          className={`form-check form-check-inline ${
-                            errors.pms_benificiary_id_radio && "invalid"
-                          }`}
-                          {...register("pms_benificiary_id_radio", {
-                            required: "State PMS Beneficiary ID is Required",
-                          })}
-                        >
+
+              <table className="table table-hover table-bordered">
+                <tbody>
+                  <tr>
+                    <td colspan="2">
+                    <Form.Label>Do you have State PMS Beneficiary ID:</Form.Label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <div className={`form-check form-check-inline ${
+                            errors.pms_benificiary_id_radio && "invalid"}`}
+                          >
                           <input
                             className="form-check-input"
                             type="radio"
@@ -198,8 +176,38 @@ function Register() {
                           />
                           <label className="form-check-label">No</label>
                         </div>
-                      </td>
-                      {txtbox1 && (
+
+                    </td>
+                    {txtbox1 &&
+                          <td>
+                              <div className="float-right form-check ">
+                                <Form.Label className="form-check-label-inline float-right">
+                                  Enter Your State PMS Beneficiary ID:
+                                </Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  className="form-input-inline float-right"
+                                  {...register("pms_benificiary_id", )}
+                                />
+                              </div>
+                              {errors.pms_benificiary_id && (
+                                <small className="text-danger">
+                                  {errors.pms_benificiary_id.message}
+                                </small>
+                              )}
+                          </td>
+                    }
+                  </tr>
+                </tbody> 
+              </table>
+            </Form.Group>
+                <Form.Group>
+                  <table className="table table-hover table-bordered">
+                    <tbody>
+                      <tr>
+                        <td>
+                            <label className="col-form-label">Category :</label>
+                        </td>
                         <td>
                           <div className="float-right form-check ">
                             <Form.Label className="form-check-label-inline float-right">
@@ -352,7 +360,7 @@ function Register() {
                 <input
                   type="text"
                   className={`form-control ${errors.email && "invalid"}`}
-                  {...register("emailid", {
+                  {...register("email", {
                     required: "Email is Required",
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -360,7 +368,7 @@ function Register() {
                     },
                   })}
                   onKeyUp={() => {
-                    trigger("emailid");
+                    trigger("email");
                   }}
                 />
                 {errors.email && (
@@ -490,6 +498,7 @@ function Register() {
                     </tr>
                   </tbody>
                 </table>
+
               </Form.Group>
               <Form.Group>
                 <table className="table table-hover table-bordered">
@@ -562,7 +571,7 @@ function Register() {
               <input
                 type="submit"
                 className="btn-lg btn-primary my-3 "
-                value="Submit"
+                value="Register"
               />
             </form>
           </div>

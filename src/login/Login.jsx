@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
+import  {useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -7,31 +8,29 @@ import axios from "axios";
 import Footer from "./Footer";
 
 function Login() {
+  const navigate = useNavigate();
   const [captchaResult, setCaptchaResult] = useState();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    trigger,
-  } = useForm();
-
-  const onSubmit = (e) => {
-    // e.preventDefault()
-
-    console.log(e);
+  const { register,handleSubmit, formState: { errors }, reset, trigger, } = useForm();
+  const [redirect, setRedirect] = useState(false);
+  
+  const onSubmit = async (e) => {
+    // e.preventDefault();s
     const Data = JSON.stringify(e);
     console.log(Data);
-    axios
-      .post("http://127.0.0.1:8000/api/recaptcha/", Data)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    reset();
-  };
+
+    fetch('http://127.0.0.1:8000/api/login/', {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body:  Data 
+    });
+    setRedirect(true);
+  }
+  if(redirect){
+    return navigate('/StuApp');
+  }
+
+
   const handleRecaptcha = (value) => {
     fetch("http://127.0.0.1:8000/api/recaptcha/", {
       method: "POST",
@@ -150,7 +149,7 @@ function Login() {
               {/* {captchaResult
              &&  */}
               <button type="submit" className="btn btn-primary mt-4">
-                SUBMIT
+                Login
               </button>
               {/* }  */}
             </form>

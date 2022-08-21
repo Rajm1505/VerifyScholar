@@ -4,10 +4,31 @@ import s_d from "../../state&disctrict.json";
 import courses from "../../allCourses.json";
 import { Form, FormText } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-import $ from "jquery";
+import $ from 'jquery';
+import Header from "../../login/Header";
 
+// function StuApp(props: {sid : string}) {
 function StuApp() {
   const bgc = { backgroundColor: "#f2f2f2" };
+  const [name, setName] = useState();
+  const [gender, setGender] = useState();
+  const [phone, setPhone] = useState();
+
+  useEffect(() => {
+    (
+      async () => {
+        const response = await fetch('http://127.0.0.1:8000/api/registerfetch/', {
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+        });
+        const content = await response.json();
+        setName(content.name);
+        setGender(content.gender);
+        setPhone(content.mobile_number);
+        console.log(content);
+      }
+    )();
+  });
 
   const {
     register,
@@ -86,6 +107,7 @@ function StuApp() {
       <div className="row justify-content-sm-center pt-5 pb-5">
         <div className="col-sm-8 shadow round pb-3" style={bgc}>
           <h1 className="text-center pt-3 text-secondary">Application Form</h1>
+
           <form onSubmit={handleSubmit(onSubmit)}>
             {/*  ################################################################################################################## */}
             <div className="mt-5">
@@ -98,7 +120,9 @@ function StuApp() {
                   {...register("name", { required: "Name is Required" })}
                   onKeyUp={() => {
                     trigger("name");
-                  }}
+                  }}  
+                  value={name}
+                  disabled
                 />
                 {errors.name && (
                   <small className="text-danger">{errors.name.message}</small>
@@ -225,9 +249,11 @@ function StuApp() {
                             message: "Invalid phone no",
                           },
                         })}
+                        value={phone}
                         onKeyUp={() => {
                           trigger("phone");
                         }}
+                        disabled
                       />
                       {errors.phone && (
                         <small className="text-danger">
@@ -1738,6 +1764,7 @@ function StuApp() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

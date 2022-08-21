@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'requests',
-    'corsheaders'
+    'corsheaders',
+    'semiadmin'
 ]
 
 MIDDLEWARE = [
@@ -69,7 +70,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'build'
+            BASE_DIR / 'build',
+            BASE_DIR / 'api' / 'templates'
          ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -149,3 +151,5 @@ MEDIA_URL = "/media/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'api.User'
