@@ -1,16 +1,13 @@
-import React from 'react';
+import React from "react";
 import "../login/page.css";
 import banner from "../images/banner.jpg";
 import page2 from "../images/page2.jpeg";
-import Carousel from 'react-bootstrap/Carousel';
-
+import Carousel from "react-bootstrap/Carousel";
 
 const Container = () => {
-
-
-	return (
-		<>
-			{/* <div className="">
+  return (
+    <>
+      {/* <div className="">
 				<div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
 					<div className="carousel-indicators">
 						<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
@@ -36,29 +33,22 @@ const Container = () => {
 				</div>
 			</div> */}
 
-			<Carousel interval="2000" touch="true" fade="true">
-				<Carousel.Item touch="true">
-					<img
-						className="d-block w-100"
-						src={page2}
-						alt="First slide"
-					/>
-				</Carousel.Item>
-				<Carousel.Item touch="true">
-					<img
-						className="d-block w-100"
-						src={banner}
-						alt="Second slide"
-					/>
+      <Carousel interval="2000" touch="true" fade="true">
+        <Carousel.Item touch="true">
+          <img className="d-block w-100" src={page2} alt="First slide" />
+        </Carousel.Item>
+        <Carousel.Item touch="true">
+          <img className="d-block w-100" src={banner} alt="Second slide" />
+          <a href="/register" className="register-btn fw-bold text-dark fs-5">
+            Register Now
+          </a>
+        </Carousel.Item>
+      </Carousel>
 
-						<a href="/register" className="register-btn text-capitalize fs-10 fw-bold text-dark fs-5">Register Now</a>	
-				</Carousel.Item>
-			</Carousel>
-
-			<div className="bg-light py-5">
-				<div className="container-xxl">
-					<div className="row">
-						{/* <div className="col-md-4 my-3">
+      <div className="bg-light py-5">
+        <div className="container-xxl">
+          <div className="row">
+            {/* <div className="col-md-4 my-3">
 							<div className="bg-white p-2 rounded shadow-md">
 								<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d547.8286097150761!2d77.21536100000002!3d28.616131000000003!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x3734b2a18b792399!2sMinistry%20of%20Social%20Justice%20and%20Empowerment%2C%20Govt%20of%20India!5e1!3m2!1sen!2sin!4v1651661575528!5m2!1sen!2sin" width="100%" height="360" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 								<div className="row">
@@ -71,21 +61,35 @@ const Container = () => {
 								</div>
 							</div>
 						</div> */}
-						<div className="col-md-4 my-3">
-							<div className="bg-white p-2 rounded shadow-md social-tiles">
-								<div className="facebook-responsive">
-									<iframe className="border" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FMOSJANDE%2F&tabs=timeline&width=400&height=590&small_header=false&adapt_container-md_width=true&hide_cover=false&show_facepile=true&appId" width="100%" height="590" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-								</div>
-							</div>
-						</div>
-						<div className="col-md-4 my-3">
-							<div className="bg-white p-2 rounded shadow-md social-tiles">
-								<div className="facebook-responsive">
-									<iframe data-tweet-url="https://twitter.com/MSJEGOI" src="data:text/html;charset=utf-8,%3Ca%20class%3D%22twitter-timeline%22%20href%3D%22https%3A//twitter.com/MSJEGOI%3Fref_src%3Dtwsrc%255Etfw%22%3ETweets%20by%20MSJEGOI%3C/a%3E%0A%3Cscript%20async%20src%3D%22https%3A//platform.twitter.com/widgets.js%22%20charset%3D%22utf-8%22%3E%3C/script%3E%0A"></iframe>
-								</div>
-							</div>
-						</div>
-						{/* <div className="col-md-4 my-3">
+            <div className="col-md-4 my-3">
+              <div className="bg-white p-2 rounded shadow-md social-tiles">
+                <div className="facebook-responsive">
+                  <iframe
+                    title="myFrame"
+                    className="border"
+                    src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FMOSJANDE%2F&tabs=timeline&width=400&height=590&small_header=false&adapt_container-md_width=true&hide_cover=false&show_facepile=true&appId"
+                    width="100%"
+                    height="590"
+                    scrolling="no"
+                    frameborder="0"
+                    allowfullscreen="true"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 my-3">
+              <div className="bg-white p-2 rounded shadow-md social-tiles">
+                <div className="facebook-responsive">
+                  <iframe
+                    title="myFrame1"
+                    data-tweet-url="https://twitter.com/MSJEGOI"
+                    src="data:text/html;charset=utf-8,%3Ca%20class%3D%22twitter-timeline%22%20href%3D%22https%3A//twitter.com/MSJEGOI%3Fref_src%3Dtwsrc%255Etfw%22%3ETweets%20by%20MSJEGOI%3C/a%3E%0A%3Cscript%20async%20src%3D%22https%3A//platform.twitter.com/widgets.js%22%20charset%3D%22utf-8%22%3E%3C/script%3E%0A"
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+            {/* <div className="col-md-4 my-3">
 							<div className="bg-white p-2 rounded shadow-md social-tiles">
 								<div className="border">
 									<iframe className="twitter-timeline" href="https://twitter.com/MSJEGOI?ref_src=twsrc%5Etfw" ></iframe>
@@ -93,12 +97,11 @@ const Container = () => {
 								</div>
 							</div>
 						</div> */}
-					</div>
-				</div>
-			</div>
-
-		</>
-	);
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Container;

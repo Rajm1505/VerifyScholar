@@ -1,0 +1,80 @@
+{
+  "Courses": [
+    {
+      "label": "Banking Service Exam",
+      "value": "Banking Service Exam"
+    },
+    {
+      "label": "Chartered Accountant Common Proficiency Test (CA CPT)",
+      "value": "Chartered Accountant Common Proficiency Test (CA CPT)"
+    },
+    {
+      "label": "Staff Public Selection Commission (SPSC)",
+      "value": "Staff Public Selection Commission (SPSC)"
+    },
+    {
+      "label": "Union Public Service Commission (UPSC)",
+      "value": "Union Public Service Commission (UPSC)"
+    },
+    {
+      "label": "Combined Defence Services (CDS)",
+      "value": "Combined Defence Services (CDS)"
+    },
+    {
+      "label": "Commercial Pilot License (CPL)",
+      "value": "Commercial Pilot License (CPL)"
+    },
+    {
+      "label": "Common Admission Test (CAT)",
+      "value": "Common Admission Test (CAT)"
+    },
+    {
+      "label": "Common Law Admission Test (CLAT)",
+      "value": "Common Law Admission Test (CLAT)"
+    },
+    {
+      "label": "Common Management Admission Test (CMAT)",
+      "value": "Common Management Admission Test (CMAT)"
+    },
+    {
+      "label": "Graduate Aptitude Test in Engineering (GATE)",
+      "value": "Graduate Aptitude Test in Engineering (GATE)"
+    },
+    {
+      "label": "Graduate Management Admission Test (GMAT)",
+      "value": "Graduate Management Admission Test (GMAT)"
+    },
+    {
+      "label": "Graduate Record Exam (GRE)",
+      "value": "Graduate Record Exam (GRE)"
+    },
+    {
+      "label": "Indian Engineering Services (IES)",
+      "value": "Indian Engineering Services (IES)"
+    },
+    {
+      "label": "Insurance Sector Exam",
+      "value": "Insurance Sector Exam"
+    },
+    {
+      "label": "Joint Entrance Exam (JEE)",
+      "value": "Joint Entrance Exam (JEE)"
+    },
+    {
+      "label": "National Defence Academy (NDA)",
+      "value": "National Defence Academy (NDA)"
+    },
+    {
+      "label": "National Eligibility cum Entrance Test (NEET)",
+      "value": "National Eligibility cum Entrance Test (NEET)"
+    },
+    {
+      "label": "Public Sector Undertaking Exam",
+      "value": "Public Sector Undertaking Exam"
+    },
+    {
+      "label": "Railway Recruitment Boards(RRBs)",
+      "value": "Railway Recruitment Boards(RRBs)"
+    }
+  ]
+}
