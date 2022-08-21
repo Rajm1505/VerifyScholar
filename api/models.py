@@ -78,8 +78,8 @@ class User(AbstractUser):
 
 class StudentDetails(models.Model):
     sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
-    nsp_id = models.CharField(max_length = 20)
-    pms_benificiary_id = models.CharField(max_length = 20)
+    nsp_id = models.CharField(max_length = 20, null=True)
+    pms_benificiary_id = models.CharField(max_length = 20, null=True)
     caste_category = models.CharField(max_length=20, choices=castecategory, default = '--Select--')
     name = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)

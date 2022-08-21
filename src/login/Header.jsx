@@ -11,20 +11,20 @@ const Header = () => {
 	const navigate = useNavigate();
 	const [redirect, setRedirect] = useState(false);
 	
-	useEffect(() => {
-		(
-			async () => {
-				const response = await fetch('http://127.0.0.1:8000/api/registerfetch/', {
-					headers: { 'Content-Type': 'appliction/json' },
-					credentials: 'include',
+	// useEffect(() => {
+	// 	(
+	// 		async () => {
+	// 			const response = await fetch('http://127.0.0.1:8000/api/registerfetch/', {
+	// 				headers: { 'Content-Type': 'appliction/json' },
+	// 				credentials: 'include',
 
-				});
-				const content = await response.json();
-				setSid(content.sid);
+	// 			});
+	// 			const content = await response.json();
+	// 			setSid(content.sid);
 				
-			}
-		)();
-	});
+	// 		}
+	// 	)();
+	// });
 
 	const logout = async () => {
 		fetch('http://127.0.0.1:8000/api/logout/', {

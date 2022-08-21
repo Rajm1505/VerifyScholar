@@ -114,7 +114,7 @@ function Register() {
                       <Form.Control
                         type="text"
                         className="form-input-inline"
-                        {...register("nsp_id", { required: "nsp is Required" })}
+                        {...register("nsp_id", )}
                         />
                     
                       {errors.nsp_id && (
@@ -171,9 +171,7 @@ function Register() {
                                 <Form.Control
                                   type="text"
                                   className="form-input-inline float-right"
-                                  {...register("pms_benificiary_id", {
-                                    required: "pms is Required",
-                                  })}
+                                  {...register("pms_benificiary_id", )}
                                 />
                               </div>
                               {errors.pms_benificiary_id && (
