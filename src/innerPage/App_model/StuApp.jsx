@@ -103,6 +103,8 @@ function StuApp() {
   // console.log(errors.name)
 
   return (
+    <>
+    <Header />
     <div className="container pt-5 pb-5">
       <div className="row justify-content-sm-center pt-5 pb-5">
         <div className="col-sm-8 shadow round pb-3" style={bgc}>
@@ -141,12 +143,14 @@ function StuApp() {
                         {...register("gender", {
                           required: "Gender is Required",
                         })}
+                        disabled
                       >
                         <div className="form-check form-check-inline">
                           <input
                             className="form-check-input"
                             type="radio"
                             value="M"
+                            checked = {gender=="M"? true : false}
                             name="gender"
                             {...register("gender", {
                               required: "Gender is Required",
@@ -159,6 +163,7 @@ function StuApp() {
                             className="form-check-input"
                             type="radio"
                             value="F"
+                            checked = {gender=="F"? true : false}
                             name="gender"
                             {...register("gender", {
                               required: "Gender is Required",
@@ -171,6 +176,7 @@ function StuApp() {
                             className="form-check-input"
                             type="radio"
                             value="O"
+                            checked = {gender=="O"? true : false}
                             name="gender"
                             {...register("gender", {
                               required: "Gender is Required",
