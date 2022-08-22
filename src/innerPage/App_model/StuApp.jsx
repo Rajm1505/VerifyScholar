@@ -1,15 +1,17 @@
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import  {useNavigate } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import s_d from "../../state&disctrict.json";
 import courses from "../../allCourses.json";
 import { Form, FormText } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
 import $ from 'jquery';
 import Header from "../../login/Header";
 
 // function StuApp(props: {sid : string}) {
-function StuApp() {
+function StuApp({aname}) {
   const bgc = { backgroundColor: "#f2f2f2" };
+  const navigate = useNavigate();
   const [name, setName] = useState();
   const [gender, setGender] = useState();
   const [phone, setPhone] = useState();
@@ -26,10 +28,14 @@ function StuApp() {
         setGender(content.gender);
         setPhone(content.mobile_number);
         console.log(content);
+        if(content.detail == "Unauthenticated"){
+          return navigate('/login');
+        }
       }
     )();
   });
 
+console.log(aname);
   const {
     register,
     handleSubmit,
@@ -89,18 +95,6 @@ function StuApp() {
     { label: "Yes", value: "Yes" },
     { label: "No", value: "No" },
   ];
-  // useEffect(() => {
-  //   (async () => {
-  //     const response = await fetch("http://127.0.0.1:8000/api/registerfetch/", {
-  //       headers: { "Content-Type": "appliction/json" },
-  //       credentials: "include",
-  //     });
-  //     const content = await response.json();
-  //   })();
-  // });
-  // console.log(watch());
-
-  // console.log(errors.name)
 
   return (
     <>

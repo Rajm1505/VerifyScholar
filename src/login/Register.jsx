@@ -330,6 +330,14 @@ function Register() {
                         /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/,
                       message: "Invalid phone no",
                     },
+                    minLength: {
+                      value: 10,
+                      message: "min length is 10",
+                    },
+                    mixLength: {
+                      value: 10,
+                      message: "min length is 10",
+                    }
                   })}
                   onKeyUp={() => {
                     trigger("mobile_number");

@@ -10,21 +10,21 @@ import StuDoc from './innerPage/App_model/StuDoc';
 import DigiDemo from './DigiDemo'
 
 function App() {
-  // const [sid, setSid] = useState();
+  const [name, setName] = useState();
 
-  // useEffect(() => {
-  //   (
-  //     async () => {
-  //       const response = await fetch('http://127.0.0.1:8000/api/user/', {
-  //         headers: { 'Content-Type': 'appliction/json' },
-  //         credentials: 'include',
+  useEffect(() => {
+    (
+      async () => {
+        const response = await fetch('http://127.0.0.1:8000/api/registerfetch/', {
+          headers: { 'Content-Type': 'appliction/json' },
+          credentials: 'include',
           
-  //       });
-  //       const content = await response.json();
-  //       setSid(content.sid);
-  //     }
-  //   )();
-  // });
+        });
+        const content = await response.json();
+        setName(content.name);
+      }
+    )();
+  });
 
   return (
 
@@ -34,7 +34,7 @@ function App() {
       <Route path='/login' element={<Login /> } />
       <Route path='/register' element={<Register/>} />
       <Route path='/contact' element={<ContactUs/>} />
-      <Route path='/StuApp' element={<StuApp />} />
+      <Route path='/StuApp' element={<StuApp aname="hello" />} />
       <Route path='/StuDoc' element={<StuDoc />} />
 
     </Routes>
