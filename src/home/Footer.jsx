@@ -29,7 +29,10 @@ const Footer = () => {
 	 </div>	
 	</div>
 	<hr className="footer-line my-2" />
-
+	<div className='text-center p-2' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' ,color: '#808080' }}>
+        © 2022 Copyright: dosje for smart india Hackthon 
+        
+      </div>
    </div>
 </footer>   
     </>

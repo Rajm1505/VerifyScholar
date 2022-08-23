@@ -6,10 +6,10 @@ import s_d from "../../state&disctrict.json";
 import courses from "../../allCourses.json";
 import { Form, FormText } from "react-bootstrap";
 import $ from 'jquery';
-import Header from "../../login/Header";
+import Header from "../Header";
 
 // function StuApp(props: {sid : string}) {
-function StuApp({aname}) {
+function StuApp() {
   const bgc = { backgroundColor: "#f2f2f2" };
   const navigate = useNavigate();
   const [name, setName] = useState();
@@ -35,7 +35,6 @@ function StuApp({aname}) {
     )();
   });
 
-console.log(aname);
   const {
     register,
     handleSubmit,
@@ -45,7 +44,7 @@ console.log(aname);
   } = useForm();
 
   const onSubmit = (data) => {
-    // data.preventDefault();
+    data.preventDefault();
     console.table(data);
     console.table(JSON.stringify(data));
     // reset();
