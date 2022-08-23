@@ -1283,7 +1283,7 @@ console.log(aname);
             </div>
             <hr />{" "}
             {/*  ################################################################################################################## */}
-            {/* <div className="mt-5">
+            <div className="mt-5">
               <h4>
                 9. Total Income from all sources of family members contributing
                 to the household during the Financial Year 2020-21.
@@ -1696,7 +1696,7 @@ console.log(aname);
                   </tbody>
                 </table>
               </div>
-            </div> */}
+            </div>
             <div className="mt-5">
               <h4 className="mb-3">10. Declaration</h4>
               <div className="form-group">
