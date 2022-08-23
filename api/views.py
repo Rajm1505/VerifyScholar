@@ -38,12 +38,17 @@ class LoginView(APIView):
         password = request.data['password']
 
         user = User.objects.filter(email=email).first()
+        response = Response()
 
         if user is None:
-            raise AuthenticationFailed("User not found")
+            # raise AuthenticationFailed("User not found")
+            response.data = {'error':'User not found',"detail": "Unauthenticated"}
+            return response
 
         if not user.check_password(password):
-            raise AuthenticationFailed("Invalid password")
+            # raise AuthenticationFailed("Invalid password")
+            response.data = {'error':'Invalid password',"detail": "Unauthenticated"}
+            return response
         
         payload = {
             'sid': user.sid,
@@ -53,11 +58,11 @@ class LoginView(APIView):
         
         token = jwt.encode(payload,'secret',algorithm='HS256')
         
-        response = Response()
         response.set_cookie(key='jwt',value=token,httponly=True)
         
         response.data = {
-            'jwt' : token
+            'jwt' : token,
+            'message' : 'Success'
         }
         
         return response

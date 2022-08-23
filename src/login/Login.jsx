@@ -1,32 +1,49 @@
-import React, { useState} from "react";
-import  {useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import Header from "./Header";
 import axios from "axios";
 import Footer from "./Footer";
+import swal from 'sweetalert';
 
 function Login() {
   const navigate = useNavigate();
   const [captchaResult, setCaptchaResult] = useState();
-  const { register,handleSubmit, formState: { errors }, reset, trigger, } = useForm();
-  const [redirect, setRedirect] = useState(false);
-  
+  const { register, handleSubmit, formState: { errors }, reset, trigger, } = useForm();
+  // const [redirect, setRedirect] = useState(false);
+  const [error, setError] = useState();
+  const [message, setMessage] = useState();
+  // var response;
+  // var content;
+
   const onSubmit = async (e) => {
     // e.preventDefault();s
     const Data = JSON.stringify(e);
     console.log(Data);
 
-    fetch('http://127.0.0.1:8000/api/login/', {
+    var response = await fetch('http://127.0.0.1:8000/api/login/', {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
-      body:  Data 
+      body: Data
     });
-    setRedirect(true);
+    var content = await response.json();
+    setError(content.error);
+    if (content.detail == "Unauthenticated") {
+      swal({
+        title: error,
+        text: "Please Enter valid information !! ",
+        icon: "error",
+        button: "Ok",
+        dangerMode: true,
+      });
+    }
+    setMessage(content.message);
+    // setRedirect(true);
   }
-  if(redirect){
+  if (message == "Success") {
     return navigate('/StuApp');
   }
 
@@ -148,9 +165,8 @@ function Login() {
 
               {/* {captchaResult
              &&  */}
-              <button type="submit" className="btn btn-primary mt-4">
-                Login
-              </button>
+              <input type="submit" className="btn btn-primary mt-4" value="login" />
+
               {/* }  */}
             </form>
           </div>
