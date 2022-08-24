@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 // import Footer from "./Footer";
 
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
-import Header from "../../login/Header";
+import Header from "../Header";
 
 function StuDoc() {
     const navigate = useNavigate();

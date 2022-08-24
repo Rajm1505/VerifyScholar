@@ -2,93 +2,86 @@ import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink } from 'react-router-dom';
 import govlogo from "../images/government-logo.png";
-// import "../style/nav.css";
+import "../style/nav.css";
 import "./page.css";
-import  { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+
 
 const Header = () => {
-	const [sid, setSid] = useState('');
+
 	const [detail, setDetail] = useState('');
 	const navigate = useNavigate();
 	const [redirect, setRedirect] = useState(false);
-	
-	useEffect(() => {
-		(
-			async () => {
-				const response = await fetch('http://127.0.0.1:8000/api/registerfetch/', {
-					headers: { 'Content-Type': 'appliction/json' },
-					credentials: 'include',
 
-				});
-				const content = await response.json();
-				console.log(content);
-				setSid(content.name);
-				setDetail(content.detail);
-				
-			}
-		)();
-	});
+	// useEffect(() => {
+	// 	(
+	// 		async () => {
+	// 			const response = await fetch('http://127.0.0.1:8000/api/registerfetch/', {
+	// 				headers: { 'Content-Type': 'appliction/json' },
+	// 				credentials: 'include',
 
-	const logout = async () => {
-		fetch('http://127.0.0.1:8000/api/logout/', {
-			method: "POST",
-			headers: { 'Content-Type': 'appliction/json' },
-			credentials: 'include',
-		});
-		setSid('');
-		setRedirect(true);
-	}
+	// 			});
+	// 			const content = await response.json();
+	// 			console.log(content);
+	// 			setSid(content.name);
+	// 			setDetail(content.detail);
+
+	// 		}
+	// 	)();
+	// });
+
+	// const logout = async () => {
+	// 	fetch('http://127.0.0.1:8000/api/logout/', {
+	// 		method: "POST",
+	// 		headers: { 'Content-Type': 'appliction/json' },
+	// 		credentials: 'include',
+	// 	});
+	// 	setSid('');
+	// 	setRedirect(true);
+	// }
 
 
-	if(redirect){
-		return navigate('/login');;
-	  }
+	// if (redirect) {
+	// 	return navigate('/login');;
+	// }
 
-	let menu;
-	if (detail == "Unauthenticated") {
-		menu = (
-			<div className="collapse navbar-collapse collapse show" id="navbarScroll">
-				<ul className="navbar-nav me-auto my-lg-0 navbar-nav-scroll">
-					<li className="nav-item">
-						<NavLink className="nav-link p-0 py-1 me-4 d-inline-block active" to="/">Home</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink className="nav-link p-0 py-1 me-4 d-inline-block" to="#" >Scheme Guidelines</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink className="nav-link p-0 py-1 me-4 d-inline-block" to="#" >FaQ's</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink className="nav-link p-0 py-1 me-4 d-inline-block" to="/register">Register</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink className="nav-link p-0 py-1 me-0 d-inline-block" to="/contact">Contact Us</NavLink>
-					</li>
-				</ul>
-				<NavLink to="/login" className="btn rounded-pill bg-yellow py-2 px-4 fs-7 fw-bold" >Login</NavLink>
-			</div>
-		)
-	} else {
-		menu = (
-			<div className="collapse navbar-collapse collapse show" id="navbarScroll">
-				<ul className="navbar-nav me-auto my-lg-0 navbar-nav-scroll">
-					<li className="nav-item">
-						<NavLink className="nav-link p-0 py-1 me-4 d-inline-block active" to="/StuApp">Student Application Form </NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink className="nav-link p-0 py-1 me-0 d-inline-block" to="/StuDoc">Student Documente Form </NavLink>
-					</li>
-				</ul>
-				<NavLink to="/login" className="btn rounded-pill bg-yellow py-2 px-4 fs-7 fw-bold" onClick={logout}>logout</NavLink>
-			</div>
-		)
-	}
+	// let menu;
+	// if (detail == "Unauthenticated") {
+	// 	menu = (
+	// 		<>
+	// 			<Nav className="me-auto nt">
+	// 				<Nav.Link href="/" className="navlink hover-zoom nt" >Home</Nav.Link>
+	// 				<Nav.Link href="/register" className="navlink hover-zoom nt">Register</Nav.Link>
+	// 				<Nav.Link href="/contact" className="navlink hover-zoom nt">Contact Us</Nav.Link>
+	// 			</Nav>
+	// 			<Nav>
+	// 				<Nav.Link href="/login" className="text-dark text-gradient btn-warning nt px-4 text-decoration-none">Login</Nav.Link>
+	// 			</Nav>
+	// 		</>
+	// 	)
+	// } else {
+	// 	menu = (
+	// 		<>
+	// 			<Nav className="me-auto nt">
+	// 				<Nav.Link href="/StuApp" className="navlink hover-zoom nt">Student Application Form</Nav.Link>
+	// 				<Nav.Link href="/StuDoc" className="navlink hover-zoom nt">Student Documente Form</Nav.Link>
+	// 			</Nav>
+	// 			<Nav>
+	// 				<Nav.Link href="/login" className="text-dark text-gradient btn-warning nt px-4 text-decoration-none" onClick={logout}>Logout</Nav.Link>
+	// 			</Nav>
+	// 		</>
+	// 	)
+	// }
 
 	return (
 		<>
-			<nav className="navbar py-0 sticky-top navbar-dark bg-blue navbar-expand-lg">
-				<div className="container-xxl justify-content-lg-end">
-					<NavLink className="navbar-brand d-flex align-items-center d-lg-none" to="/">
+			<Navbar collapseOnSelect expand="lg" variant="dark" className="nav-bg" >
+				<Container>
+					<Navbar.Brand href="#home" className="navbar-brand d-flex align-items-center ">
+						{/* <Nav.Link className="navbar-brand d-flex align-items-center " to="#"> */}
 						<img src={govlogo} className="bg-white rounded p-1" alt="central gov logo" width="45" />
 						<div className="lh-1 fs-6 fw-ligh ms-2 text-dark">
 							<p className="m-0 text-white fw-bold mb-1 fs-7">Free Coaching Scheme For <br />SC & OBC Students </p>
@@ -96,13 +89,21 @@ const Header = () => {
 							<p className="m-0 fs-7 text-white">Ministry of Social Justice and Empowerment.</p>
 							<p className="m-0 fs-7 text-white">Government of India.</p>
 						</div>
-					</NavLink>
-					<button className="navbar-toggler shadow-none px-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="true" aria-label="Toggle navigation">
-						<span className="navbar-toggler-icon"></span>
-					</button>
-					{menu}
-				</div>
-			</nav>
+						{/* </Nav.Link> */}
+					</Navbar.Brand>
+					<Navbar.Toggle aria-controls="responsive-navbar-nav " />
+					<Navbar.Collapse id="responsive-navbar-nav ">
+						<Nav className="me-auto nt">
+							<Nav.Link href="/" className="navlink hover-zoom nt" >Home</Nav.Link>
+							<Nav.Link href="/register" className="navlink hover-zoom nt">Register</Nav.Link>
+							<Nav.Link href="/contact" className="navlink hover-zoom nt">Contact Us</Nav.Link>
+						</Nav>
+						<Nav>
+							<Nav.Link href="/login" className="text-dark text-gradient btn-warning nt px-4 text-decoration-none">Login</Nav.Link>
+						</Nav>
+					</Navbar.Collapse>
+				</Container>
+			</Navbar>
 
 		</>
 

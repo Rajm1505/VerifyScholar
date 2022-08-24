@@ -13,40 +13,48 @@ function Login() {
   const [captchaResult, setCaptchaResult] = useState();
   const { register, handleSubmit, formState: { errors }, reset, trigger, } = useForm();
   // const [redirect, setRedirect] = useState(false);
-  const [error, setError] = useState();
+  // const [error, setError] = useState();
   const [message, setMessage] = useState();
-  // var response;
-  // var content;
 
   const onSubmit = async (e) => {
-    // e.preventDefault();s
-    const Data = JSON.stringify(e);
-    console.log(Data);
 
-    var response = await fetch('http://127.0.0.1:8000/api/login/', {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: Data
-    });
-    var content = await response.json();
-    setError(content.error);
-    if (content.detail == "Unauthenticated") {
+    // e.preventDefault();
+    if (captchaResult == true) {
+      const Data = JSON.stringify(e);
+      console.log(Data);
+
+      var response = await fetch('http://127.0.0.1:8000/api/login/', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: Data
+      });
+
+      var content = await response.json();
+      if (content.detail == "Unauthenticated") {
+        swal({
+          title: content.error,
+          text: "Please Enter valid information !! ",
+          icon: "error",
+          button: "Ok",
+          dangerMode: true,
+        });
+      }
+      setMessage(content.message);
+    }
+    else {
       swal({
-        title: error,
-        text: "Please Enter valid information !! ",
+        title: "invalid captcha",
+        // text: "Please Enter valid information !! ",
         icon: "error",
         button: "Ok",
         dangerMode: true,
       });
     }
-    setMessage(content.message);
-    // setRedirect(true);
   }
   if (message == "Success") {
     return navigate('/StuApp');
   }
-
 
   const handleRecaptcha = (value) => {
     fetch("http://127.0.0.1:8000/api/recaptcha/", {
@@ -139,7 +147,7 @@ function Login() {
                     {...register("password", {
                       required: "required",
                       minLength: {
-                        value: 5,
+                        value: 8,
                         message: "min length is 5",
                       },
                     })}

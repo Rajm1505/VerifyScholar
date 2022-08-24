@@ -43,11 +43,15 @@ class LoginView(APIView):
         if user is None:
             # raise AuthenticationFailed("User not found")
             response.data = {'error':'User not found',"detail": "Unauthenticated"}
+            
+            print(response.data)
             return response
 
         if not user.check_password(password):
             # raise AuthenticationFailed("Invalid password")
             response.data = {'error':'Invalid password',"detail": "Unauthenticated"}
+            
+            print(response.data)
             return response
         
         payload = {
@@ -64,7 +68,7 @@ class LoginView(APIView):
             'jwt' : token,
             'message' : 'Success'
         }
-        
+        print(response.data)
         return response
     
 class UserView(APIView):
