@@ -156,6 +156,9 @@ class family_income(models.Model):
     
 class StudentDocuments(models.Model):
    
+    def use_directory_path(instance,filename):
+        return 'media/'+str(instance)+'/'+filename
+
     sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
     aadhar = models.CharField(max_length=30,null=True, default=None)
     aname = models.CharField(max_length=30,default=None)
@@ -164,12 +167,17 @@ class StudentDocuments(models.Model):
     adob = models.DateField(default=None)
     incomecertificate = models.CharField(max_length=250,null=True, default=None)
     vpass = models.SmallIntegerField(default = 0)
+    icname = models.CharField(max_length=100,null=True,default=None)
+    icincome = models.IntegerField(default=None)
+    incomecertificate = models.FileField(upload_to=use_directory_path,default=None)
     
     def date_trunc_field(self):
         return self.adob.date()
-    
+  
     def __str__(self):
         return str(self.sid)
 
 
+
+    
 

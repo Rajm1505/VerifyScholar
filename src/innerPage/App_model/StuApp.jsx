@@ -1,15 +1,17 @@
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import  {useNavigate } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import s_d from "../../state&disctrict.json";
 import courses from "../../allCourses.json";
 import { Form, FormText } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
 import $ from 'jquery';
-import Header from "../../login/Header";
+import Header from "../Header";
 
 // function StuApp(props: {sid : string}) {
 function StuApp() {
   const bgc = { backgroundColor: "#f2f2f2" };
+  const navigate = useNavigate();
   const [name, setName] = useState();
   const [gender, setGender] = useState();
   const [phone, setPhone] = useState();
@@ -26,6 +28,9 @@ function StuApp() {
         setGender(content.gender);
         setPhone(content.mobile_number);
         console.log(content);
+        if(content.detail == "Unauthenticated"){
+          return navigate('/login');
+        }
       }
     )();
   });
@@ -39,7 +44,7 @@ function StuApp() {
   } = useForm();
 
   const onSubmit = (data) => {
-    // data.preventDefault();
+    data.preventDefault();
     console.table(data);
     console.table(JSON.stringify(data));
     // reset();
@@ -89,18 +94,6 @@ function StuApp() {
     { label: "Yes", value: "Yes" },
     { label: "No", value: "No" },
   ];
-  // useEffect(() => {
-  //   (async () => {
-  //     const response = await fetch("http://127.0.0.1:8000/api/registerfetch/", {
-  //       headers: { "Content-Type": "appliction/json" },
-  //       credentials: "include",
-  //     });
-  //     const content = await response.json();
-  //   })();
-  // });
-  // console.log(watch());
-
-  // console.log(errors.name)
 
   return (
     <>
@@ -1289,7 +1282,7 @@ function StuApp() {
             </div>
             <hr />{" "}
             {/*  ################################################################################################################## */}
-            {/* <div className="mt-5">
+            <div className="mt-5">
               <h4>
                 9. Total Income from all sources of family members contributing
                 to the household during the Financial Year 2020-21.
@@ -1702,7 +1695,7 @@ function StuApp() {
                   </tbody>
                 </table>
               </div>
-            </div> */}
+            </div>
             <div className="mt-5">
               <h4 className="mb-3">10. Declaration</h4>
               <div className="form-group">

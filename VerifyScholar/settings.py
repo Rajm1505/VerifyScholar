@@ -99,6 +99,7 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': config('PORT'),
+
     }
 }
 
@@ -150,5 +151,13 @@ MEDIA_URL = "/media/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID ='AKIA5OMPXD4YOFKKCP7Q' 
+# AWS_ACCESS_KEY_ID ='AKIA5OMPXD4YCXTYBARA'
+AWS_SECRET_ACCESS_KEY ='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'  
+# AWS_SECRET_ACCESS_KEY ='v93DSqPNOznOFfAglF7S2ej4AlVujpeMryxxAL8n'
+AWS_STORAGE_BUCKET_NAME ='sihfilebucket'
+AWS_QUERYSTRING_AUTH = False
 
 AUTH_USER_MODEL = 'api.User'

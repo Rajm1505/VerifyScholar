@@ -16,6 +16,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate,get_user_model
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import AuthenticationFailed
+from django.core.files.base import ContentFile
 
 
 # for digilocker view
@@ -38,12 +39,21 @@ class LoginView(APIView):
         password = request.data['password']
 
         user = User.objects.filter(email=email).first()
+        response = Response()
 
         if user is None:
-            raise AuthenticationFailed("User not found")
+            # raise AuthenticationFailed("User not found")
+            response.data = {'error':'User not found',"detail": "Unauthenticated"}
+            
+            print(response.data)
+            return response
 
         if not user.check_password(password):
-            raise AuthenticationFailed("Invalid password")
+            # raise AuthenticationFailed("Invalid password")
+            response.data = {'error':'Invalid password',"detail": "Unauthenticated"}
+            
+            print(response.data)
+            return response
         
         payload = {
             'sid': user.sid,
@@ -53,13 +63,13 @@ class LoginView(APIView):
         
         token = jwt.encode(payload,'secret',algorithm='HS256')
         
-        response = Response()
         response.set_cookie(key='jwt',value=token,httponly=True)
         
         response.data = {
-            'jwt' : token
+            'jwt' : token,
+            'message' : 'Success'
         }
-        
+        print(response.data)
         return response
     
 class UserView(APIView):
@@ -311,24 +321,46 @@ def callback(request):
                 
                 if 'INCER' in fileuri:
                     file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
-                    path = "media/"+str(sidinstance)+"/"
-                    if os.getcwd().replace("\\","/") != "E:/Study Material/SIH/VerifyScholar/"+"media/"+str(sidinstance):
-                        os.chdir('media/')
-                    # print("E:\Study Material\SIH\VerifyScholar'\z'zz+ path)
-                        print(os.getcwd())
-                        if not os.path.exists(str(sidinstance)):
-                            os.mkdir(str(sidinstance))
-                        os.chdir(str(sidinstance))
+                    # path = "media/"+str(sidinstance)+"/"
+                    # if os.getcwd().replace("\\","/") != "E:/Study Material/SIH/VerifyScholar/"+"media/"+str(sidinstance):
+                    #     os.chdir('media/')
+                    # # print("E:\Study Material\SIH\VerifyScholar'\z'zz+ path)
+                    #     print(os.getcwd())
+                    #     if not os.path.exists(str(sidinstance)):
+                    #         os.mkdir(str(sidinstance))
+                    #     os.chdir(str(sidinstance))
 
-                    filename = str(sidinstance) + '_income certificate.pdf'
-                    if filename not in os.listdir():
-                        open(filename, "wb").write(file.content)
+                    # if filename not in os.listdir():
+                    #     open(filename, "wb").write(file.content)
                     
-                    finalpath =os.path.join(path,filename)
-                    print(finalpath)
+                    # finalpath =os.path.join(path,filename)
+                    # print(finalpath)
                     
-                    studoc.incomecertificate  = finalpath
-                    studoc.save()                    
+                    # studoc.incomecertificate  = finalpath
+                    filename = str(sidinstance) + '_income_certificate.pdf'
+                    sid = str(sidinstance)
+                    studoc = StudentDocuments.objects.filter(sid=sid).first()
+                    f = ContentFile(file.content)
+                    studoc.incomecertificate.save(filename,f)
+
+                    
+                    with open('fname-en', "w") as f:
+                        f.write(translatedoc(sid,filename))
+
+                    with open('fname-en', 'r',encoding='utf8') as f:
+                        text=f.read()
+                    start = text.find('(cid:7773)') + 11
+                    end = text.find('&#10', start)
+                    icname=text[start:end]
+
+                    start = text.find('(cid:7671).&#10;&#10; ') + 22
+                    end = text.find('/-', start)
+                    icincome=text[start:end]
+
+                    print("name: " + icname+"\nIncome: " + icincome)
+                    studoc.icname = icname
+                    studoc.icincome = icincome
+                    studoc.save()    
                     # with open(filename,'rb') as f:
                     # content = ContentFile(file.content)
                     # doc = StudentDocuments.incomecertificate.save(filename, content)
@@ -348,6 +380,32 @@ def callback(request):
         return redirect('StuDoc')
     
     # {'access_token': 'cfc7cfa52b5eb2d24d861ef3100008b4013d39ee', 'expires_in': 3600, 'token_type': 'Bearer', 'scope': None, 'refresh_token': 'c9241729f73eb2b0026718d16e62e9b72837b50c', 'digilockerid': '1f80c52d-d4a2-11e9-ae46-9457a564506c', 'name': 'Mandaviya Raj Jayesh', 'dob': '15052003', 'gender': 'M', 'eaadhaar': 'Y', 'reference_key': '', 'mobile': '9724197043', 'new_account': 'N'}  
+def translatedoc(sid,filename):
+    from pdfminer.high_level import extract_text #pip install pdfminer.six
+    import urllib.request
+    pdf_path = "https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/"+sid+"/"+filename
+    def download_file(download_url, filename):
+        response = urllib.request.urlopen(download_url)    
+        file = open(filename, 'wb')
+        file.write(response.read())
+        file.close()
+                    
+    download_file(pdf_path, "Test.pdf")
+    # Extract text from a pdf.
+    text = extract_text('Test.pdf')
+     # print(text)
+    with open('fname', "w", encoding="utf-8") as f:
+        f.write(text)
 
+    with open('fname', 'r',encoding='utf8') as f:
+        text=f.read()[:400]
+    with open('fname', 'r',encoding='utf8') as f:
+        text1 = f.read()[401:850]
+
+    from translate import Translator #pip install translate
+    translator=Translator(from_lang = "gu-IN",to_lang="en")
+    translation=translator.translate(text)
+    translation+=translator.translate(text1)
+    return translation
     
    
