@@ -3,6 +3,33 @@
 {% block title %}Admin{% endblock title %}
 
 {% block body %}
+<div class="container">
+
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Sr No.</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Verification Requests</th>
+
+          </tr>
+        </thead>
+        <tbody>
+            {% for i in users %}
+            <tr>
+                <th scope="row">1</th>
+                <td>{{i.name}}</td>
+                <td>{{i.email}}</td>
+                <td><a class="btn btn-success" href="./verifypage?sid={{i.sid}}">Approve</a> </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+
+
+</div>
+
 {{request.user}}
 <h1>Hello this is semiadmin</h1>
 
