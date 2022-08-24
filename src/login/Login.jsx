@@ -1,35 +1,60 @@
-import React, { useState} from "react";
-import  {useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import Header from "./Header";
 import axios from "axios";
 import Footer from "./Footer";
+import swal from 'sweetalert';
 
 function Login() {
   const navigate = useNavigate();
   const [captchaResult, setCaptchaResult] = useState();
-  const { register,handleSubmit, formState: { errors }, reset, trigger, } = useForm();
-  const [redirect, setRedirect] = useState(false);
-  
-  const onSubmit = async (e) => {
-    // e.preventDefault();s
-    const Data = JSON.stringify(e);
-    console.log(Data);
+  const { register, handleSubmit, formState: { errors }, reset, trigger, } = useForm();
+  // const [redirect, setRedirect] = useState(false);
+  // const [error, setError] = useState();
+  const [message, setMessage] = useState();
 
-    fetch('http://127.0.0.1:8000/api/login/', {
-      method: "POST",
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body:  Data 
-    });
-    setRedirect(true);
+  const onSubmit = async (e) => {
+
+    // e.preventDefault();
+    if (captchaResult == true) {
+      const Data = JSON.stringify(e);
+      console.log(Data);
+
+      var response = await fetch('http://127.0.0.1:8000/api/login/', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: Data
+      });
+
+      var content = await response.json();
+      if (content.detail == "Unauthenticated") {
+        swal({
+          title: content.error,
+          text: "Please Enter valid information !! ",
+          icon: "error",
+          button: "Ok",
+          dangerMode: true,
+        });
+      }
+      setMessage(content.message);
+    }
+    else {
+      swal({
+        title: "invalid captcha",
+        // text: "Please Enter valid information !! ",
+        icon: "error",
+        button: "Ok",
+        dangerMode: true,
+      });
+    }
   }
-  if(redirect){
+  if (message == "Success") {
     return navigate('/StuApp');
   }
-
 
   const handleRecaptcha = (value) => {
     fetch("http://127.0.0.1:8000/api/recaptcha/", {
@@ -122,7 +147,7 @@ function Login() {
                     {...register("password", {
                       required: "required",
                       minLength: {
-                        value: 5,
+                        value: 8,
                         message: "min length is 5",
                       },
                     })}
@@ -148,9 +173,8 @@ function Login() {
 
               {/* {captchaResult
              &&  */}
-              <button type="submit" className="btn btn-primary mt-4">
-                Login
-              </button>
+              <input type="submit" className="btn btn-primary mt-4" value="login" />
+
               {/* }  */}
             </form>
           </div>

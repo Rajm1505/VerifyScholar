@@ -1,63 +1,42 @@
-import React, { useRef } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { NavLink } from "react-router-dom";
-import { FaTimes, FaBars } from "react-icons/fa";
-import "../style/nav.css";
-function Header() {
-  const navRef = useRef();
+import React, { useState } from 'react';
+import '../style/nav.css';
+import govlogo from "../images/government-logo.png";
 
-  const shownavbar = () => {
-    navRef.current.classList.toggle("responsive_nav");
-  };
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+
+
+export default function Header() {
   return (
-    <>
-      {/* Main Header
-        <br />
-        <NavLink to="/login" >login</NavLink>
-        <br />
-        <NavLink to="/StuApp" >Student Application Form </NavLink>
-
-        <br />
-        <NavLink to="/StuDoc" > Student Documente Form </NavLink> */}
-
-      <header>
-        <h3>Home Page </h3>
-        <nav ref={navRef}>
-          <NavLink to="/StuApp" className="navlink">
-            Student Application Form{" "}
-          </NavLink>
-          <NavLink to="/StuDoc" className="navlink">
-            {" "}
-            Student Documente Form{" "}
-          </NavLink>
-          <NavLink to="#" className="navlink">
-            Scheme Guidelines
-          </NavLink>
-          <NavLink to="#" className="navlink">
-            FaQ's
-          </NavLink>
-          <NavLink to="/register" className="navlink">
-            Register
-          </NavLink>
-          <NavLink to="/contact" className="navlink">
-            Contact Us
-          </NavLink>
-          <NavLink
-            to="/login"
-            className="float-right btn rounded-pill bg-yellow py-2 px-4 fs-7 fw-bold"
-          >
-            Login
-          </NavLink>
-          <button className="nav-btn nav-close-btn" onClick={shownavbar}>
-            <FaTimes />
-          </button>
-        </nav>
-        <button className="nav-btn nav-close-btn" onClick={shownavbar}>
-          <FaBars />
-        </button>
-      </header>
-    </>
+    <Navbar collapseOnSelect expand="lg" variant="dark" className="nav-bg" >
+      <Container>
+        <Navbar.Brand href="#home" className="navbar-brand d-flex align-items-center ">
+        {/* <Nav.Link className="navbar-brand d-flex align-items-center " to="#"> */}
+						<img src={govlogo} className="bg-white rounded p-1" alt="central gov logo" width="45" />
+						<div className="lh-1 fs-6 fw-ligh ms-2 text-dark">
+							<p className="m-0 text-white fw-bold mb-1 fs-7">Free Coaching Scheme For <br />SC & OBC Students </p>
+							<p className="m-0 fs-7 text-white">Department of Social Justice & Empowerment.</p>
+							<p className="m-0 fs-7 text-white">Ministry of Social Justice and Empowerment.</p>
+							<p className="m-0 fs-7 text-white">Government of India.</p>
+						</div>
+					{/* </Nav.Link> */}
+          </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav " />
+        <Navbar.Collapse id="responsive-navbar-nav ">
+          <Nav className="me-auto nt">
+            <Nav.Link href="#" className="navlink hover-zoom nt" >Scheme Guidelines</Nav.Link>
+            <Nav.Link href="#" className="navlink hover-zoom nt">Faq's</Nav.Link>
+            <Nav.Link href="/register" className="navlink hover-zoom nt">Register</Nav.Link>
+            <Nav.Link href="/contact" className="navlink hover-zoom nt">Contact Us</Nav.Link>
+          </Nav>
+          <Nav>
+          <Nav.Link href="/login" className="text-dark text-gradient btn-warning nt px-4 text-decoration-none">Login</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 
-export default Header;
+

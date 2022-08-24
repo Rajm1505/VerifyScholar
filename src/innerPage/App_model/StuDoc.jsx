@@ -1,5 +1,6 @@
 import { Form, FormLabel } from "react-bootstrap";
 import axios from "axios";
+import  {useNavigate } from 'react-router-dom';
 import digi from "../../images/digilocker.png";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -8,9 +9,10 @@ import { useForm } from "react-hook-form";
 // import Footer from "./Footer";
 
 import BootstrapSwitchButton from 'bootstrap-switch-button-react';
-import Header from "../../login/Header";
+import Header from "../Header";
 
 function StuDoc() {
+    const navigate = useNavigate();
     const bgc = { backgroundColor: "#f2f2f2" };
     const doc1 = true;
     const doc2 = true;
@@ -35,6 +37,9 @@ function StuDoc() {
             setAadhar(content.aadhar)
             setIncomecertificate(content.incomecertificate)
             console.log(content);
+            if(content.detail == "Unauthenticated"){
+                return navigate('/login');
+            }
         }
         )();
     });

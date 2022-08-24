@@ -156,6 +156,9 @@ class family_income(models.Model):
     
 class StudentDocuments(models.Model):
    
+    def use_directory_path(instance,filename):
+        return 'media/'+str(instance)+'/'+filename
+
     sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
     aadhar = models.CharField(max_length=30,null=True, default=None)
     aname = models.CharField(max_length=30,default=None)
@@ -172,4 +175,6 @@ class StudentDocuments(models.Model):
         return str(self.sid)
 
 
+
+    
 
