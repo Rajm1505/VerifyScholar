@@ -186,7 +186,7 @@ def userdoclist(request):
         print(doclist)      
 
     else:
-        doclist['authorized'] = False
+        doclist['Digilocker_Authorized'] = False
     return JsonResponse(doclist)
     
     
@@ -270,7 +270,17 @@ def callback(request):
                     dob = content['KycRes']['UidData']['Poi']['@dob']
                     gender = content['KycRes']['UidData']['Poi']['@gender']
                     
-                    studentdetails = StudentDetails.objects.filter(sid=sid).first()
+                    studentdetails = StudentDetails.objects.get(sid=sid)
+                    studoc.auid = uid
+                    studoc.aname = studentname
+                    studoc.agender = gender
+                    temp = str(dob).split('-')[::-1]
+                    dob = ''
+                    for i in temp:
+                        dob += i + '-' 
+                    studoc.adob = dob[0:len(dob)-1]
+                
+                    
                     # print('object',studoc)
                     # print("|"+(studentdetails.name + " "+ studentdetails.fname).lower()+"|")
                     # print(type("|"+(studentdetails.name + " "+ studentdetails.fname).lower()+"|"))
