@@ -372,16 +372,21 @@ def getFiles(request):
                     studoc.incomecertificate.save(filename,f)
 
                     
-                    with open('fname-en', "w") as f:
+                    with open('poppler_pdf-en', "w") as f:
                         f.write(translatedoc(sid,filename))
 
-                    with open('fname-en', 'r',encoding='utf8') as f:
+                    with open('poppler_pdf-en', 'r',encoding='utf8') as f:
                         text=f.read()
-                    start = text.find('(cid:7773)') + 11
-                    end = text.find('&#10', start)
+
+                    # start = text.find('(cid:7773)') + 11
+                    # end = text.find('&#10', start)
+                    start = text.find('Shri') + 5
+                    end = text.find('is', start)
                     icname=text[start:end]
 
-                    start = text.find('(cid:7671).&#10;&#10; ') + 22
+                    # start = text.find('(cid:7671).&#10;&#10; ') + 22
+                    # end = text.find('/-', start)
+                    start = text.find('Rs.') + 3
                     end = text.find('/-', start)
                     icincome=text[start:end]
 
@@ -421,20 +426,42 @@ def translatedoc(sid,filename):
                     
     download_file(pdf_path, "Test.pdf")
     # Extract text from a pdf.
-    text = extract_text('Test.pdf')
-     # print(text)
-    with open('fname', "w", encoding="utf-8") as f:
-        f.write(text)
+    # text = extract_text('Test.pdf')
 
-    with open('fname', 'r',encoding='utf8') as f:
-        text=f.read()[:400]
-    with open('fname', 'r',encoding='utf8') as f:
-        text1 = f.read()[401:850]
+    #new pdf to text (ocr)
+    from multilingual_pdf2text.pdf2text import PDF2Text
+    from multilingual_pdf2text.models.document_model.document import Document
+    import logging
+    logging.basicConfig(level=logging.INFO)
+
+    def poppler_pdf_income():
+        ## create document for extraction with configurations
+        pdf_document = Document(
+            document_path='Test.pdf',
+            language='guj'
+            )
+        pdf2text = PDF2Text(document=pdf_document)
+        content = pdf2text.extract()
+        with open('poppler_pdf','w',encoding='utf8') as f:
+            f.write(str(content))
+    poppler_pdf_income()
+    with open('poppler_pdf', 'r',encoding='utf8') as f:
+        text1 = f.read()[200:500]
+    
+
+     # print(text)
+    # with open('fname', "w", encoding="utf-8") as f:
+    #     f.write(text)
+
+    # with open('fname', 'r',encoding='utf8') as f:
+    #     text=f.read()[:400]
+    # with open('fname', 'r',encoding='utf8') as f:
+    #     text1 = f.read()[401:850]
 
     from translate import Translator #pip install translate
     translator=Translator(from_lang = "gu-IN",to_lang="en")
-    translation=translator.translate(text)
-    translation+=translator.translate(text1)
+    translation=translator.translate(text1)
+    # translation+=translator.translate(text1)
     return translation
     
    
