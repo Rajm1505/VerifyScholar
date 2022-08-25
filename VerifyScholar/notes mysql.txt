@@ -1,5 +1,0 @@
-Have to run: pip install mysqlclient
-
-Have to add 
-skip-grant-tables 
-in my.ini file after line [mysqld]

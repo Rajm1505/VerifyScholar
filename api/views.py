@@ -343,7 +343,6 @@ def callback(request):
                     f = ContentFile(file.content)
                     studoc.incomecertificate.save(filename,f)
 
-                    
                     with open('poppler_pdf-en', "w") as f:
                         f.write(translatedoc(sid,filename))
 
@@ -366,6 +365,18 @@ def callback(request):
                     studoc.icname = icname
                     studoc.icincome = icincome
                     studoc.save()    
+
+                if 'gujarat.dst-CNCMY' in fileuri:
+                    file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
+                    # open('media/creamy.txt').write(file.content)
+                    filename = str(sidinstance) + '_income_certificate.pdf'
+                    sid = str(sidinstance)
+                    studoc = StudentDocuments.objects.filter(sid=sid).first()
+                    f = ContentFile(file.content)
+                    studoc.creamcertificate.save(filename,f)
+                    studoc.crname=translateDoc_nonCremy(sid,filename)
+                    studoc.save()
+                    
                     # with open(filename,'rb') as f:
                     # content = ContentFile(file.content)
                     # doc = StudentDocuments.incomecertificate.save(filename, content)
@@ -434,5 +445,68 @@ def translatedoc(sid,filename):
     translation=translator.translate(text1)
     # translation+=translator.translate(text1)
     return translation
+
+def translateDoc_nonCremy(sid,filename):
     
-   
+    #pip install multilingual-pdf2text
+    #env variable in pc 1.poppler 2.Tesseract-OCR
+    from multilingual_pdf2text.pdf2text import PDF2Text
+    from multilingual_pdf2text.models.document_model.document import Document
+    import logging
+    logging.basicConfig(level=logging.INFO)
+
+    from pdfminer.high_level import extract_text #pip install pdfminer.six
+    from langdetect import detect
+    pdf_name = filename
+    # Extract text from a pdf.
+    text = extract_text(pdf_name)
+    # print(text)
+    if(detect(text) == 'gu'):
+        lang = 'guj'
+    else:
+        lang = 'eng'
+    # print(detect(text))
+
+    def poppler_pdf_income():
+        ## create document for extraction with configurations
+        pdf_document = Document(
+            document_path=pdf_name,
+            language=lang
+            )
+        pdf2text = PDF2Text(document=pdf_document)
+        content = pdf2text.extract()
+        with open('poppler_pdf_nonCr','w',encoding='utf8') as f:
+            f.write(str(content))
+    poppler_pdf_income()
+    # with open('poppler_pdf', 'r',encoding='utf8') as f:
+    #     text=f.read()[:400]
+    with open('poppler_pdf_nonCr', 'r',encoding='utf8') as f:
+        text = f.read()[320:500]
+        # text = f.read()[600:820]
+        
+
+    # print(text1)
+    from translate import Translator #pip install translate
+    translator=Translator(from_lang = "gu-IN",to_lang="en")
+    # translation=translator.translate(text1)
+    translation=translator.translate(text)
+    with open('poppler_pdf_nonCr-en', 'w')as f:
+        f.write(translation)
+
+    with open('poppler_pdf_nonCr-en', 'r') as f:
+        text =f.read()
+    if (lang =='guj'):
+        start = text.find('Shri') + 5
+        end = text.find('\\n', start)
+        name=text[start:end]
+        return name
+        # print(name)
+    else:
+        start = text.find('Shree') + 6
+        end = text.find('\\n', start)
+        name=text[start:end]
+        return name
+        # print(name)
+
+
+    
