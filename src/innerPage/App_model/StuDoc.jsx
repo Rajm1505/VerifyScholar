@@ -114,7 +114,7 @@ function StuDoc() {
                                 {/* <img src={digi}></img><br /><span>please authorize digilocker account</span> */}
                                 <Button variant="info" >authorize digilocker</Button>
                             </a>) : (<a href="https://accounts.digilocker.gov.in/signup/smart_v2">
-                           
+
                                 {/* <img src={digi}></img><br />\<span>make digilocker account</span> */}
                                 <Button variant="info">make digilocker account</Button>
                             </a>)
@@ -128,19 +128,10 @@ function StuDoc() {
     
 
     const onsubmit = (e) => {
-        console.log(e);
-        let data = e
-        console.log(data);
-        axios
-            .post("http://127.0.0.1:8000/api/abc/", data)
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        reset();
-        // setRedirect(true);
+        if (adhaar == true && inc_certificate == true && adhaar == true && adhaar ==true && adhaar == true && adhaar == true )
+        {
+            return navigate('/profile');
+        }
     };
 
 
@@ -196,6 +187,7 @@ function StuDoc() {
                                         <tr>
                                             <td><Form.Label>10th MarkSheet</Form.Label></td>
                                             <td>
+
                                                 {marksheet10_status ? (<h2 className="text-success">&#10004;</h2>) : (
                                                     <Form.Label className="text-danger"> &#10008;(Please Upload this document in Digi Locker )</Form.Label>)}
                                             </td>
