@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import Header from "./Header";
-import axios from "axios";
+// import axios from "axios";
 import Footer from "./Footer";
 import swal from 'sweetalert';
 
@@ -15,6 +15,7 @@ function Login() {
   // const [redirect, setRedirect] = useState(false);
   // const [error, setError] = useState();
   const [message, setMessage] = useState();
+  const [semiu , setSemiU] = useState();
 
   const onSubmit = async (e) => {
 
@@ -41,6 +42,7 @@ function Login() {
         });
       }
       setMessage(content.message);
+      setSemiU(content.semi);
     }
     else {
       swal({
@@ -52,8 +54,12 @@ function Login() {
       });
     }
   }
-  if (message == "Success") {
-    return navigate('/StuApp');
+  if (semiu == "1"){
+    return navigate('/');
+  }else{
+    if (message == "Success") {
+      return navigate('/StuApp');
+    }
   }
 
   const handleRecaptcha = (value) => {
@@ -165,10 +171,13 @@ function Login() {
                 )}
               </Form.Group>
               <Form.Group className="mt-4">
+                
+
                 <ReCAPTCHA
                   sitekey="6Ld7UwUhAAAAALEngXULJ7ywescW3jkh54CNCtuO"
                   onChange={handleRecaptcha}
-                />
+                  />
+                 
               </Form.Group>
 
               {/* {captchaResult
