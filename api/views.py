@@ -1,7 +1,5 @@
-from asyncio.windows_events import NULL
-from pydoc import doc
-import re
 import requests
+from requests.auth import HTTPBasicAuth
 from django.shortcuts import render, redirect
 import jwt,datetime
 from .models import StudentDetails,User,FormDetails,StudentDocuments
@@ -176,8 +174,9 @@ def login(request):
 
 @api_view(['GET'])
 def userdoclist(request):
-    response = isAuth(request)
-    studentdetails = StudentDocuments.objects.filter(sid=response.data['sid']).first()
+    sid = isAuth(request).data['sid']
+    user = User.objects.get(sid=sid)
+    studentdetails = StudentDocuments.objects.get(sid=user)
     print(studentdetails)
     doclist = {}
     if studentdetails!=None:
@@ -186,17 +185,17 @@ def userdoclist(request):
         print(serializer.data)
         
         for i in serializer.data:
-            if serializer.data[i] == None or serializer.data[i] == '' :
+            if serializer.data[i] == None or serializer.data[i] == '' or serializer.data[i] == "False":
                 doclist[i] = False
             elif str(serializer.data[i]).split(' ')[-1] == 'mismatch':
                 doclist[i] = serializer.data[i]
             else:
                 doclist[i] = True
-                
+        doclist['vpass'] = user.vpass   
         print(doclist)      
 
     else:
-        doclist['authorized'] = False
+        doclist['Digilocker_Authorized'] = False
     return JsonResponse(doclist)
     
     
@@ -216,15 +215,11 @@ def recaptcha(request):
     return Response({'captcha': r.json()})
 
 
-
-
-
-def callback(request):
+def getRefreshToken(request):
     if request.method == 'GET':
         sid = isAuth(request).data['sid']
-        sidinstance = User.objects.filter(sid = sid).first()
-        studoc = StudentDocuments()
-        studoc.sid  = sidinstance
+        user = User.objects.get(sid = sid)
+        studoc = StudentDocuments.objects.get(sid=sid)
         code = request.GET.get('code')
         state = request.GET.get('state')
 
@@ -238,8 +233,44 @@ def callback(request):
         }
         # API call for obtaining accesstoken
 
-        accesstoken = requests.post(url, json = myobj, headers = {"Content-Type": "application/json"}).json().get('access_token')
-        print(accesstoken)
+        refreshtoken = requests.post(url, json = myobj, headers = {"Content-Type": "application/json"}).json().get('refresh_token')
+        print(refreshtoken)
+
+        user.refreshtoken = refreshtoken
+        user.save()
+        studoc.refreshtoken = True
+        studoc.save()
+
+
+        return redirect('StuDoc')
+
+
+def getFiles(request):
+    if request.method == 'GET':
+        sid = isAuth(request).data['sid']
+        user = User.objects.get(sid = sid)
+        studoc = StudentDocuments()
+        user.vpass = user.vpass+1
+        user.save()
+        studoc.sid  = user
+        print("userrefresh",user.refreshtoken)
+
+        url = 'https://api.digitallocker.gov.in/public/oauth2/1/token'
+        myobj = {
+            "refresh_token": user.refreshtoken,
+            "grant_type": "refresh_token",
+        }
+        # API call for obtaining accesstoken
+    
+        refreshtokencall = requests.post(url, json = myobj,auth = HTTPBasicAuth('2407FC9F', '69e83492f63f996bfd5d')).json()  
+        accesstoken = refreshtokencall.get('access_token')
+        refreshtoken = refreshtokencall.get('refresh_token')
+        print("access: ",accesstoken)
+        print("refresh_tokenL: ",refreshtoken)
+        # open('hello.txt','wb').write(accesstoken)  
+        print(refreshtokencall)
+        user.refreshtoken = refreshtoken
+        user.save()
 
         # API call for obtaining list of files in user's digilocker
         
@@ -280,7 +311,14 @@ def callback(request):
                     dob = content['KycRes']['UidData']['Poi']['@dob']
                     gender = content['KycRes']['UidData']['Poi']['@gender']
                     
-                    studentdetails = StudentDetails.objects.filter(sid=sid).first()
+                    studentdetails = StudentDetails.objects.get(sid=sid)
+                    studoc.auid = uid
+                    studoc.aname = studentname
+                    studoc.agender = gender
+                    temp = str(dob).split('-')[::-1]
+                    studoc.adob =  "-".join(temp)
+                
+                    
                     # print('object',studoc)
                     # print("|"+(studentdetails.name + " "+ studentdetails.fname).lower()+"|")
                     # print(type("|"+(studentdetails.name + " "+ studentdetails.fname).lower()+"|"))
@@ -327,23 +365,28 @@ def callback(request):
                     # print(finalpath)
                     
                     # studoc.incomecertificate  = finalpath
-                    filename = str(sidinstance) + '_income_certificate.pdf'
-                    sid = str(sidinstance)
-                    studoc = StudentDocuments.objects.filter(sid=sid).first()
+                    filename = str(user) + '_income_certificate.pdf'
+                    sid = str(user)
+                    studoc = StudentDocuments.objects.get(sid=sid)
                     f = ContentFile(file.content)
                     studoc.incomecertificate.save(filename,f)
 
                     
-                    with open('fname-en', "w") as f:
+                    with open('poppler_pdf-en', "w") as f:
                         f.write(translatedoc(sid,filename))
 
-                    with open('fname-en', 'r',encoding='utf8') as f:
+                    with open('poppler_pdf-en', 'r',encoding='utf8') as f:
                         text=f.read()
-                    start = text.find('(cid:7773)') + 11
-                    end = text.find('&#10', start)
+
+                    # start = text.find('(cid:7773)') + 11
+                    # end = text.find('&#10', start)
+                    start = text.find('Shri') + 5
+                    end = text.find('is', start)
                     icname=text[start:end]
 
-                    start = text.find('(cid:7671).&#10;&#10; ') + 22
+                    # start = text.find('(cid:7671).&#10;&#10; ') + 22
+                    # end = text.find('/-', start)
+                    start = text.find('Rs.') + 3
                     end = text.find('/-', start)
                     icincome=text[start:end]
 
@@ -367,6 +410,7 @@ def callback(request):
                 print("These file does not exist: " + file)
         # print(resdict)
         # return render(request, 'index.html',resdict)
+        
         return redirect('StuDoc')
     
     # {'access_token': 'cfc7cfa52b5eb2d24d861ef3100008b4013d39ee', 'expires_in': 3600, 'token_type': 'Bearer', 'scope': None, 'refresh_token': 'c9241729f73eb2b0026718d16e62e9b72837b50c', 'digilockerid': '1f80c52d-d4a2-11e9-ae46-9457a564506c', 'name': 'Mandaviya Raj Jayesh', 'dob': '15052003', 'gender': 'M', 'eaadhaar': 'Y', 'reference_key': '', 'mobile': '9724197043', 'new_account': 'N'}  
@@ -382,20 +426,42 @@ def translatedoc(sid,filename):
                     
     download_file(pdf_path, "Test.pdf")
     # Extract text from a pdf.
-    text = extract_text('Test.pdf')
-     # print(text)
-    with open('fname', "w", encoding="utf-8") as f:
-        f.write(text)
+    # text = extract_text('Test.pdf')
 
-    with open('fname', 'r',encoding='utf8') as f:
-        text=f.read()[:400]
-    with open('fname', 'r',encoding='utf8') as f:
-        text1 = f.read()[401:850]
+    #new pdf to text (ocr)
+    from multilingual_pdf2text.pdf2text import PDF2Text
+    from multilingual_pdf2text.models.document_model.document import Document
+    import logging
+    logging.basicConfig(level=logging.INFO)
+
+    def poppler_pdf_income():
+        ## create document for extraction with configurations
+        pdf_document = Document(
+            document_path='Test.pdf',
+            language='guj'
+            )
+        pdf2text = PDF2Text(document=pdf_document)
+        content = pdf2text.extract()
+        with open('poppler_pdf','w',encoding='utf8') as f:
+            f.write(str(content))
+    poppler_pdf_income()
+    with open('poppler_pdf', 'r',encoding='utf8') as f:
+        text1 = f.read()[200:500]
+    
+
+     # print(text)
+    # with open('fname', "w", encoding="utf-8") as f:
+    #     f.write(text)
+
+    # with open('fname', 'r',encoding='utf8') as f:
+    #     text=f.read()[:400]
+    # with open('fname', 'r',encoding='utf8') as f:
+    #     text1 = f.read()[401:850]
 
     from translate import Translator #pip install translate
     translator=Translator(from_lang = "gu-IN",to_lang="en")
-    translation=translator.translate(text)
-    translation+=translator.translate(text1)
+    translation=translator.translate(text1)
+    # translation+=translator.translate(text1)
     return translation
     
    

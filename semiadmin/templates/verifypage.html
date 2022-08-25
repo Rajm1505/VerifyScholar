@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}verifypage{% endblock title  %}
+
+{% block body %}
+
+<div class="container-fluid row h-100 d-flex align-items-center justify-content-center m-0 mt-5">
+  <h1>Aadhaar Data</h1>
+
+  <div class="card" style="width: 30rem;">
+    <div class="float-left">
+    <div class="card-header font-italic" style="font-weight: bold;">
+      Aadhaar Data
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">aadhaar Number: {{studoc.auid}}</li>
+      <li class="list-group-item">aadhaar Name: {{studoc.aname}}</li>
+    <li class="list-group-item">aadhaar Gender: {{studoc.agender}}</li>
+    <li class="list-group-item">aadhaar DOB: {{studoc.adob}}</li>
+  </ul>
+</div> 
+</div>
+
+
+<div class="card" style="width: 30rem;">
+    <div class="card-header font-italic" style="font-weight: bold;">
+    User-entered Data
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">aadhaar Number: to be added from student app </li>
+    <li class="list-group-item">aadhaar Name: {{studentdetails.name}} {{studentdetails.fname}}</li>
+    <li class="list-group-item">aadhaar Gender: {{studentdetails.gender}}</li>
+    <li class="list-group-item">aadhaar DOB: {{studentdetails.dob}}</li>
+  </ul>
+</div> 
+<div class="h-100 d-flex align-items-center justify-content-center m-0">
+  <button value="aadhaarcorrect" class="btn btn-success mx-5 my-2 " onClick=aadhaarVerify(this)>Verify</button>
+  <button value="aadhaarincorrect" class="btn btn-success" onClick=aadhaarVerify(this)>Incorrect</button>
+</div>
+<h1>{{aadhaarverify}}</h1>
+
+
+<h1>Income Certificate Data</h1>
+
+<!-- <iframe style="height: 500px; width: 500px; " src="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/5_income_certificate.pdf" frameborder="10"></iframe> -->
+
+<div class="card" style="width: 30rem;">
+  <div class="card-header font-italic" style="font-weight: bold;">
+    User-entered Data
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Name of Student: {{studentdetails.name}} </li>
+    <li class="list-group-item">Father Name: {{studentdetails.fname}}</li>
+    <div class="card-header font-italic" style="font-weight: bold;">
+      Document from Digilocker
+    </div>
+    <li
+      <a class="btn btn-success " href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/{{studoc.incomecertificate}}" target="_blank">View Income Certificate in new tab</a>
+    </li>
+  </ul>
+</div> 
+  <div class="h-100 d-flex align-items-center justify-content-center m-0">
+  <button value="inccorrect" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
+  <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button>
+  </div>
+
+</div>
+
+<script>
+let arrayverify = []
+function aadhaarVerify(verify){
+if (arrayverify.length==0){
+  arrayverify.push(verify.value)
+}
+}
+function incVerify(objButton){
+  arrayverify.push(objButton.value)
+}
+console.log(arrayverify)
+</script>
+
+{% endblock body %}
