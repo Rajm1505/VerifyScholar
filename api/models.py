@@ -168,7 +168,7 @@ class StudentDocuments(models.Model):
     incomecertificate = models.CharField(max_length=250,null=True, default=None)
     vpass = models.SmallIntegerField(default = 0)
     icname = models.CharField(max_length=100,null=True,default=None)
-    icincome = models.IntegerField(default=None)
+    icincome = models.IntegerField(default=None,null=True)
     incomecertificate = models.FileField(upload_to=use_directory_path,default=None)
     
     def date_trunc_field(self):
