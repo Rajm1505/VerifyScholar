@@ -73,7 +73,7 @@ function StuDoc() {
                 <tr>
                     <td></td>
                     <td>
-                        <a href="https://api.digitallocker.gov.in/public/oauth2/1/authorize?response_type=code&client_id=2407FC9F&redirect_uri=http://127.0.0.1:8000/api/callback&state=hello">
+                        <a href="http://127.0.0.1:8000/api/verify">
                             <Button variant="info" >check Document</Button>
                         </a></td>
                 </tr>
@@ -128,7 +128,7 @@ function StuDoc() {
     
 
     const onsubmit = (e) => {
-        if (adhaar == true && inc_certificate == true && adhaar == true && adhaar ==true && adhaar == true && adhaar == true )
+        if (aadhaar_status == true && inc_status == true && creamy_status == true && marksheet10_status ==true )
         {
             return navigate('/profile');
         }

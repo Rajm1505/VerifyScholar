@@ -23,7 +23,7 @@ class StudentDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentDetails
         fields = ['sid','nsp_id','aadhaar_no',
-        'pms_benificiary_id','caste_category','name','fname','mobile_number']
+        'pms_benificiary_id','caste_category','name','fname']
         
         extra_kwargs = {
             'sid':{'write_only':True}
