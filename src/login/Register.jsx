@@ -248,56 +248,7 @@ function Register() {
               
               </Form.Group>
               <br/>
-              <Form.Group>
-                  <table className="table table-hover table-bordered">
-                    <tbody>
-                      <tr>
-                        <td>
-                            <label className="col-form-label">Gender:</label>
-                        </td>
-                        <td className="text-center">
-                              <div
-                                className={`form-check-inline ${errors.gender && "invalid"}`}
-                                {...register("gender", { required: "Gender is Required" })}
-                              >
-                                <input
-                                  className="form-check-input"
-                                  type="radio"
-                                  value="M"
-                                  name="gender"
-                                  {...register("gender", { required: "Gender is Required" })}
-                                />{" "}
-                                Male &emsp; &emsp;
-                                <input
-                                  className="form-check-input"
-                                  type="radio"
-                                  value="F"
-                                  name="gender"
-                                  {...register("gender", { required: "Gender is Required" })}
-                                />{" "}
-                                Female &emsp; &emsp;
-                                <input
-                                  className="form-check-input"
-                                  type="radio"
-                                  value="O"
-                                  name="gender"
-                                  {...register("gender", { required: "Gender is Required" })}
-                                />{" "}
-                                Other &emsp; &emsp;
-                              </div>
-                              <div>
-                                {errors.gender && (
-                                  <small className="text-danger">
-                                    {errors.gender.message}
-                                  </small>
-                                )}
-                              </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-               
-                </Form.Group>
+              
               <div className="form-group">
                 <label className="col-form-label">Email:</label>
                 <input
@@ -347,22 +298,6 @@ function Register() {
                   <small className="text-danger">{errors.phone.message}</small>
                 )}
               </div>
-              &nbsp;
-              <Form.Group controlId="dob">
-                <Form.Label>Date of Birth</Form.Label>
-                <Form.Control
-                  type="date"
-                  name="dob"
-                  placeholder="Date of Birth"
-                  className={`${errors.state && "invalid"}`}
-                  {...register("dob", {
-                    required: "Date of Birth is Required",
-                  })}
-                />
-                {errors.dob && (
-                  <small className="text-danger">{errors.dob.message}</small>
-                )}
-              </Form.Group>
               &nbsp;
               <Form.Group controlId="password">
                 <table className="table table-hover table-bordered"> 
@@ -424,106 +359,6 @@ function Register() {
                     </tbody>
                   </table>
               </Form.Group>
-              <Form.Group>
-              <table className="table table-hovertable-bordered"> 
-              <tbody>
-                <tr>
-                  <td>
-                        <Form.Label>State of Passing 10th Exam:</Form.Label>
-                  </td>
-                  <td>
-
-                      <Form.Select
-                        className={`${errors.state && "invalid"}`}
-                        {...register("state_of_passing_10th_exam", {
-                          required: "State is Required",
-                        })}
-                      >
-                        <option >-- Select -- </option>
-                        {s_d.states.map((State) => (
-                          <option value={State.state} key={State.state}>
-                            {State.state}
-                          </option>
-                        ))}
-                      </Form.Select>
-                      {errors.state_of_passing_10th_exam && (
-                        <small className="text-danger">
-                          {errors.state_of_passing_10th_exam.message}
-                        </small>
-                      )}
-                  </td>
-                </tr>
-              </tbody>
-              </table>
-              </Form.Group>
-              <Form.Group>
-                <table className="table table-hover table-bordered">
-                  <tbody>
-                    <tr>
-                      <td>
-                          <Form.Label>10th Board Certificate Number: </Form.Label>
-                      </td>
-                      <td>
-                          <Form.Control
-                            type="text"
-                            className={`form-control ${
-                              errors.certificateno && "invalid"
-                            }`}
-                            {...register("board_10th_certificate_number", {
-                              required: "Cerificate number is Required",
-                              pattern: {
-                                value: /^[0-9]*$/,
-                                message: "Only numbers are allowed",
-                              },
-                            })}
-                          />
-                          {errors.certificateno && (
-                            <small className="text-danger">
-                              {errors.certificateno.message}
-                            </small>
-                          )}
-                      </td>
-                    </tr>
-                  </tbody> 
-                  </table>
-                  <table className="table table-hover table-bordered"> 
-                  <tbody>
-                    <tr>
-                      <td>
-                          <Form.Label>Year of passing 10th Board: </Form.Label>
-                      </td>
-                      <td>
-                          <Form.Control
-                            type="number"
-                            className={`form-control ${
-                              errors.year_of_passing_10th_board && "invalid"
-                            }`}
-                            {...register("year_of_passing_10th_board", {
-                              required: "passing year is Required",
-                              pattern: {
-                                value: /^[0-9]*$/,
-                                message: "Only numbers are allowed",
-                              },
-                              min: {
-                                value: 1950,
-                                message: "this year is not a valid year",
-                              },
-                              max: {
-                                value: 2022,
-                                message: "not valid year",
-                              },
-                            })}
-                          />
-                          {errors.year_of_passing_10th_board && (
-                            <small className="text-danger">
-                              {errors.year_of_passing_10th_board.message}
-                            </small>
-                          )}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </Form.Group >
               <input 
                 type="submit"
                 className="btn-lg btn-primary my-3 "
