@@ -13,10 +13,10 @@
       Aadhaar Data
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">Aadhar Number: {{studoc.auid}}</li>
-      <li class="list-group-item">Aadhar Name: {{studoc.aname}}</li>
-    <li class="list-group-item">Aadhar Gender: {{studoc.agender}}</li>
-    <li class="list-group-item">Aadhar DOB: {{studoc.adob}}</li>
+      <li class="list-group-item">aadhaar Number: {{studoc.auid}}</li>
+      <li class="list-group-item">aadhaar Name: {{studoc.aname}}</li>
+    <li class="list-group-item">aadhaar Gender: {{studoc.agender}}</li>
+    <li class="list-group-item">aadhaar DOB: {{studoc.adob}}</li>
   </ul>
 </div> 
 </div>
@@ -27,17 +27,17 @@
     User-entered Data
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item">Aadhar Number: to be added from student app </li>
-    <li class="list-group-item">Aadhar Name: {{studentdetails.name}} {{studentdetails.fname}}</li>
-    <li class="list-group-item">Aadhar Gender: {{studentdetails.gender}}</li>
-    <li class="list-group-item">Aadhar DOB: {{studentdetails.dob}}</li>
+    <li class="list-group-item">aadhaar Number: to be added from student app </li>
+    <li class="list-group-item">aadhaar Name: {{studentdetails.name}} {{studentdetails.fname}}</li>
+    <li class="list-group-item">aadhaar Gender: {{studentdetails.gender}}</li>
+    <li class="list-group-item">aadhaar DOB: {{studentdetails.dob}}</li>
   </ul>
 </div> 
 <div class="h-100 d-flex align-items-center justify-content-center m-0">
-  <button value="aadharcorrect" class="btn btn-success mx-5 my-2 " onClick=aadharVerify(this)>Verify</button>
-  <button value="aadharincorrect" class="btn btn-success" onClick=aadharVerify(this)>Incorrect</button>
+  <button value="aadhaarcorrect" class="btn btn-success mx-5 my-2 " onClick=aadhaarVerify(this)>Verify</button>
+  <button value="aadhaarincorrect" class="btn btn-success" onClick=aadhaarVerify(this)>Incorrect</button>
 </div>
-<h1>{{aadharverify}}</h1>
+<h1>{{aadhaarverify}}</h1>
 
 
 <h1>Income Certificate Data</h1>
@@ -68,7 +68,7 @@
 
 <script>
 let arrayverify = []
-function aadharVerify(verify){
+function aadhaarVerify(verify){
 if (arrayverify.length==0){
   arrayverify.push(verify.value)
 }

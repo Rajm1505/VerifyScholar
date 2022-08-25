@@ -51,7 +51,7 @@ def verifypage(request):
     # print(user)
     # vpasslistjson = serializers.serialize('json',vpasslist)
     # print(type(vpasslistjson))
-    # print(vpasslist[0].aadhar)
+    # print(vpasslist[0].aadhaar)
     # print(len(vpasslist))
     # for i in range(0,len(vpasslist)):
     #     print(vpasslist[i])
@@ -60,7 +60,7 @@ def verifypage(request):
     
         # context['sid'+str(i)] = dict(str(vpasslist[i]))
         # print('hello')
-        # context['sid'+str(i)]['aadhar'] = vpasslist[i].aadhar
+        # context['sid'+str(i)]['aadhaar'] = vpasslist[i].aadhaar
         
     print(context)
 

@@ -16,7 +16,7 @@ function StuDoc() {
     const bgc = { backgroundColor: "#f2f2f2" };
     const doc1 = true;
     const doc2 = true;
-    const [aadhar, setAadhar] = useState();
+    const [aadhaar, setaadhaar] = useState();
     const [incomecertificate, setIncomecertificate] = useState();
     const {
         register,
@@ -34,7 +34,7 @@ function StuDoc() {
                 credentials: 'include',
             });
             let content = await response.json();
-            setAadhar(content.aadhar)
+            setaadhaar(content.aadhaar)
             setIncomecertificate(content.incomecertificate)
             console.log(content);
             if(content.detail == "Unauthenticated"){
@@ -105,7 +105,7 @@ function StuDoc() {
                                         <tr>
                                             <td><Form.Label>Category/Cast Certificate </Form.Label></td>
                                             <td>
-                                                {aadhar ? (<Form.Label className="text-success">&#10004; (your Document is successfully submitted)</Form.Label>) : (
+                                                {aadhaar ? (<Form.Label className="text-success">&#10004; (your Document is successfully submitted)</Form.Label>) : (
                                                     <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in DigiLocker )</Form.Label>)}
                                                 {/* <BootstrapSwitchButton checked={true} onstyle="warning" offstyle="danger" size="sm" onlabel="Yes" offlabel="No"/> */}
                                             </td>
@@ -121,7 +121,7 @@ function StuDoc() {
                                         <tr>
                                             <td><Form.Label>12th MarkSheet (if 12th completed)</Form.Label></td>
                                             <td>
-                                                {aadhar ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
+                                                {aadhaar ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
                                                     <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
                                             </td>
                                         </tr>
@@ -181,7 +181,7 @@ function StuDoc() {
                                         <tr>
                                             <td><Form.Label>Permanent Address Proof</Form.Label></td>
                                             <td>
-                                                {aadhar ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
+                                                {aadhaar ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
                                                     <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
                                             </td>
                                         </tr>

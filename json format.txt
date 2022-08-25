@@ -21,7 +21,7 @@ Form Details
 
 {
     "plus18":true,
-    "aadhar":"123456789123",
+    "aadhaar":"123456789123",
     "minority_category":false,
     "disablity":false,
     "marital_status":"Unmarried",
