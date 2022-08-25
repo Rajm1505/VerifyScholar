@@ -170,7 +170,9 @@ class StudentDocuments(models.Model):
     auid = models.CharField(max_length=4,default=None)
     adob = models.DateField(default=None)
     vpass = models.SmallIntegerField(default = 0)
-    refreshtoken = models.BooleanField(default=False)
+    icname = models.CharField(max_length=100,null=True,default=None)
+    icincome = models.IntegerField(default=None,null=True)
+    incomecertificate = models.FileField(upload_to=use_directory_path,default=None)
     
     def date_trunc_field(self):
         return self.adob.date()
