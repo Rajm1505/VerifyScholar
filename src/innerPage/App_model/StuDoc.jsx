@@ -95,8 +95,7 @@ function StuDoc() {
                             <a href="https://api.digitallocker.gov.in/public/oauth2/1/authorize?response_type=code&client_id=2407FC9F&redirect_uri=http://127.0.0.1:8000/api/callback&state=hello">
                                 {/* <img src={digi}></img><br /><span>please authorize digilocker account</span> */}
                                 <Button variant="info" >authorize digilocker</Button>
-                            {/* </a>) : (<a href="https://accounts.digilocker.gov.in/signup/smart_v2"> */}
-                            </a>) : (<a href="#">
+                            </a>) : (<a href="https://accounts.digilocker.gov.in/signup/smart_v2">
                                 {/* <img src={digi}></img><br />\<span>make digilocker account</span> */}
                                 <Button variant="info">make digilocker account</Button>
                             </a>)
@@ -110,19 +109,10 @@ function StuDoc() {
     
 
     const onsubmit = (e) => {
-        console.log(e);
-        let data = e
-        console.log(data);
-        axios
-            .post("http://127.0.0.1:8000/api/abc/", data)
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        reset();
-        // setRedirect(true);
+        if (adhaar == true && inc_certificate == true && adhaar == true && adhaar ==true && adhaar == true && adhaar == true )
+        {
+            return navigate('/profile');
+        }
     };
 
 
@@ -179,7 +169,7 @@ function StuDoc() {
                                             <td><Form.Label>10th MarkSheet</Form.Label></td>
                                             <td>
                                                 {incomecertificate ? (<h2 className="text-success">&#10004;</h2>) : (
-                                                    <Form.Label className="text-danger"> &#10008;(Please Upload this document in Digi Locker )</Form.Label>)}
+                                                    <Form.Label className="text-danger"><h2>&#10008;</h2>(Please Upload this document in Digi Locker )</Form.Label>)}
                                             </td>
                                         </tr>
 
