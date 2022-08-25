@@ -49,4 +49,4 @@ class FormDetailsSerializer(serializers.ModelSerializer):
 class StudentDocumentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentDocuments
-        fields = ['sid','aadhar','incomecertificate']
+        fields = ['sid','aadhar','incomecertificate','refreshtoken']

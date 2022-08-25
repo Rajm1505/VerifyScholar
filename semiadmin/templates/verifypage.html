@@ -5,7 +5,8 @@
 {% block body %}
 
 <div class="container-fluid row h-100 d-flex align-items-center justify-content-center m-0 mt-5">
-  
+  <h1>Aadhaar Data</h1>
+
   <div class="card" style="width: 30rem;">
     <div class="float-left">
     <div class="card-header font-italic" style="font-weight: bold;">
@@ -33,18 +34,49 @@
   </ul>
 </div> 
 <div class="h-100 d-flex align-items-center justify-content-center m-0">
-  <button class="btn btn-success mx-5" onclick="">Verify</button>
-  <button class="btn btn-success" onclick="">Incorrect</button>
+  <button value="aadharcorrect" class="btn btn-success mx-5 my-2 " onClick=aadharVerify(this)>Verify</button>
+  <button value="aadharincorrect" class="btn btn-success" onClick=aadharVerify(this)>Incorrect</button>
 </div>
-</div>
-
+<h1>{{aadharverify}}</h1>
 
 
 <h1>Income Certificate Data</h1>
 
-<a class="btn btn-success" href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/{{studoc.incomecertificate}}" target="_blank">View Income Certificate in new tab</a>
 <!-- <iframe style="height: 500px; width: 500px; " src="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/5_income_certificate.pdf" frameborder="10"></iframe> -->
 
+<div class="card" style="width: 30rem;">
+  <div class="card-header font-italic" style="font-weight: bold;">
+    User-entered Data
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Name of Student: {{studentdetails.name}} </li>
+    <li class="list-group-item">Father Name: {{studentdetails.fname}}</li>
+    <div class="card-header font-italic" style="font-weight: bold;">
+      Document from Digilocker
+    </div>
+    <li
+      <a class="btn btn-success " href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/{{studoc.incomecertificate}}" target="_blank">View Income Certificate in new tab</a>
+    </li>
+  </ul>
+</div> 
+  <div class="h-100 d-flex align-items-center justify-content-center m-0">
+  <button value="inccorrect" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
+  <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button>
+  </div>
 
+</div>
+
+<script>
+let arrayverify = []
+function aadharVerify(verify){
+if (arrayverify.length==0){
+  arrayverify.push(verify.value)
+}
+}
+function incVerify(objButton){
+  arrayverify.push(objButton.value)
+}
+console.log(arrayverify)
+</script>
 
 {% endblock body %}

@@ -3,7 +3,9 @@
 {% block title %}Admin{% endblock title %}
 
 {% block body %}
+
 <div class="container">
+  <h1 class="m-5">Manual Verification Requests</h1>
 
     <table class="table">
         <thead>
@@ -21,7 +23,7 @@
                 <th scope="row">1</th>
                 <td>{{i.name}}</td>
                 <td>{{i.email}}</td>
-                <td><a class="btn btn-success" href="./verifypage?sid={{i.sid}}">Approve</a> </td>
+                <td><a class="btn btn-success " href="./verifypage?sid={{i.sid}}">Verify</a> </td>
             </tr>
             {% endfor %}
         </tbody>
@@ -30,8 +32,6 @@
 
 </div>
 
-{{request.user}}
-<h1>Hello this is semiadmin</h1>
 
 {% endblock body %}
 
