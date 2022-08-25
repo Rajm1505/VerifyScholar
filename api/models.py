@@ -70,6 +70,7 @@ class User(AbstractUser):
     name = models.CharField(max_length=255)
     email = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
+    refreshtoken = models.CharField(max_length=255, default=None)
     vpass = models.SmallIntegerField(default = 0)
     username = None
 
@@ -160,12 +161,14 @@ class StudentDocuments(models.Model):
         return 'media/'+str(instance)+'/'+filename
 
     sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
+    incomecertificate = models.FileField(upload_to=use_directory_path,default=None)
+    icname = models.CharField(max_length=100,null=True,default=None)
+    icincome = models.IntegerField(default=None, null=True)
     aadhar = models.CharField(max_length=30,null=True, default=None)
     aname = models.CharField(max_length=30,default=None)
     agender = models.CharField(max_length=1,default=None)
     auid = models.CharField(max_length=4,default=None)
     adob = models.DateField(default=None)
-    incomecertificate = models.CharField(max_length=250,null=True, default=None)
     vpass = models.SmallIntegerField(default = 0)
     icname = models.CharField(max_length=100,null=True,default=None)
     icincome = models.IntegerField(default=None,null=True)

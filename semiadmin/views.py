@@ -34,8 +34,15 @@ def verifypage(request):
     print(sid)
     studoc = StudentDocuments.objects.filter(sid=sid).first()
     user = User.objects.filter(sid=sid).first()
-    studentdetails = StudentDetails.objects.get(sid=sid)
-    studoc = StudentDocuments.objects.get(sid=sid)
+    try:
+        studentdetails = StudentDetails.objects.get(sid=sid)
+    except:
+        studentdetails = "  "
+    try:
+        studoc = StudentDocuments.objects.get(sid=sid)
+    except:
+        studoc = None
+
     list1 = []
     # for i in range(0,len(vpasslist)):
     #     list1.append(vpasslist[i].pk)
