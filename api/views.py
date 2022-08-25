@@ -2,7 +2,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 from django.shortcuts import render, redirect
 import jwt,datetime
-from .models import StudentDetails,User,FormDetails,StudentDocuments
+from .models import StudentDetails,User,FormDetails,StudentDocuments,StuDocAdmin
 from rest_framework.views import APIView
 
 from .Serializers import StudentDetailsSerializer,FormDetailsSerializer,StudentDetailsFetchSerializer,UserSerializer,StudentDocumentsSerializer
@@ -143,8 +143,8 @@ def register(request):
 @csrf_exempt
 def register_fetch(request):
     if request.method == 'GET':
-        response = isAuth(request)
-        sid = response.data['sid']
+        sid = isAuth(request).data['sid']
+        user = User.objects.get(sid=sid)
         try:   
             studentdetails = StudentDetails.objects.filter(pk=sid).first()
             print(studentdetails)
@@ -153,6 +153,7 @@ def register_fetch(request):
     
         if request.method == 'GET':   
             serializer = StudentDetailsFetchSerializer(studentdetails)
+            serializer.validated_data['email'] = user.email
             return JsonResponse(serializer.data)
 
 @csrf_exempt
@@ -176,11 +177,11 @@ def login(request):
 def userdoclist(request):
     sid = isAuth(request).data['sid']
     user = User.objects.get(sid=sid)
-    studentdetails = StudentDocuments.objects.get(sid=user)
-    print(studentdetails)
+    studoc = StudentDocuments.objects.get(sid=sid)
+    print(studoc)
     doclist = {}
-    if studentdetails!=None:
-        serializer = StudentDocumentsSerializer(studentdetails)
+    if studoc!=None:
+        serializer = StudentDocumentsSerializer(studoc)
         serializer.data['hello'] = 'hello'
         print(serializer.data)
         
@@ -191,7 +192,12 @@ def userdoclist(request):
                 doclist[i] = serializer.data[i]
             else:
                 doclist[i] = True
-        doclist['vpass'] = user.vpass   
+        doclist['vpass'] = user.vpass
+        if user.refreshtoken != '' or   user.refreshtoken != None :
+            doclist['refreshtoken'] = True
+        else:
+            doclist['refreshtoken'] = False
+
         print(doclist)      
 
     else:
@@ -218,8 +224,9 @@ def recaptcha(request):
 def getRefreshToken(request):
     if request.method == 'GET':
         sid = isAuth(request).data['sid']
+        print("sidgetrefresh",sid)
         user = User.objects.get(sid = sid)
-        studoc = StudentDocuments.objects.get(sid=sid)
+        # studoc = StudentDocuments.objects.get(sid=user)
         code = request.GET.get('code')
         state = request.GET.get('state')
 
@@ -238,14 +245,13 @@ def getRefreshToken(request):
 
         user.refreshtoken = refreshtoken
         user.save()
-        studoc.refreshtoken = True
-        studoc.save()
+        
 
 
         return redirect('StuDoc')
 
 
-def getFiles(request):
+def verify(request):
     if request.method == 'GET':
         sid = isAuth(request).data['sid']
         user = User.objects.get(sid = sid)
@@ -306,17 +312,14 @@ def getFiles(request):
                 if 'ADHAR' in fileuri:
                     xml = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/xml/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})
                     content  = xmltodict.parse(xml.content)
+                    # open('media/aadhar.json','w').write(content)
                     uid = content['KycRes']['UidData']['@uid'][8:]
                     studentname = content['KycRes']['UidData']['Poi']['@name']
                     dob = content['KycRes']['UidData']['Poi']['@dob']
                     gender = content['KycRes']['UidData']['Poi']['@gender']
                     
                     studentdetails = StudentDetails.objects.get(sid=sid)
-                    studoc.auid = uid
-                    studoc.aname = studentname
-                    studoc.agender = gender
-                    temp = str(dob).split('-')[::-1]
-                    studoc.adob =  "-".join(temp)
+                   
                 
                     
                     # print('object',studoc)
@@ -329,19 +332,8 @@ def getFiles(request):
                     # print(gender)
                 
                     if str(studentdetails.name + " " +  studentdetails.fname).lower().strip() != str(studentname).lower().strip():
-                        studoc.aadhar = 'name Mismatch'
-                        
-                    elif str(studentdetails.dob).split('-')[0:] != str(dob).split('-')[::-1]:
-                        studoc.aadhar = 'dob Mismatch'
-                                                    
-                    elif studentdetails.gender != gender:
-                        studoc.aadhar = 'gender Mismatch'
-                        
-                    else:
-                        studoc.aadhar = 'verified'    
-                        
+                        studoc.aadhaar_status = 'name Mismatch'
                     studoc.save()
-                    
                     # Mandaviya Raj Jayesh
                     print(uid,studentname,dob,gender)
                     
@@ -367,15 +359,14 @@ def getFiles(request):
                     # studoc.incomecertificate  = finalpath
                     filename = str(user) + '_income_certificate.pdf'
                     sid = str(user)
-                    studoc = StudentDocuments.objects.get(sid=sid)
-                    f = ContentFile(file.content)
-                    studoc.incomecertificate.save(filename,f)
+                    with open('media/'+filename,'wb') as f:
+                        f.write(file.content)
 
-                    
-                    with open('poppler_pdf-en', "w") as f:
+     
+                    with open('media/poppler_pdf-en', "w") as f:
                         f.write(translatedoc(sid,filename))
 
-                    with open('poppler_pdf-en', 'r',encoding='utf8') as f:
+                    with open('media/poppler_pdf-en', 'r',encoding='utf8') as f:
                         text=f.read()
 
                     # start = text.find('(cid:7773)') + 11
@@ -391,17 +382,33 @@ def getFiles(request):
                     icincome=text[start:end]
 
                     print("name: " + icname+"\nIncome: " + icincome)
-                    studoc.icname = icname
-                    studoc.icincome = icincome
-                    studoc.save()    
-                    # with open(filename,'rb') as f:
-                    # content = ContentFile(file.content)
-                    # doc = StudentDocuments.incomecertificate.save(filename, content)
-                    # doc.save()
-                    # print(doc)
-                    # StudentDocuments.objects.create()
-                    #OCR CODE HERE
-                    print(fileuri)
+                    icname1 = icname.split(' ')[0] +  ' ' + icname.split(' ')[2]
+
+    
+                    if icname1 == str(studentdetails.fname + ' ' + str(studentdetails.name).split(' ')[0] ).lower().strip():
+                        if int(icincome) < '600000':
+                            studoc.inc_status = 'verified'
+                        else:
+                            studoc.inc_status = 'income is more than 600000'
+                    else:
+                        studoc.inc_status = 'name mismatch'
+
+                        studoc.save()
+
+
+
+                # if 'gujarat.dst-CNCMY' in fileuri:
+                #     file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
+                #     # open('media/creamy.txt').write(file.content)
+                #     filename = str(user) + '_income_certificate.pdf'
+                #     sid = str(user)
+                #     studoc = StudentDocuments.objects.filter(sid=sid).first()
+                #     f = ContentFile(file.content)
+                #     studoc.creamcertificate.save(filename,f)
+                #     studoc.crname=translateDoc_nonCremy(sid,filename)
+                #     studoc.save()
+
+                #     print(fileuri)
                 
                 # else if fileuri[0]:
                     
@@ -463,5 +470,186 @@ def translatedoc(sid,filename):
     translation=translator.translate(text1)
     # translation+=translator.translate(text1)
     return translation
+
+def translateDoc_nonCremy(sid,filename):
+    
+    #pip install multilingual-pdf2text
+    #env variable in pc 1.poppler 2.Tesseract-OCR
+    from multilingual_pdf2text.pdf2text import PDF2Text
+    from multilingual_pdf2text.models.document_model.document import Document
+    import logging
+    logging.basicConfig(level=logging.INFO)
+
+    from pdfminer.high_level import extract_text #pip install pdfminer.six
+    from langdetect import detect
+    pdf_name = filename
+    # Extract text from a pdf.
+    text = extract_text(pdf_name)
+    # print(text)
+    if(detect(text) == 'gu'):
+        lang = 'guj'
+    else:
+        lang = 'eng'
+    # print(detect(text))
+
+    def poppler_pdf_income():
+        ## create document for extraction with configurations
+        pdf_document = Document(
+            document_path=pdf_name,
+            language=lang
+            )
+        pdf2text = PDF2Text(document=pdf_document)
+        content = pdf2text.extract()
+        with open('poppler_pdf_nonCr','w',encoding='utf8') as f:
+            f.write(str(content))
+    poppler_pdf_income()
+    # with open('poppler_pdf', 'r',encoding='utf8') as f:
+    #     text=f.read()[:400]
+    with open('poppler_pdf_nonCr', 'r',encoding='utf8') as f:
+        text = f.read()[320:500]
+        # text = f.read()[600:820]
+        
+
+    # print(text1)
+    from translate import Translator #pip install translate
+    translator=Translator(from_lang = "gu-IN",to_lang="en")
+    # translation=translator.translate(text1)
+    translation=translator.translate(text)
+    with open('poppler_pdf_nonCr-en', 'w')as f:
+        f.write(translation)
+
+    with open('poppler_pdf_nonCr-en', 'r') as f:
+        text =f.read()
+    if (lang =='guj'):
+        start = text.find('Shri') + 5
+        end = text.find('\\n', start)
+        name=text[start:end]
+        return name
+        # print(name)
+    else:
+        start = text.find('Shree') + 6
+        end = text.find('\\n', start)
+        name=text[start:end]
+        return name
+        # print(name)
+
+
+
+def getFiles(request):
+    if request.method == 'GET':
+        sid = isAuth(request).data['sid']
+        user = User.objects.get(sid = sid)
+        studoca = StuDocAdmin()
+        studoca.sid  = user
+        print("userrefresh",user.refreshtoken)
+
+        url = 'https://api.digitallocker.gov.in/public/oauth2/1/token'
+        myobj = {
+            "refresh_token": user.refreshtoken,
+            "grant_type": "refresh_token",
+        }
+        # API call for obtaining accesstoken
+    
+        refreshtokencall = requests.post(url, json = myobj,auth = HTTPBasicAuth('2407FC9F', '69e83492f63f996bfd5d')).json()  
+        accesstoken = refreshtokencall.get('access_token')
+        refreshtoken = refreshtokencall.get('refresh_token')
+        print("access: ",accesstoken)
+        print("refresh_tokenL: ",refreshtoken)
+        # open('hello.txt','wb').write(accesstoken)  
+        print("refreshtokencall",refreshtokencall)
+        user.refreshtoken = refreshtoken
+        user.save()
+
+        # API call for obtaining list of files in user's digilocker
+        
+
+        filelist = requests.get('https://api.digitallocker.gov.in/public/oauth2/2/files/issued',headers = {"Authorization": "bearer " + accesstoken}).json()
+        print(filelist)
+
+        # Extracting uris of required files from the file list
+
+        requiredfiles = ['Class X Marksheet','Aadhaar Card','Income Certificate']
+        # category/caste certificate, 12th marksheet, self photo, self signature, permanent address proof, permanent address proof, disability certificate(if required)
+        fileuris = []
+        filenames = []
+        for i in range(len(filelist['items'])):
+            for rfile in range(len(requiredfiles)):
+                if(filelist['items'][i]['name'] == requiredfiles[rfile]):
+                    fileuris.append(filelist['items'][i]['uri'])
+                    filenames.append(filelist['items'][i]['name'])
+
+        print(fileuris) 
+        # #Files which are not uploaded in users digilocker account
+        # resdict = {}
+        # for i in requiredfiles:
+        #     if i not in filenames:
+        #         resdict[i] = False
+        #     else:
+        #         resdict[i] = True
+        # print(resdict)
+
+    # Requesting XML of files from digilocker 
+        try:
+            for fileuri in fileuris:
+                if 'ADHAR' in fileuri:
+                    xml = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/xml/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})
+                    content  = xmltodict.parse(xml.content)
+                    studentdetails = StudentDetails.objects.get(sid=sid)
+                    studoca.auid = content['KycRes']['UidData']['@uid'][8:]
+                    studoca.aname = content['KycRes']['UidData']['Poi']['@name']
+                    dob = content['KycRes']['UidData']['Poi']['@dob']
+                    studoca.agender = content['KycRes']['UidData']['Poi']['@gender']
+                    temp = str(dob).split('-')[::-1]
+                    studoca.adob =  "-".join(temp)
+                    studoca.save()
+                    
+                    # Mandaviya Raj Jayesh
+                    print(studoca.auid,studoca.aname,dob,studoca.agender)
+                    
+    # Downloading files from digilocker 
+                
+                if 'INCER' in fileuri:
+                    file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
+                    # studoc.incomecertificate  = finalpath
+                    filename = str(user) + '_income_certificate.pdf'
+                    sid = str(user)
+                    studoca = StuDocAdmin.objects.get(sid=sid)
+                    f = ContentFile(file.content)
+                    studoca.incomecertificate.save(filename,f)
+
+                if 'gujarat.dst-CNCMY' in fileuri or 'gujarat.dst-NLCER' in fileuri:
+                    file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
+                    # studoc.incomecertificate  = finalpath
+                    filename = str(user) + '_Non_creamy_layer_certificate.pdf'
+                    sid = str(user)
+                    studoca = StuDocAdmin.objects.get(sid=sid)
+                    f = ContentFile(file.content)
+                    studoca.noncreamylayer.save(filename,f)
+
+                if 'gseb-SSCER' in fileuri:
+                    file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
+                    # studoc.incomecertificate  = finalpath
+                    filename = str(user) + '_10th_Marksheet.pdf'
+                    sid = str(user)
+                    studoca = StuDocAdmin.objects.get(sid=sid)
+                    f = ContentFile(file.content)
+                    studoca.marksheet10.save(filename,f)
+
+                if 'gseb-HSCER' in fileuri:
+                    file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
+                    # studoc.incomecertificate  = finalpath
+                    filename = str(user) + '_10th_Marksheet.pdf'
+                    sid = str(user)
+                    studoca = StuDocAdmin.objects.get(sid=sid)
+                    f = ContentFile(file.content)
+                    studoca.marksheet12.save(filename,f)
+            
+        except NameError:
+            for file in requiredfiles:
+                print("These file does not exist: " + file)
+        # print(resdict)
+        # return render(request, 'index.html',resdict)
+        
+        return redirect('StuDoc')
     
    

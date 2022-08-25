@@ -22,10 +22,8 @@ class UserSerializer(serializers.ModelSerializer):
 class StudentDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentDetails
-        fields = ['sid','nsp_id',
-        'pms_benificiary_id','caste_category','name','fname','gender','mobile_number',
-        'dob','state_of_passing_10th_exam','board_10th_certificate_number',
-        'year_of_passing_10th_board']
+        fields = ['sid','nsp_id','aadhaar_no',
+        'pms_benificiary_id','caste_category','name','fname','mobile_number']
         
         extra_kwargs = {
             'sid':{'write_only':True}
@@ -34,7 +32,7 @@ class StudentDetailsSerializer(serializers.ModelSerializer):
 class StudentDetailsFetchSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentDetails
-        fields = ['name','gender','mobile_number']
+        fields = ['name','aadhaar_no','mobile_number',]
 
 
 class FormDetailsSerializer(serializers.ModelSerializer):
@@ -49,4 +47,4 @@ class FormDetailsSerializer(serializers.ModelSerializer):
 class StudentDocumentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentDocuments
-        fields = ['sid','inc_status','aadhaar_status','creamy_status','marksheet10_status','marksheet12_status','disability_status','vpass','refreshtoken']
+        fields = ['sid','inc_status','aadhaar_status','creamy_status','marksheet10_status','marksheet12_status','disability_status','vpass']

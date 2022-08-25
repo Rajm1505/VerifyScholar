@@ -11,10 +11,16 @@ function StuDoc() {
     const navigate = useNavigate();
     const bgc = { backgroundColor: "#f2f2f2" };
     const [aadhar, setAadhar] = useState();
+    const [inc_status, setInc_status] = useState();
+    const [aadhaar_status, setAadhaar_status] = useState();
+    const [creamy_status, setCreamy_status] = useState();
+    const [marksheet10_status, setMarksheet10_status] = useState();
+    const [marksheet12_status, setMarksheet12_status] = useState();
+    const [disability_status, setDisability_status] = useState();
+
     const [rf_t, setRf_t] = useState();
     const [vpass, setVpass] = useState();
 
-    const doc1 = true;
     const doc2 = true;
     const [aadhaar, setaadhaar] = useState();
 
@@ -26,7 +32,6 @@ function StuDoc() {
         reset,
         trigger,
     } = useForm();
-    const doc1 =true;
     const [txtbox, setTxtbox] = useState(false);
 
     useEffect(() => {
@@ -36,11 +41,16 @@ function StuDoc() {
                 credentials: 'include',
             });
             let content = await response.json();
-            setAadhar(content.aadhar);
+            setInc_status(content.inc_status);
+            setAadhaar_status(content.aadhaar_status);
             setRf_t(content.refreshtoken);
             setVpass(content.vpass);
+            setCreamy_status(content.creamy_status);
+            setMarksheet10_status(content.marksheet10_status)
+            setMarksheet12_status(content.marksheet12_status)
+            setDisability_status(content.disability_status)
 
-            setaadhaar(content.aadhaar)
+            
 
             setIncomecertificate(content.incomecertificate)
             console.log("data : ", content);
@@ -104,6 +114,7 @@ function StuDoc() {
                                 {/* <img src={digi}></img><br /><span>please authorize digilocker account</span> */}
                                 <Button variant="info" >authorize digilocker</Button>
                             </a>) : (<a href="https://accounts.digilocker.gov.in/signup/smart_v2">
+
                                 {/* <img src={digi}></img><br />\<span>make digilocker account</span> */}
                                 <Button variant="info">make digilocker account</Button>
                             </a>)
@@ -151,7 +162,7 @@ function StuDoc() {
                                                 <Form.Text id="passwordHelpBlock" muted>(Please upload certificate in given format, In Case of ITR of family members please merge them in a single file and upload)</Form.Text>
                                             </td>
                                             <td>
-                                                {incomecertificate ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
+                                                {inc_status ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
                                                     <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
                                                 {/* <Form.Control type="file" className={`${errors.incomecertificate && "invalid"}`}
                                                     {...register("incomecertificate", {
@@ -168,7 +179,7 @@ function StuDoc() {
                                         <tr>
                                             <td><Form.Label>Category/Cast Certificate (non Crimilayar)</Form.Label></td>
                                             <td>
-                                                {aadhaar ? (<Form.Label className="text-success">&#10004; (your Document is successfully submitted)</Form.Label>) : (
+                                                {creamy_status ? (<Form.Label className="text-success">&#10004; (your Document is successfully submitted)</Form.Label>) : (
                                                     <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in DigiLocker )</Form.Label>)}
                                                 {/* <BootstrapSwitchButton checked={true} onstyle="warning" offstyle="danger" size="sm" onlabel="Yes" offlabel="No"/> */}
                                             </td>
@@ -176,15 +187,16 @@ function StuDoc() {
                                         <tr>
                                             <td><Form.Label>10th MarkSheet</Form.Label></td>
                                             <td>
-                                                {incomecertificate ? (<h2 className="text-success">&#10004;</h2>) : (
-                                                    <Form.Label className="text-danger"><h2>&#10008;</h2>(Please Upload this document in Digi Locker )</Form.Label>)}
+
+                                                {marksheet10_status ? (<h2 className="text-success">&#10004;</h2>) : (
+                                                    <Form.Label className="text-danger"> &#10008;(Please Upload this document in Digi Locker )</Form.Label>)}
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <td><Form.Label>12th MarkSheet (if 12th completed)</Form.Label></td>
                                             <td>
-                                                {aadhaar ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
+                                                {marksheet12_status ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
                                                     <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
                                             </td>
                                         </tr>
@@ -216,7 +228,7 @@ function StuDoc() {
                                         <tr>
                                             <td><Form.Label>Permanent Address Proof</Form.Label></td>
                                             <td>
-                                                {aadhaar ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
+                                                {aadhaar_status ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
                                                     <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
                                             </td>
                                         </tr>
@@ -264,7 +276,7 @@ function StuDoc() {
                                                 </Form.Label>
                                             </td>
                                             <td className="pt-3">
-                                                { aadhar ? (
+                                                { disability_status ? (
                                                     <Form.Label className="text-success">
                                                        <h2>&#10008;</h2> (Your document is successfully submitted)
                                                     </Form.Label>
