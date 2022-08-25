@@ -177,8 +177,11 @@ def login(request):
 def userdoclist(request):
     sid = isAuth(request).data['sid']
     user = User.objects.get(sid=sid)
-    studoc = StudentDocuments.objects.get(sid=sid)
-    print(studoc)
+    try:
+        studoc = StudentDocuments.objects.get(sid=sid)
+    except:
+        studoc = ''
+    print('studoc1',studoc)
     doclist = {}
     if studoc!=None:
         serializer = StudentDocumentsSerializer(studoc)
@@ -364,7 +367,7 @@ def verify(request):
 
      
                     with open('media/poppler_pdf-en', "w") as f:
-                        f.write(translatedoc(sid,filename))
+                        f.write(translatedocument(sid,filename))
 
                     with open('media/poppler_pdf-en', 'r',encoding='utf8') as f:
                         text=f.read()
@@ -383,9 +386,15 @@ def verify(request):
 
                     print("name: " + icname+"\nIncome: " + icincome)
                     icname1 = icname.split(' ')[0] +  ' ' + icname.split(' ')[2]
+                    fathername = str(studentdetails.fname + ' ' + str(studentdetails.name).split(' ')[0] ).lower().strip()
+                   
+                    # if icname1 == str(studentdetails.fname + ' ' + str(studentdetails.name).split(' ')[0] ).lower().strip():
 
-    
-                    if icname1 == str(studentdetails.fname + ' ' + str(studentdetails.name).split(' ')[0] ).lower().strip():
+                    count = 0
+                    for i in icname1:
+                        if i in fathername:
+                            count+=1
+                    if count > len(fathername)-3:
                         if int(icincome) < '600000':
                             studoc.inc_status = 'verified'
                         else:
@@ -421,6 +430,33 @@ def verify(request):
         return redirect('StuDoc')
     
     # {'access_token': 'cfc7cfa52b5eb2d24d861ef3100008b4013d39ee', 'expires_in': 3600, 'token_type': 'Bearer', 'scope': None, 'refresh_token': 'c9241729f73eb2b0026718d16e62e9b72837b50c', 'digilockerid': '1f80c52d-d4a2-11e9-ae46-9457a564506c', 'name': 'Mandaviya Raj Jayesh', 'dob': '15052003', 'gender': 'M', 'eaadhaar': 'Y', 'reference_key': '', 'mobile': '9724197043', 'new_account': 'N'}  
+
+def translatedocument(sid,filename):
+    from multilingual_pdf2text.pdf2text import PDF2Text
+    from multilingual_pdf2text.models.document_model.document import Document
+    import logging
+    logging.basicConfig(level=logging.INFO)
+
+    def poppler_pdf_income():
+        ## create document for extraction with configurations
+        pdf_document = Document(
+            document_path='media/3_income_certificate.pdf',
+            language='guj'
+            )
+        pdf2text = PDF2Text(document=pdf_document)
+        content = pdf2text.extract()
+        with open('poppler_pdf','w',encoding='utf8') as f:
+            f.write(str(content))
+    poppler_pdf_income()
+    with open('poppler_pdf', 'r',encoding='utf8') as f:
+        text1 = f.read()[220:500]
+    from googletrans import Translator
+    translator = Translator()
+    text = translator.translate(text1,dest='en').text
+    print(text)
+    return text
+
+
 def translatedoc(sid,filename):
     from pdfminer.high_level import extract_text #pip install pdfminer.six
     import urllib.request
