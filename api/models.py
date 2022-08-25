@@ -70,8 +70,8 @@ class User(AbstractUser):
     name = models.CharField(max_length=255)
     email = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
-    refreshtoken = models.CharField(max_length=255, default=None)
-    vpass = models.SmallIntegerField(default = 0)
+    refreshtoken = models.CharField(max_length=255, default=None,null=True)
+    vpass = models.SmallIntegerField(default = 0,null=True)
     username = None
 
     USERNAME_FIELD = 'email'
