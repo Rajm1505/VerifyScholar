@@ -243,7 +243,7 @@ function Register() {
                       </td>
                       <td>
                         <Form.Select
-                          className={`form-control ${errors.category && "invalid"}`}
+                          className={`form-control ${errors.caste_category && "invalid"}`}
                           {...register("caste_category", {
                             required: "Category is Required",
                           })}
@@ -255,9 +255,9 @@ function Register() {
                             </option>
                           ))}
                         </Form.Select>
-                        {errors.Category && (
+                        {errors.caste_category && (
                           <small className="text-danger">
-                            {errors.Category.message}
+                            {errors.caste_category.message}
                           </small>
                         )}
                       </td>
@@ -326,8 +326,8 @@ function Register() {
                 <label className="col-form-label">Phone:</label>
                 <input
                   type="text"
-                  className={`form-control ${errors.phone && "invalid"}`}
-                  {...register("mobile_nu-mber", {
+                  className={`form-control ${errors.mobile_number && "invalid"}`}
+                  {...register("mobile_number", {
                     required: "Phone is Required",
                     pattern: {
                       value:
@@ -347,8 +347,8 @@ function Register() {
                     trigger("mobile_number");
                   }}
                 />
-                {errors.phone && (
-                  <small className="text-danger">{errors.phone.message}</small>
+                {errors.mobile_number && (
+                  <small className="text-danger">{errors.mobile_number.message}</small>
                 )}
               </div>
               &nbsp;
@@ -359,7 +359,7 @@ function Register() {
 
                 <input
                   type="text"
-                  className={`form-control ${errors.aadhaar && "invalid"
+                  className={`form-control ${errors.aadhaar_no && "invalid"
                     }`}
                   {...register("aadhaar_no", {
                     required: "Adhaar No./Application ID is Required",

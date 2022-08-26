@@ -165,6 +165,14 @@ def register_fetch(request):
 def formregister(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
+        sid = isAuth(request).data['sid']
+        data['sid'] = User.objects.get(sid=sid).sid
+
+        # print(sid)
+        # user = User.objects.get(sid=sid)
+        # print(user)
+        formdetails = FormDetails()
+        # formdetails.sid = user
 
     serializer = FormDetailsSerializer(data=data)
 

@@ -103,7 +103,6 @@ class FormDetails(models.Model):
     # plus18 = models.BooleanField(default=False)
     # aadhaar = models.CharField(max_length = 12)
     # minority_category = models.BooleanField(default=False)
-    disablity = models.BooleanField(default=False)
     coaching_required = models.CharField(max_length=70)
     qualification = models.CharField(max_length=70)
     qualification_status = models.CharField(max_length=10,choices=qualification_status)

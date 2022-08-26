@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import Header from "../Header";
 import ReactLoading from "react-loading";
 import swal from 'sweetalert';
+import Profile from "./profile";
 
 // import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 
@@ -74,20 +75,21 @@ function StuDoc() {
         )();
     });
 
-    if(vpass > 0){
-        swal({
-            title: "Oops! Please fix these:",
-            text: docerror,
-            icon: "error",
-            button: "Ok",
-            dangerMode: true,
-          });
-    }
+    // if (vpass > 0) {
+    //     swal({
+    //         title: "Oops! Please fix these:",
+    //         text: docerror,
+    //         icon: "error",
+    //         button: "Ok",
+    //         dangerMode: true,
+    //     });
+    // }
     // onClick={loding}
     // const loding= () => {
     //     <ReactLoading type="spinningBubbles" color="#0000FF" height={100}  width={50} />
     // }
-let vpass1;
+    let vpass1;
+
 
     if(vpass==3){
         vpass1 = (
@@ -97,31 +99,33 @@ let vpass1;
             
         )
     }
-    else{
+    else {
         vpass1 = (
+
             <a href="http://127.0.0.1:8000/api/verify">
                             <Button variant="info" >check Document</Button>
                             </a>
         )
     }
-    
+
     let manu1;
     let manu2;
 
     if (rf_t == true) {
-        manu1 =(
+        manu1 = (
             <>
                 <tr>
                     <td></td>
                     <td>
                         {vpass1}
-                        </td>
+
+                    </td>
                 </tr>
             </>
         )
     }
     else {
-        manu2 =(
+        manu2 = (
             <>
                 <tr>
                     <td>
@@ -165,16 +169,21 @@ let vpass1;
             </>
         )
     }
-    
+
 
     const onsubmit = (e) => {
-
-        if (aadhaar_status == true && inc_status == true && creamy_status == true && marksheet10_status ==true )
-
-        {
+        const message = "Your documents are successfully verified, you will receive a mail regarding the scholarship funds shortly.";
+        if (aadhaar_status == true && inc_status == true && creamy_status == true && marksheet10_status == true) {
+            <Profile status={message} />
             return navigate('/profile');
+        } else {
         }
     };
+    if (vpass == 3) {
+        const message1 = "You have excedded your automatic verification limit. Please proceed to apply for manual verification!";
+            <Profile status={messae1}/>
+            return navigate('/profile');
+    }
 
 
     return (
@@ -197,9 +206,9 @@ let vpass1;
                                     <tbody>
                                         {manu2}
                                         <br />
-                                        
+
                                         <tr>
-                                        {/* <ReactLoading type="spinningBubbles" color="#0000FF" height={100}  width={50} /> */}
+                                            {/* <ReactLoading type="spinningBubbles" color="#0000FF" height={100}  width={50} /> */}
                                             <td><Form.Label>income Certificate</Form.Label><br />
                                                 <Form.Text id="passwordHelpBlock" muted>(Please upload certificate in given format, In Case of ITR of family members please merge them in a single file and upload)</Form.Text>
                                             </td>
@@ -268,7 +277,7 @@ let vpass1;
                                             </td>
                                         </tr> */}
                                         <tr>
-                                            <td><Form.Label>Permanent Address Proof</Form.Label></td>
+                                            <td><Form.Label>currunt Address Proof</Form.Label></td>
                                             <td>
                                                 {aadhaar_status ? (<Form.Label className="text-success">&#10004; (your Documente is successfully submitted)</Form.Label>) : (
                                                     <Form.Label className="text-danger"><h2>&#10008;</h2> (Please Upload this document in Digi Locker )</Form.Label>)}
@@ -310,25 +319,65 @@ let vpass1;
                                                 )}
                                             </td>
                                         </tr> */}
+                                        <Form.Group>
+                                            <label className="col-form-label">
+                                                Are you "Differently abled"?
+                                            </label>
 
-                                        <tr>
-                                            <td className="pt-4">
-                                                <Form.Label>
-                                                    Disability Certificate (If required)
-                                                </Form.Label>
-                                            </td>
-                                            <td className="pt-3">
-                                                { disability_status ? (
-                                                    <Form.Label className="text-success">
-                                                       <h2>&#10008;</h2> (Your document is successfully submitted)
+                                            <div
+                                                className={`${errors.disablity && "invalid"}`}
+                                                {...register("disablity", {
+                                                    required: "Required",
+                                                })}
+                                            >
+                                                <div className="form-check form-check-inline">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="radio"
+                                                        value="Yes"
+                                                        name="disablity"
+                                                        {...register("disablity", {
+                                                            required: "Required",
+                                                        })}
+                                                        onClick={() => { setTxtbox(true); }}
+                                                    />
+                                                    <label className="form-check-label">Yes</label>
+                                                </div>
+                                                <div className="form-check form-check-inline">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="radio"
+                                                        value="No"
+                                                        name="disablity"
+                                                        {...register("disablity", {
+                                                            required: "Required",
+                                                        })}
+                                                        onClick={() => { setTxtbox(false); }}
+                                                    />
+                                                    <label className="form-check-label">No</label>
+                                                </div>
+                                            </div>
+                                        </Form.Group>
+                                        {txtbox &&
+                                            <tr>
+                                                <td className="pt-4">
+                                                    <Form.Label>
+                                                        Disability Certificate (If required)
                                                     </Form.Label>
-                                                ) : (
-                                                    <Form.Label className="text-danger">
-                                                        <h2>&#10008;</h2> (Please upload this document in DigiLocker)
-                                                    </Form.Label>
-                                                )}
-                                            </td>
-                                        </tr>
+                                                </td>
+                                                <td className="pt-3">
+                                                    {disability_status ? (
+                                                        <Form.Label className="text-success">
+                                                            <h2>&#10008;</h2> (Your document is successfully submitted)
+                                                        </Form.Label>
+                                                    ) : (
+                                                        <Form.Label className="text-danger">
+                                                            <h2>&#10008;</h2> (Please upload this document in DigiLocker)
+                                                        </Form.Label>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        }
                                         {manu1}
                                     </tbody>
                                 </table>
