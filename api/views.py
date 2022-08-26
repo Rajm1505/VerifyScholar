@@ -150,15 +150,15 @@ def register_fetch(request):
             print(studentdetails)
         except(StudentDetails.DoesNotExist):
             return JsonResponse(studentdetails.errors, status=404)
-        formdetails = FormDetails.objects.get(sid=sid)
-
+        # formdetails = FormDetails.objects.get(sid=sid)
         if request.method == 'GET':   
             serializer = StudentDetailsFetchSerializer(studentdetails)
             # serializer.data['email'] = user.email
             response = Response()
             response.data = serializer.data
             response.data['email'] = user.email
-            response.data['coaching_required'] = formdetails.coaching_required
+            response.data['verification_status'] = user.verification_status
+            # response.data['coaching_required'] = formdetails.coaching_required
             return response
 
 @csrf_exempt
@@ -666,7 +666,7 @@ def translateDoc_nonCremy(sid,filename):
 
 def getFiles(request):
     if request.method == 'GET':
-        sid = request.GET.get('sid')
+        sid = isAuth(request).data['sid']
         user = User.objects.get(sid = sid)
         studoca = StuDocAdmin()
         studoca.sid  = user

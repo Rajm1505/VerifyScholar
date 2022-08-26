@@ -5,7 +5,7 @@ import { Form, FormLabel, Button } from "react-bootstrap";
 
 import Header from "../Header";
 
-export default function PersonalProfile(props) {
+export default function PersonalProfile() {
     const navigate = useNavigate();
     const [name, setName] = useState();
   const [email, setEmail] = useState();
@@ -25,7 +25,7 @@ export default function PersonalProfile(props) {
             setEmail(content.email);
             setAadhaar(content.aadhaar);
             setPhone(content.mobile_number);
-            setStatus(content.mobile_number);
+            setStatus(content.verification_status);
             console.log(content);
             if (content.detail == "Unauthenticated") {
               return navigate('/login');
@@ -33,7 +33,15 @@ export default function PersonalProfile(props) {
           }
         )();
       });
+let message;
 
+if(status==true){
+  message = "Your documents are successfully verified, you will receive a mail regarding the scholarship funds shortly.";
+}
+else{
+  message = "You have excedded your automatic verification limit. Please proceed to apply for manual verification!";
+}
+       
   return (
     <>
     <Header />
@@ -71,11 +79,11 @@ export default function PersonalProfile(props) {
                     <hr className="mt-0 mb-4" />
                     <MDBRow className="pt-1">
                       <MDBCol size="6" className="mb-3">
-                        <MDBTypography tag="h6" style={{color :"red"}}>{props.message} </MDBTypography>
+                        <MDBTypography tag="h6" style={{color :"black"}}>{message} </MDBTypography>
 
                         {/* <MDBCardText className="text-muted">info@example.com</MDBCardText> */}
                         <a href="http://127.0.0.1:8000/api/getfiles">
-                            <Button variant="info" >Manual Verification</Button>
+                            <Button variant="info" >Apply for Manual Verification</Button>
                             </a>
                         {/* <MDBCardTex\\ className="text-muted">info@example.com</MDBCardText> */}
                       </MDBCol>

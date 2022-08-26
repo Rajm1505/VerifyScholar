@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import s_d from "../../state&disctrict.json";
 import courses from "../../allCourses.json";
 import { Form, FormText } from "react-bootstrap";
-import $ from 'jquery';
+import $ from "jquery";
 import Header from "../Header";
 import axios from "axios";
 
@@ -17,51 +17,44 @@ function StuApp() {
   const [aadhaar, setAadhaar] = useState();
   // const [redirect, setRedirect] = useState(false);
 
-
   useEffect(() => {
     (
-      async () => {
-        const response = await fetch('http://127.0.0.1:8000/api/registerfetch/', {
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        });
-        const content = await response.json();
-        setName(content.name);
-        setAadhaar(content.aadhaar_no);
-        // console.log(content);
-        if (content.detail == "Unauthenticated") {
-          return navigate('/login');
-        }
+    async () => {
+      const response = await fetch("http://127.0.0.1:8000/api/registerfetch/", {
+        headers: { "Content-Type": "appliction/json" },
+        credentials: "include",
+      });
+      const content = await response.json();
+      setName(content.name);
+      setAadhaar(content.aadhaar_no);
+      console.log(content);
+      if (content.detail == "Unauthenticated") {
+        return navigate("/login");
       }
-    )();
+    }
+  )();
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
-    trigger,
   } = useForm();
 
   const onSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     console.table(e);
     const Data = JSON.stringify(e);
     console.log(Data);
 
-    axios
-      .post("http://127.0.0.1:8000/api/formregister/", Data)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    reset();
-    // setRedirect(true);
-
-    // reset();
+    // axios
+    //   .post("http://127.0.0.1:8000/api/formregister/", Data)
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
 
   const declarations = [
@@ -74,73 +67,54 @@ function StuApp() {
       value: "No",
     },
   ];
+
   return (
     <>
       <Header />
       <div className="container pt-5 pb-5">
         <div className="row justify-content-sm-center pt-5 pb-5">
           <div className="col-sm-8 shadow round pb-3" style={bgc}>
-            <h1 className="text-center pt-3 text-secondary">Application Form</h1>
-
+            <h1 className="text-center pt-3 text-secondary">
+              Application Form
+            </h1>
             <form onSubmit={handleSubmit(onSubmit)}>
-              {/*  ################################################################################################################## */}
-              <div className="mt-5">
-                <h4>1. Personal Details</h4>
-                <div className="form-group">
-                  <label className="col-form-label">Full Name</label>
-                  <input
-                    type="text"
-                    className={`form-control ${errors.name && "invalid"}`}
-                    {...register("name", { required: "Name is Required" })}
-                    onKeyUp={() => {
-                      trigger("name");
-                    }}
-                    value={name}
-                    disabled
-                  />
-                  {errors.name && (
-                    <small className="text-danger">{errors.name.message}</small>
-                  )}
-                </div>
-                <br />
-
-                <label className="col-form-label">
-                  Adhaar No. / Application ID
-                </label>
-
+              <div className="form-group">
+                <label className="col-form-label">Full Name</label>
                 <input
+                  className="form-control"
                   type="text"
-                  className={`form-control ${errors.aadhaar_no && "invalid"
-                    }`}
-                  {...register("aadhaar_no", {
-                    required: "Adhaar No./Application ID is Required",
-                  })}
-                  onKeyUp={() => {
-                    trigger("aadhaar_no");
-                  }}
-                  value={aadhaar}
+                  placeholder="Full Name"
+                  {...register("name", { required: false, maxLength: 80 })}
+                  value={name}
                   disabled
                 />
-                {errors.aadhaar_no && (
-                  <small className="text-danger">
-                    {errors.aadhaar_no.message}
-                  </small>
-                )}
               </div>
+              <br />
+              <label className="col-form-label">
+                Adhaar No. / Application ID
+              </label>
+
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Aadhaar No. / Application ID"
+                {...register("aadhaar_no", { required: false, maxLength: 100 })}
+                value={aadhaar}
+                disabled
+              />
               <hr />
-              {/*  ################################################################################################################## */}
               <div className="mt-5">
-                <h4 className="mb-4">2. Examination Details for which coaching is required.</h4>
+                <h4 className="mb-4">
+                  3. Examination Details for which coaching is required.
+                </h4>
                 <div className="form-group">
                   <Form.Text className="fs-6" muted>
                     Examination for which coaching is required.
                   </Form.Text>
                   <div className="mt-3">
                     <select
-                      className={`form-control ${errors.coaching_required && "invalid"
-                        }`}
                       {...register("coaching_required", {
-                        required: "Coaching is Required",
+                        required: true,
                       })}
                     >
                       <option value="">-- Select Course -- </option>
@@ -150,18 +124,12 @@ function StuApp() {
                         </option>
                       ))}
                     </select>
-                    {errors.coaching_required && (
-                      <small className="text-danger">
-                        {errors.coaching_required.message}
-                      </small>
-                    )}
                   </div>
                 </div>
               </div>
-              <hr />{" "}
-              {/*  ################################################################################################################## */}
+              <hr />
               <div className="mt-5">
-                <h4>3. Qualifying Examination Details.</h4>
+                <h4>4. Qualifying Examination Details.</h4>
                 <div className="form-group">
                   <FormText className="fs-6" muted>
                     Please Enter Details of High School
@@ -178,17 +146,11 @@ function StuApp() {
                         <td>
                           <input
                             type="text"
-                            className={`form-control ${errors.qualification && "invalid"
-                              }`}
-                            onKeyUp={() => {
-                              trigger("qualification");
-                            }}
+                            placeholder="Qualification Exam Cource Name"
+                            {...register("Qualification Exam Cource Name", {
+                              required: true,
+                            })}
                           />
-                          {errors.qualification && (
-                            <small className="text-danger">
-                              {errors.qualification.message}
-                            </small>
-                          )}
                         </td>
                       </tr>
                       <tr>
@@ -197,15 +159,17 @@ function StuApp() {
                         </td>
                         <td className="pt-3">
                           <div
-                            className={`${errors.qualification_status && "invalid"
-                              }`}
+                            {...register("qualification_status", {
+                              required: "Required",
+                            })}
                           >
                             <div className="form-check form-check-inline">
                               <input
-                                className="form-check-input"
+                                {...register("qualification_status", {
+                                  required: true,
+                                })}
                                 type="radio"
-                                value="Yes"
-                                name="qualification_status"
+                                value="Appearing"
                               />
                               <label className="form-check-label">
                                 Appearing
@@ -213,20 +177,14 @@ function StuApp() {
                             </div>
                             <div className="form-check form-check-inline">
                               <input
-                                className="form-check-input"
+                                {...register("qualification_status", {
+                                  required: true,
+                                })}
                                 type="radio"
-                                value="No"
-                                name="qualification_status"
+                                value="Passed"
                               />
                               <label className="form-check-label">Passed</label>
                             </div>
-                          </div>
-                          <div>
-                            {errors.qualification_status && (
-                              <small className="text-danger">
-                                {errors.qualification_status.message}
-                              </small>
-                            )}
                           </div>
                         </td>
                       </tr>
@@ -234,12 +192,9 @@ function StuApp() {
                   </table>
                 </div>
               </div>
-              <hr />{" "}
-              {/*  ################################################################################################################## */}
-
-              {/*  ################################################################################################################## */}
+              <hr />
               <div className="mt-5">
-                <h4>4. Bank Account details of candidates.</h4>
+                <h4>7. Bank Account details of candidates.</h4>
                 <div className="form-group">
                   <FormText className="fs-6" muted>
                     Please provide details of account which is adhaar seeded
@@ -255,20 +210,11 @@ function StuApp() {
                         <td>
                           <input
                             type="text"
-                            className={`form-control ${errors.bank_accountholder_name && "invalid"
-                              }`}
+                            placeholder="Name of Account Holder"
                             {...register("bank_accountholder_name", {
-                              required: "Account Holder Name is Required",
+                              required: true,
                             })}
-                            onKeyUp={() => {
-                              trigger("bank_accountholder_name");
-                            }}
                           />
-                          {errors.bank_accountholder_name && (
-                            <small className="text-danger">
-                              {errors.bank_accountholder_name.message}
-                            </small>
-                          )}
                         </td>
                         <td>
                           <label className="col-form-label">Bank Name</label>
@@ -276,43 +222,23 @@ function StuApp() {
                         <td>
                           <input
                             type="text"
-                            className={`form-control ${errors.bank_name && "invalid"
-                              }`}
-                            {...register("bank_name", {
-                              required: "Bank Name is Required",
-                            })}
-                            onKeyUp={() => {
-                              trigger("bank_name");
-                            }}
+                            placeholder="Bank Name"
+                            {...register("bank_name", { required: true })}
                           />
-                          {errors.bank_name && (
-                            <small className="text-danger">
-                              {errors.bank_name.message}
-                            </small>
-                          )}
                         </td>
                       </tr>
                       <tr>
                         <td>
-                          <label className="col-form-label">Account Number</label>
+                          <label className="col-form-label">
+                            Account Number
+                          </label>
                         </td>
                         <td>
                           <input
                             type="text"
-                            className={`form-control ${errors.bank_account_no && "invalid"
-                              }`}
-                            {...register("bank_account_no", {
-                              required: "Account Number is Required",
-                            })}
-                            onKeyUp={() => {
-                              trigger("bank_account_no");
-                            }}
+                            placeholder="Account Number"
+                            {...register("bank_account_no", { required: true })}
                           />
-                          {errors.bank_account_no && (
-                            <small className="text-danger">
-                              {errors.bank_account_no.message}
-                            </small>
-                          )}
                         </td>
                         <td>
                           <label className="col-form-label">IFSC Code</label>
@@ -320,44 +246,32 @@ function StuApp() {
                         <td>
                           <input
                             type="text"
-                            className={`form-control ${errors.bank_IFSC_code && "invalid"
-                              }`}
-                            {...register("bank_IFSC_code", {
-                              required: "IFSC Code is Required",
-                            })}
-                            onKeyUp={() => {
-                              trigger("bank_IFSC_code");
-                            }}
+                            placeholder="IFSC Code"
+                            {...register("bank_IFSC_code", { required: true })}
                           />
-                          {errors.bank_IFSC_code && (
-                            <small className="text-danger">
-                              {errors.bank_IFSC_code.message}
-                            </small>
-                          )}
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
-              <hr />{" "}
-              {/*  ################################################################################################################## */}
+              <hr />
               <div className="mt-5">
-                <h4 className="mb-3">5. Declaration</h4>
+                <h4 className="mb-3">8. Declaration</h4>
                 <div className="form-group">
                   <ol type="i">
                     <FormText className="fs-6" muted>
                       <li>
                         I declare that, i have not taken the benefits till now/
-                        have not taken the benefit more than once under the Scheme
-                        of Free Coaching for SC and OBC students being implemented
-                        by Govt. of India.
+                        have not taken the benefit more than once under the
+                        Scheme of Free Coaching for SC and OBC students being
+                        implemented by Govt. of India.
                       </li>
                       <br />
                       <li>
                         Declare that, i am not a beneficiary of a similar Scheme
-                        being implemented by any other Department/ Ministry of of
-                        Central Government or State Government in which free
+                        being implemented by any other Department/ Ministry of
+                        of Central Government or State Government in which free
                         coaching is provided to the students for preparation of
                         competitive exams.
                       </li>
@@ -368,21 +282,18 @@ function StuApp() {
                       </li>
                       <br />
                       <li>
-                        All information filled in the application form is true to
-                        my knowledge, and if, on any occasion information given by
-                        me is found to be incorrect, my candidature for this
-                        coaching scheme shall able to be canceled, and/or I may be
-                        proceeded against for administrative/criminal proceedings.
-                        I shall also be able to deposit any fee paid to me with
-                        the applicable penalty stipulated in the scheme
-                        guidelines.
+                        All information filled in the application form is true
+                        to my knowledge, and if, on any occasion information
+                        given by me is found to be incorrect, my candidature for
+                        this coaching scheme shall able to be canceled, and/or I
+                        may be proceeded against for administrative/criminal
+                        proceedings. I shall also be able to deposit any fee
+                        paid to me with the applicable penalty stipulated in the
+                        scheme guidelines.
                       </li>
                     </FormText>
                   </ol>
-                  <select
-                    className={`form-control ${errors.declaration_action && "invalid"
-                      }`}
-                  >
+                  <select className="form-control">
                     <option value="">-- Select -- </option>
                     {declarations.map((declaration) => (
                       <option key={declaration.value} value={declaration.value}>
@@ -390,23 +301,16 @@ function StuApp() {
                       </option>
                     ))}
                   </select>
-                  {errors.declaration_action && (
-                    <small className="text-danger">
-                      {errors.declaration_action.message}
-                    </small>
-                  )}
                 </div>
               </div>
-              {/*  ################################################################################################################## */}
               <input
-                type="submit"
                 className="btn btn-lg btn-primary mt-5 mb-3"
-                // value="Submit"
+                type="submit"
               />
             </form>
           </div>
         </div>
-      </div >
+      </div>
     </>
   );
 }

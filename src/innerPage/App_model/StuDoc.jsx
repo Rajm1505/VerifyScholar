@@ -181,7 +181,7 @@ function StuDoc() {
     };
     if (vpass == 3) {
         const message1 = "You have excedded your automatic verification limit. Please proceed to apply for manual verification!";
-            <Profile status={messae1}/>
+            <Profile status={message1}/>
             return navigate('/profile');
     }
 
