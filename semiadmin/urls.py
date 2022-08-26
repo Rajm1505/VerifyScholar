@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path , include
 from . import views
+from api.views import getFiles
 from VerifyScholar.views import index
 from django.conf import settings
 from django.conf.urls.static import static
@@ -25,6 +26,8 @@ urlpatterns = [
     path('', views.index,name='home'),
     path('./login', index,name='login'),
     path('verifypage', views.verifypage,name='verifypage'),
+    path('approvedrequests', views.approvedrequests,name='approvedrequests'),
+    # path('getfiles/<str:pk>', getFiles,name='getfiles'),
     # path('callback/', views.callback),
 
     

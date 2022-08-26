@@ -20,8 +20,8 @@
     </ul>
   </div> 
     <div class="h-100 d-flex align-items-center justify-content-center m-0">
-    <button value="inccorrect" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
-    <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button>
+    <input type="button" id="aBtn" value="Verify Aadhaar" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=aVerify(this)>
+    {% comment %} <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button> {% endcomment %}
     </div>
 
 
@@ -46,8 +46,8 @@
   </ul>
 </div> 
   <div class="h-100 d-flex align-items-center justify-content-center m-0">
-  <button value="inccorrect" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
-  <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button>
+  <input type="button" id="incBtn" value="Verify Income Certificate" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=incVerify(this)>
+  {% comment %} <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button> {% endcomment %}
   </div>
 <h1>Non-creamy Layer Certificate </h1>
 
@@ -68,8 +68,8 @@
   </ul>
 </div> 
   <div class="h-100 d-flex align-items-center justify-content-center m-0">
-  <button value="inccorrect" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
-  <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button>
+  <input type="button" id="creamyBtn" value="Verify Non-creamy layer" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=creamyVerify(this)>
+  {% comment %} <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button> {% endcomment %}
   </div>
 
 
@@ -92,22 +92,120 @@
   </ul>
 </div> 
   <div class="h-100 d-flex align-items-center justify-content-center m-0">
-  <button value="inccorrect" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
-  <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button>
+  <input type="button" id="btn10" value="Verify 10th Marksheet" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=verify10th(this)>
+  {% comment %} <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button> {% endcomment %}
   </div>
+  <input type="button" value="Submit"  onClick="handleSubmit()">
 </div>
 
 <script>
-let arrayverify = []
-function aadhaarVerify(verify){
-if (arrayverify.length==0){
-  arrayverify.push(verify.value)
+
+function aVerify(obj){
+if (obj.value == "Verify Aadhaar"){
+  obj.value = "Verified Aadhaar"
+  // obj.text = "Verified"
+}
+else{
+  obj.value = "Verify Aadhaar"
 }
 }
-function incVerify(objButton){
-  arrayverify.push(objButton.value)
+
+function incVerify(obj1){
+if (obj1.value == "Verify Income Certificate"){
+  obj1.value = "Income Certificate Verified"
+  // obj.text = "Verified"
 }
-console.log(arrayverify)
+else{
+  obj1.value = "Verify Income Certificate"
+}
+console.log(obj1.value)
+}
+function creamyVerify(obj2){
+if (obj2.value == "Verify Non-creamy layer"){
+  obj2.value = "Non-creamy layer Verified"
+  // obj.text = "Verified"
+}
+else{
+  obj2.value = "Verify Non-creamy layer"
+}
+}
+function verify10th(obj3){
+if (obj3.value == "Verify 10th Marksheet"){
+  obj3.value = "10th Marksheet Verified"
+  // obj.text = "Verified"
+}
+else{
+  obj3.value = "Verify 10th Marksheet"
+}
+}
+
+
+function handleSubmit(obj3){
+  
+  
+let aBtn = document.getElementById("aBtn").value
+let incBtn = document.getElementById("incBtn").value
+let creamyBtn = document.getElementById("creamyBtn").value
+let btn10 = document.getElementById("btn10").value
+ 
+
+console.log(aBtn,incBtn,creamyBtn,btn10);
+
+let submitarray = [];
+
+if(aBtn=="Verify Aadhaar"){
+  submitarray.push('Verify Aadhaar')
+}
+else{
+  {% with studoc.aadhaar_status as 'True'%}
+{% endwith %}
+}
+if(incBtn=="Verify Income Certificate"){
+  {% with studoc.inc_status as 'False'%}
+  {% endwith %}
+}
+else{
+  {% with studoc.inc_status as 'True'%}
+  {% endwith %}
+}
+if(creamyBtn=="Verify Non-creamy layer"){
+  {% with studoc.creamy_status as 'False'%}
+  {% endwith %}
+}
+else{
+  {% with studoc.creamy_status as 'True'%}
+  {% endwith %}
+}
+if(btn10=="Verify 10th Marksheet"){
+  {% with studoc.marksheet10_status as 'False'%}
+  {% endwith %}
+}
+else{
+  {% with studoc.marksheet10_status as 'True'%}
+  {% endwith %}
+}
+
+{%studoc.save()%}
+{%end%}
+}
+
+// function aVerify(obj){
+// if (obj.value == "Verify Aadhaar"){
+//   obj.value = "Verified Aadhaar"
+//   // obj.text = "Verified"
+// }
+// else{
+//   obj.value = "Verify Aadhaar"
+// }
+// }
+// onSubmit
+
+// console.log(obj.value)
+
+// function incVerify(objButton){
+//   arrayverify.push(objButton.value)
+// }
+// console.log(arrayverify)
 </script>
 
 {% endblock body %}

@@ -201,10 +201,10 @@ def userdoclist(request):
             else:
                 doclist[i] = True
         doclist['vpass'] = user.vpass
-        if user.refreshtoken != '' or   user.refreshtoken != None :
-            doclist['refreshtoken'] = True
-        else:
+        if user.refreshtoken == '' or   user.refreshtoken == None :
             doclist['refreshtoken'] = False
+        else:
+            doclist['refreshtoken'] = True
         studentdetails = StudentDetails.objects.get(sid=sid)
         # formdetails = FormDetails.objects.get(sid=sid)
         # try:
@@ -277,9 +277,7 @@ def getRefreshToken(request):
 
         user.refreshtoken = refreshtoken
         user.save()
-        
-
-
+                                                                                                                                                                                                                  
         return redirect('StuDoc')
 
 
@@ -422,7 +420,11 @@ def verify(request):
                
                 # # if icname1 == str(studentdetails.fname + ' ' + str(studentdetails.name).split(' ')[0] ).lower().strip():
                 # count = 0
-                # for i in icname1:
+                # for i in icname1:+++++++++++++++++++++++++
+
+
+
+
                 #     if i in fathername:
                 #         count+=1
                 # if count > len(fathername)-3:
@@ -460,6 +462,17 @@ def verify(request):
                     json.dump(content, outfile)
                 name10 = str(content['Certificate']['IssuedTo']['Person']['@name']).replace('  ',' ')
                 print('name10',name10)
+
+                file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
+
+                filename = str(user) + '_10th_marksheet.pdf'
+                sid = str(user)
+                with open('media/'+filename,'wb') as f:
+                    f.write(file.content)
+    
+                # with open('media/poppler_pdf-en', "w") as f:
+                #     f.write()
+                print(translatedocument(sid,filename))
                 
                 if str(studentdetails.name + " " +  studentdetails.fname).lower().strip() == str(studentname).lower().strip():
                     studoc.marksheet10_status = 'verified'
@@ -645,7 +658,7 @@ def translateDoc_nonCremy(sid,filename):
 
 def getFiles(request):
     if request.method == 'GET':
-        sid = isAuth(request).data['sid']
+        sid = request.GET.get('sid')
         user = User.objects.get(sid = sid)
         studoca = StuDocAdmin()
         studoca.sid  = user

@@ -9,21 +9,7 @@ from rest_framework.response import Response
 # Create your views here.
 
 def index(request):
-    # token = request.COOKIES.get('jwt')
-        
-    # if not token:
-    #     # raise AuthenticationFailed('Unauthenticated')
-    #     return redirect('login')
-        
-    # try:
-    #     payload = jwt.decode(token,'secret',algorithms=['HS256'])
-    #     response = Response()
-    #     response.data = {
-    #         'sid' : payload['sid']
-    #     }
-    # except jwt.ExpiredSignatureError:
-    #     return redirect('login')
-    #     raise AuthenticationFailed('Unauthenticated')
+    
 
     users = User.objects.filter(vpass=3)
     context = {'users':users}
@@ -32,7 +18,7 @@ def index(request):
 def verifypage(request):
     sid = request.GET.get('sid')
     print(sid)
-    studoc = StudentDocuments.objects.filter(sid=sid).first()
+    studoc = StudentDocuments.objects.get(sid=sid)
     user = User.objects.filter(sid=sid).first()
     try:
         studentdetails = StudentDetails.objects.get(sid=sid)
@@ -71,5 +57,35 @@ def verifypage(request):
 
     return render(request,'verifypage.html',context)
 
+def approvedrequests(request):
+    if request.method == 'GET':
+        sid = 1
+        users = User.objects.filter(verification_status = True)
+        # print(user)
+        context = {'users':users}
+
+        return render(request,'approved-requests.html',context)
+        
+
+
+
+
 def login(request):
     return render(request,'slogin.html')
+
+def isAuth(request):
+
+    token = request.COOKIES.get('jwt')
+        
+    if not token:
+        # raise AuthenticationFailed('Unauthenticated')
+        return redirect('login')
+        
+    try:
+        payload = jwt.decode(token,'secret',algorithms=['HS256'])
+        response = Response()
+        response.data = {
+            'sid' : payload['sid']
+        }
+    except jwt.ExpiredSignatureError:
+        return redirect('login')
