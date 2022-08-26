@@ -161,6 +161,7 @@ class StuDocAdmin(models.Model):
     marksheet10 = models.FileField(upload_to=use_directory_path,default=None)
     marksheet12 = models.FileField(upload_to=use_directory_path,default=None)
     disabilitycert = models.FileField(upload_to=use_directory_path,default=None)
+    rationcard = models.FileField(upload_to=use_directory_path,default=None)
     
     def __str__(self):
         return str(self.sid)

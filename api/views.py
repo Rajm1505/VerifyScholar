@@ -741,7 +741,7 @@ def getFiles(request):
 
         # Extracting uris of required files from the file list
 
-        requiredfiles = ['Class X Marksheet','Aadhaar Card','Income Certificate','Creamy - Non Creamy Layer Application']
+        requiredfiles = ['Class X Marksheet','Aadhaar Card','Income Certificate','Creamy - Non Creamy Layer Application','Ration Card']
         # category/caste certificate, 12th marksheet, self photo, self signature, permanent address proof, permanent address proof, disability certificate(if required)
         fileuris = []
         filenames = []
@@ -818,6 +818,13 @@ def getFiles(request):
                     studoca = StuDocAdmin.objects.get(sid=sid)
                     f = ContentFile(file.content)
                     studoca.marksheet12.save(filename,f)
+                if 'gujarat.dcs-RATCR' in fileuri:
+                    file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
+                    filename = str(user) + '_Ration_Card.pdf'
+                    sid = str(user)
+                    studoca = StuDocAdmin.objects.get(sid=sid)
+                    f = ContentFile(file.content)
+                    studoca.rationcard.save(filename,f)
             
         except NameError:
             for file in requiredfiles:
