@@ -3,8 +3,8 @@
 env
 db.sqlite3
 api/__pycache__ 
-api/migrations/__pycache__
-api/migrations/
+api/migrations/__pycache__ 
+api/migrations/ 
 semiadmin/__pycache__ 
 semiadmin/migrations/__pycache__ 
 semiadmin/migrations/

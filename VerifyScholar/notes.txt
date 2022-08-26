@@ -1,0 +1,14 @@
+Have to run: pip install mysqlclient
+
+Have to add 
+skip-grant-tables 
+in my.ini file after line [mysqld]
+
+step to install pdf to text :
+    1. pip install multilingual-pdf2text
+    2. download Tesseract from -> https://github.com/UB-Mannheim/tesseract/wiki
+    3. download poppler from -> http://blog.alivate.com.au/poppler-windows/
+    4. extract poppler in C:\programm files
+    5. set environment variable path:
+                                1. poppler -> C:\Program Files\[insert poppler folder]\bin
+                                2. Tesseract -> C:\Program Files\[Tesseract folder]
