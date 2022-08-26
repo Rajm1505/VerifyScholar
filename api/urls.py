@@ -28,7 +28,7 @@ urlpatterns = [
     path('formregister/', views.formregister),
     path('userdoclist/', views.userdoclist),
     path('callback/', views.getRefreshToken),
+    path('verify/', views.verify),
     path('getfiles/', views.getFiles),
-
     path('recaptcha/', views.recaptcha)
 ]

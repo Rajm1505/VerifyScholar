@@ -7,6 +7,7 @@ import Register from './login/Register';
 import ContactUs from './login/ContactUs';
 import StuApp from './innerPage/App_model/StuApp';
 import StuDoc from './innerPage/App_model/StuDoc';
+import Profile from './innerPage/App_model/profile';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <Route path='/contact' element={<ContactUs/>} />
       <Route path='/StuApp' element={<StuApp />} />
       <Route path='/StuDoc' element={<StuDoc />} />
+      <Route path='/profile' element={<Profile />} />
     </Routes>
     </>
 

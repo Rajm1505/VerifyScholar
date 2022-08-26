@@ -31,6 +31,7 @@ urlpatterns = [
     path('contact', views.index,name='contact_us'),
     path('StuApp',views.index,name='StuApp'),
     path('StuDoc/',views.index,name='StuDoc'),
+    path('profile/',views.index,name='profile'),
     # path('callback/', views.callback),
 
     
