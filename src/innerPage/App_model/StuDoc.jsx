@@ -89,17 +89,18 @@ function StuDoc() {
     // }
 let vpass1;
 
-    if(vpass<3){
+    if(vpass==3){
         vpass1 = (
-            <a href="http://127.0.0.1:8000/api/verify">
-                            <Button variant="info" >check Document</Button>
+            <a href="http://127.0.0.1:8000/api/getfiles">
+                            <Button variant="info" >Manual Verification</Button>
                             </a>
+            
         )
     }
     else{
         vpass1 = (
-            <a href="http://127.0.0.1:8000/api/getfiles">
-                            <Button variant="info" >Manual Verification</Button>
+            <a href="http://127.0.0.1:8000/api/verify">
+                            <Button variant="info" >check Document</Button>
                             </a>
         )
     }
@@ -149,7 +150,7 @@ let vpass1;
                     </td>
                     <td>
                         {txtbox ? (
-                            <a href=" ">
+                            <a href="https://api.digitallocker.gov.in/public/oauth2/1/authorize?response_type=code&client_id=2407FC9F&redirect_uri=http://127.0.0.1:8000/api/callback&state=hello">
                                 {/* <img src={digi}></img><br /><span>please authorize digilocker account</span> */}
                                 <Button variant="info" >authorize digilocker</Button>
                             </a>) : (<a href="https://accounts.digilocker.gov.in/signup/smart_v2">
