@@ -42,6 +42,7 @@ function Register() {
   const [isCPasswordDirty, setIsCPasswordDirty] = useState(false);
   const [Pass, setPass] = useState();
 
+
   useEffect(() => {
     if (isCPasswordDirty) {
       if (password.current.value === cPassword.current.value) {
@@ -351,6 +352,29 @@ function Register() {
                 )}
               </div>
               &nbsp;
+              <Form.Group>
+              <label className="col-form-label">
+                  Adhaar No. / Application ID
+                </label>
+
+                <input
+                  type="text"
+                  className={`form-control ${errors.aadhaar && "invalid"
+                    }`}
+                  {...register("aadhaar_no", {
+                    required: "Adhaar No./Application ID is Required",
+                  })}
+                  onKeyUp={() => {
+                    trigger("aadhaar_no");
+                  }}
+                />
+                {errors.aadhaar_no && (
+                  <small className="text-danger">
+                    {errors.aadhaar_no.message}
+                  </small>
+                )}
+              </Form.Group>
+              <br />
               <Form.Group controlId="password">
                 <table className="table table-hover table-bordered">
                   <tbody>

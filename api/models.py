@@ -88,7 +88,7 @@ class StudentDetails(models.Model):
     pms_benificiary_id = models.CharField(max_length = 20, null=True)
     caste_category = models.CharField(max_length=20, choices=castecategory, default = '--Select--')
     name = models.CharField(max_length=50)
-    fname = models.CharField(max_length=50)  
+    fname = models.CharField(max_length=50) 
     date_of_registration = models.DateTimeField(default=timezone.now)
     date_of_lastupdate = models.DateTimeField(auto_now=True)
 
