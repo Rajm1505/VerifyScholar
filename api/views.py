@@ -316,7 +316,7 @@ def verify(request):
 
         # Extracting uris of required files from the file list
 
-        requiredfiles = ['Class X Marksheet','Aadhaar Card','Income Certificate']
+        requiredfiles = ['Class X Marksheet','Aadhaar Card','Income Certificate','Creamy - Non Creamy Layer Application']
         # category/caste certificate, 12th marksheet, self photo, self signature, permanent address proof, permanent address proof, disability certificate(if required)
         fileuris = []
         filenames = []
@@ -398,7 +398,39 @@ def verify(request):
     
                 # with open('media/poppler_pdf-en', "w") as f:
                 #     f.write()
-                print(translatedocument(sid,filename))
+                icname,icincome=translatedocument(sid,filename)
+                icname1 = icname.split(' ')[0] +  ' ' + icname.split(' ')[2]
+                fathername = str(studentdetails.fname + ' ' + str(studentdetails.name).split(' ')[0] ).lower().strip()
+                print("icname1: "+icname1+" fname: "+fathername)
+                    # if icname1 == str(studentdetails.fname + ' ' + str(studentdetails.name).split(' ')[0] ).lower().strip():
+                print("icincome:",icincome)
+                from fuzzywuzzy import fuzz
+                rations = fuzz.ratio(icname1,fathername)
+                print(rations)
+
+                # count = 0
+                # for i in icname1:
+                #     if i in fathername:
+                #         count+=1
+                #     if count > len(fathername)-2:
+                #         if int(icincome) < 600000:
+                #             studoc.inc_status = 'verified'
+                #         else:
+                #             studoc.inc_status = 'income is more than 600000'
+                #     else:
+                #         studoc.inc_status = 'name mismatch'
+
+                #         studoc.save()
+
+                if rations>50:
+                    if int(icincome) < 600000:
+                        studoc.inc_status = 'verified'
+                    else:
+                        studoc.inc_status = 'income is more than 600000'
+                else:
+                    studoc.inc_status = 'name mismatch'
+                studoc.save()
+
                 # print(name,income)
                 # with open('media/poppler_pdf-en', 'r',encoding='utf8') as f:
                 #     text=f.read()
@@ -433,17 +465,28 @@ def verify(request):
                 #     studoc.save()
 
 
-            # if 'gujarat.dst-CNCMY' in fileuri:
-            #     file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
-            #     # open('media/creamy.txt').write(file.content)
-            #     filename = str(user) + '_income_certificate.pdf'
-            #     sid = str(user)
-            #     studoc = StudentDocuments.objects.filter(sid=sid).first()
-            #     f = ContentFile(file.content)
-            #     studoc.creamcertificate.save(filename,f)
-            #     studoc.crname=translateDoc_nonCremy(sid,filename)
-            #     studoc.save()
-            #     print(fileuri)
+            if 'gujarat.dst-CNCMY' in fileuri:
+                print("itsin")
+                file = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/file/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
+                # open('media/creamy.txt').write(file.content)
+                filename = str(user) + '_Non_creamy_layer_certificate.pdf'
+                sid = str(user)
+                with open('media/'+filename,'wb') as f:
+                    f.write(file.content)
+                crname=translateDoc_nonCremy(sid,filename)
+                # sname = studentdetails.name.split(' ')[-1]
+                # s1name = ' '.join(sname)
+                cname =studentdetails.name.split(' ')[-1]+" "+studentdetails.fname+" "+studentdetails.name.split(' ')[0]
+                print(cname)
+                from fuzzywuzzy import fuzz
+                rations = fuzz.ratio(crname,cname)
+                print(rations)
+                if rations>50:
+                    studoc.creamy_status = 'Verified'
+                else:
+                    studoc.creamy_status = 'name mismatch'
+                studoc.save()
+                print(fileuri)
             
             # else if fileuri[0]:
                 
@@ -453,11 +496,19 @@ def verify(request):
             if 'gseb-SSCER' in fileuri:
                 xml = requests.get("https://api.digitallocker.gov.in/public/oauth2/1/xml/" + fileuri,headers = {"Authorization": "bearer " + accesstoken})    
                 # studoc.incomecertificate  = finalpath
-                content  = xmltodict.parse(xml.content)
+                try:
+                    content  = xmltodict.parse(xml.content)
+                except Exception:
+                    studoc.marksheet10_status = 'fetch the document correctly.'
+                    studoc.save()
                 with open("media/sample.json", "w") as outfile:
                     json.dump(content, outfile)
-                name10 = str(content['Certificate']['IssuedTo']['Person']['@name']).replace('  ',' ')
-                print('name10',name10)
+                try:
+                    name10 = str(content['Certificate']['IssuedTo']['Person']['@name']).replace('  ',' ')
+                    print('name10',name10)
+                except Exception:
+                    studoc.marksheet10_status = 'fetch the document correctly.'
+                    studoc.save()
                 
                 if str(studentdetails.name + " " +  studentdetails.fname).lower().strip() == str(studentname).lower().strip():
                     studoc.marksheet10_status = 'verified'
@@ -486,7 +537,7 @@ def translatedocument(sid,filename):
     def poppler_pdf_income():
         ## create document for extraction with configurations
         pdf_document = Document(
-            document_path='media/6_income_certificate.pdf',
+            document_path='media/'+filename,
             language='guj'
             )
         pdf2text = PDF2Text(document=pdf_document)
@@ -511,7 +562,7 @@ def translatedocument(sid,filename):
         aws_secret_access_key=config('AWS_SECRET_ACCESS_KEY_TRANSLATE'),
     )
     result = translate.translate_text(Text=text1,SourceLanguageCode="gu",TargetLanguageCode="en")
-    # print(result)
+    print(result)
 
     result = str(result)
     start = result.find('Shri') + 5
@@ -520,62 +571,62 @@ def translatedocument(sid,filename):
 
     print('nameinfunc',name[:-3])
 
-    start = result.find('Rs.') + 4
+    start = result.find('Porbandar') + 10
     end = result.find('/-', start)
     income=result[start:end]
     print('incomeinfujnc',income)  
     return(name,income)  
 
 
-def translatedoc(sid,filename):
-    from pdfminer.high_level import extract_text #pip install pdfminer.six
-    import urllib.request
-    pdf_path = "https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/"+sid+"/"+filename
-    def download_file(download_url, filename):
-        response = urllib.request.urlopen(download_url)    
-        file = open(filename, 'wb')
-        file.write(response.read())
-        file.close()
+# def translatedoc(sid,filename):
+#     from pdfminer.high_level import extract_text #pip install pdfminer.six
+#     import urllib.request
+#     pdf_path = "https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/"+sid+"/"+filename
+#     def download_file(download_url, filename):
+#         response = urllib.request.urlopen(download_url)    
+#         file = open(filename, 'wb')
+#         file.write(response.read())
+#         file.close()
                     
-    download_file(pdf_path, "Test.pdf")
-    # Extract text from a pdf.
-    # text = extract_text('Test.pdf')
+#     download_file(pdf_path, "Test.pdf")
+#     # Extract text from a pdf.
+#     # text = extract_text('Test.pdf')
 
-    #new pdf to text (ocr)
-    from multilingual_pdf2text.pdf2text import PDF2Text
-    from multilingual_pdf2text.models.document_model.document import Document
-    import logging
-    logging.basicConfig(level=logging.INFO)
+#     #new pdf to text (ocr)
+#     from multilingual_pdf2text.pdf2text import PDF2Text
+#     from multilingual_pdf2text.models.document_model.document import Document
+#     import logging
+#     logging.basicConfig(level=logging.INFO)
 
-    def poppler_pdf_income():
-        ## create document for extraction with configurations
-        pdf_document = Document(
-            document_path='Test.pdf',
-            language='guj'
-            )
-        pdf2text = PDF2Text(document=pdf_document)
-        content = pdf2text.extract()
-        with open('poppler_pdf','w',encoding='utf8') as f:
-            f.write(str(content))
-    poppler_pdf_income()
-    with open('poppler_pdf', 'r',encoding='utf8') as f:
-        text1 = f.read()[200:500]
+#     def poppler_pdf_income():
+#         ## create document for extraction with configurations
+#         pdf_document = Document(
+#             document_path='Test.pdf',
+#             language='guj'
+#             )
+#         pdf2text = PDF2Text(document=pdf_document)
+#         content = pdf2text.extract()
+#         with open('poppler_pdf','w',encoding='utf8') as f:
+#             f.write(str(content))
+#     poppler_pdf_income()
+#     with open('poppler_pdf', 'r',encoding='utf8') as f:
+#         text1 = f.read()[200:500]
     
 
-     # print(text)
-    # with open('fname', "w", encoding="utf-8") as f:
-    #     f.write(text)
+#      # print(text)
+#     # with open('fname', "w", encoding="utf-8") as f:
+#     #     f.write(text)
 
-    # with open('fname', 'r',encoding='utf8') as f:
-    #     text=f.read()[:400]
-    # with open('fname', 'r',encoding='utf8') as f:
-    #     text1 = f.read()[401:850]
+#     # with open('fname', 'r',encoding='utf8') as f:
+#     #     text=f.read()[:400]
+#     # with open('fname', 'r',encoding='utf8') as f:
+#     #     text1 = f.read()[401:850]
 
-    from translate import Translator #pip install translate
-    translator=Translator(from_lang = "gu-IN",to_lang="en")
-    translation=translator.translate(text1)
-    # translation+=translator.translate(text1)
-    return translation
+#     from translate import Translator #pip install translate
+#     translator=Translator(from_lang = "gu-IN",to_lang="en")
+#     translation=translator.translate(text1)
+#     # translation+=translator.translate(text1)
+#     return translation
 
 def translateDoc_nonCremy(sid,filename):
     
@@ -588,9 +639,9 @@ def translateDoc_nonCremy(sid,filename):
 
     from pdfminer.high_level import extract_text #pip install pdfminer.six
     from langdetect import detect
-    pdf_name = filename
+    
     # Extract text from a pdf.
-    text = extract_text(pdf_name)
+    text = extract_text('media/'+filename)
     # print(text)
     if(detect(text) == 'gu'):
         lang = 'guj'
@@ -601,7 +652,7 @@ def translateDoc_nonCremy(sid,filename):
     def poppler_pdf_income():
         ## create document for extraction with configurations
         pdf_document = Document(
-            document_path=pdf_name,
+            document_path='media/'+filename,
             language=lang
             )
         pdf2text = PDF2Text(document=pdf_document)
@@ -612,32 +663,48 @@ def translateDoc_nonCremy(sid,filename):
     # with open('poppler_pdf', 'r',encoding='utf8') as f:
     #     text=f.read()[:400]
     with open('poppler_pdf_nonCr', 'r',encoding='utf8') as f:
-        text = f.read()[320:500]
+        text = f.read()[200:500]
+        print('text=',text)
         # text = f.read()[600:820]
-        
+    import boto3
+    from decouple import config
+    translate = boto3.client(
+        'translate',
+        region_name='ap-south-1',
+        aws_access_key_id=config('AWS_ACCESS_KEY_ID_TRANSLATE'),
+        aws_secret_access_key=config('AWS_SECRET_ACCESS_KEY_TRANSLATE'),
+    )
+    result = translate.translate_text(Text=text,SourceLanguageCode="gu",TargetLanguageCode="en")
+    # print(result)
 
+    result = str(result)    
+    start = result.find('Shri') + 5
+    end = result.find('Shri', start)
+    name=result[start:end]
+    print("non_name: ",name) 
+    return name
     # print(text1)
-    from translate import Translator #pip install translate
-    translator=Translator(from_lang = "gu-IN",to_lang="en")
-    # translation=translator.translate(text1)
-    translation=translator.translate(text)
-    with open('poppler_pdf_nonCr-en', 'w')as f:
-        f.write(translation)
+    # from translate import Translator #pip install translate
+    # translator=Translator(from_lang = "gu-IN",to_lang="en")
+    # # translation=translator.translate(text1)
+    # translation=translator.translate(text)
+    # with open('poppler_pdf_nonCr-en', 'w')as f:
+    #     f.write(translation)
 
-    with open('poppler_pdf_nonCr-en', 'r') as f:
-        text =f.read()
-    if (lang =='guj'):
-        start = text.find('Shri') + 5
-        end = text.find('\\n', start)
-        name=text[start:end]
-        return name
-        # print(name)
-    else:
-        start = text.find('Shree') + 6
-        end = text.find('\\n', start)
-        name=text[start:end]
-        return name
-        # print(name)
+    # with open('poppler_pdf_nonCr-en', 'r') as f:
+    #     text =f.read()
+    # if (lang =='guj'):
+    #     start = text.find('Shri') + 5
+    #     end = text.find('\\n', start)
+    #     name=text[start:end]
+    #     return name
+    #     # print(name)
+    # else:
+    #     start = text.find('Shree') + 6
+    #     end = text.find('\\n', start)
+    #     name=text[start:end]
+    #     return name
+    #     # print(name)
 
 
 
