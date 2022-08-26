@@ -5,7 +5,7 @@ import { Form, FormLabel, Button } from "react-bootstrap";
 
 import Header from "../Header";
 
-export default function PersonalProfile() {
+export default function PersonalProfile(props) {
     const navigate = useNavigate();
     const [name, setName] = useState();
   const [email, setEmail] = useState();
@@ -71,7 +71,7 @@ export default function PersonalProfile() {
                     <hr className="mt-0 mb-4" />
                     <MDBRow className="pt-1">
                       <MDBCol size="6" className="mb-3">
-                        <MDBTypography tag="h6" style={{color :"red"}}>Not Verified! Please proceed for manual verification </MDBTypography>
+                        <MDBTypography tag="h6" style={{color :"red"}}>{props.message} </MDBTypography>
 
                         {/* <MDBCardText className="text-muted">info@example.com</MDBCardText> */}
                         <a href="http://127.0.0.1:8000/api/getfiles">
