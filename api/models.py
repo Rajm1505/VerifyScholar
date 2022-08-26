@@ -73,6 +73,7 @@ class User(AbstractUser):
     password = models.CharField(max_length=255)
     refreshtoken = models.CharField(max_length=255, default=None,null=True)
     vpass = models.SmallIntegerField(default = 0,null=True)
+    verification_status = models.BooleanField(default=False) 
     username = None
 
     USERNAME_FIELD = 'email'
@@ -102,7 +103,6 @@ class FormDetails(models.Model):
     # plus18 = models.BooleanField(default=False)
     # aadhaar = models.CharField(max_length = 12)
     # minority_category = models.BooleanField(default=False)
-    disablity = models.BooleanField(default=False)
     coaching_required = models.CharField(max_length=70)
     qualification = models.CharField(max_length=70)
     qualification_status = models.CharField(max_length=10,choices=qualification_status)
@@ -139,7 +139,7 @@ class StudentDocuments(models.Model):
     marksheet10_status = models.CharField(max_length=30,null=True,default=None)
     marksheet12_status = models.CharField(max_length=30,null=True,default=None)
     disability_status = models.CharField(max_length=30,null=True,default=None)
-    vpass = models.SmallIntegerField(default = 0)    
+    vpass = models.SmallIntegerField(default = 0)   
     def date_trunc_field(self):
         return self.adob.date()
     

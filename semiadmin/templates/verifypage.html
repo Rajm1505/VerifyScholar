@@ -4,79 +4,293 @@
 
 {% block body %}
 
+<div class="row" style="width: 100%;">
+  <div class="col m-4 p-0" style="width: 50%;">
+    <h1 style="font-size: 30px; text-align: left-top;">Aadhaar Data</h1>
+  <div class="card text-white mb-3"  >
+    <div style="border-style: solid; border-color: #0D6EFD; border-width: 5px; border-radius: 7px;">
+  <div class="card-body text-white mb-3 p-0">
+    <h1 class="card-title p-0" style="font-size: 25px; color: black;">Aadhar card</h1>
 <div class="container-fluid row h-100 d-flex align-items-center justify-content-center m-0 mt-5">
   <h1>Aadhaar Data</h1>
 
   <div class="card" style="width: 30rem;">
-    <div class="float-left">
     <div class="card-header font-italic" style="font-weight: bold;">
-      Aadhaar Data
+      User-entered Data
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">aadhaar Number: {{studoc.auid}}</li>
-      <li class="list-group-item">aadhaar Name: {{studoc.aname}}</li>
-    <li class="list-group-item">aadhaar Gender: {{studoc.agender}}</li>
-    <li class="list-group-item">aadhaar DOB: {{studoc.adob}}</li>
-  </ul>
-</div> 
-</div>
+      <li class="list-group-item">Aadhaar Number: xxxx xxxx {{studoca.auid}}</li>
+      <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
+      <li class="list-group-item">Gender: {{studoca.agender}}</li>
+      <li class="list-group-item">Date of Birth: {{studoca.adob}}</li>
+      <li class="list-group-item">Address: {{studoca.aaddress}}</li>
+    </ul>
+  </div> 
+    <div class="h-100 d-flex align-items-center justify-content-center m-0">
+    <input type="button" id="aBtn" value="Verify Aadhaar" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=aVerify(this)>
+    {% comment %} <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button> {% endcomment %}
+    </div>
 
 
-<div class="card" style="width: 30rem;">
-    <div class="card-header font-italic" style="font-weight: bold;">
-    User-entered Data
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">aadhaar Number: to be added from student app </li>
-    <li class="list-group-item">aadhaar Name: {{studentdetails.name}} {{studentdetails.fname}}</li>
-    <li class="list-group-item">aadhaar Gender: {{studentdetails.gender}}</li>
-    <li class="list-group-item">aadhaar DOB: {{studentdetails.dob}}</li>
-  </ul>
-</div> 
-<div class="h-100 d-flex align-items-center justify-content-center m-0">
-  <button value="aadhaarcorrect" class="btn btn-success mx-5 my-2 " onClick=aadhaarVerify(this)>Verify</button>
-  <button value="aadhaarincorrect" class="btn btn-success" onClick=aadhaarVerify(this)>Incorrect</button>
-</div>
-<h1>{{aadhaarverify}}</h1>
 
 
-<h1>Income Certificate Data</h1>
+<h1>Income Certificate </h1>
 
 <!-- <iframe style="height: 500px; width: 500px; " src="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/5_income_certificate.pdf" frameborder="10"></iframe> -->
 
 <div class="card" style="width: 30rem;">
   <div class="card-header font-italic" style="font-weight: bold;">
-    User-entered Data
+    Data from Aadhaar
+
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item">Name of Student: {{studentdetails.name}} </li>
-    <li class="list-group-item">Father Name: {{studentdetails.fname}}</li>
+    <li class="list-group-item">Aadhaar Number: xxxx xxxx {{studoca.auid}}</li>
+    <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
+    <li class="list-group-item">Gender: {{studoca.agender}}</li>
+    <li class="list-group-item">Date of Birth: {{studoca.adob}}</li>
+    <li class="list-group-item">Address: {{studoca.aaddress}}</li>
+  </ul>
+</div> 
+  <div class="h-100 d-flex align-items-center justify-content-center m-0">
+  <input type="button" id="incBtn" value="Verify Income Certificate" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=incVerify(this)>
+  {% comment %} <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button> {% endcomment %}
+  </div>
+  </div>
+  <div class="">
+    <button value="inccorrect" class="btn btn-dark mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
+  </div>
+
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
     <div class="card-header font-italic" style="font-weight: bold;">
       Document from Digilocker
     </div>
-    <li
-      <a class="btn btn-success " href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/{{studoc.incomecertificate}}" target="_blank">View Income Certificate in new tab</a>
+    <li>
+      <a class="btn btn-success " href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/{{studoca.noncreamylayer}}" target="_blank">View Non-creamy layer in new tab</a>
     </li>
   </ul>
 </div> 
   <div class="h-100 d-flex align-items-center justify-content-center m-0">
-  <button value="inccorrect" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
-  <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button>
+  <input type="button" id="creamyBtn" value="Verify Non-creamy layer" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=creamyVerify(this)>
+  {% comment %} <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button> {% endcomment %}
   </div>
 
+  <div class="col m-4 p-0" style="width: 50%;">
+    <h1 style=" font-size:30px;">Income Certificate </h1>
+  
+    <!-- <iframe style="height: 500px; width: 500px; " src="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/5_income_certificate.pdf" frameborder="10"></iframe> -->
+    
+    <div class="card text-white mb-3" >
+      <div class="card-body p-0 ">
+
+        <div style="border-style: solid; border-color: #0D6EFD; border-width: 5px; border-radius: 7px;">
+        <h1 class="card-title" style="font-size: 25px; color: black; " >Data From Aadhar</h1>
+      
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
+        <div class="card-header font-italic" style="font-weight: bold;">
+          Document from Digilocker
+        </div>
+        <li>
+          <a class="btn btn-dark" href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/{{studoca.incomecertificate}}" target="_blank">View Income Certificate in new tab</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    </div> 
+  
+    <div class="align-items-right justify-content-right m-0">
+      <button value="inccorrect" class="btn btn-dark mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
+    </div>
+  </div>
 </div>
 
+<div class="row" style="width: 100%;">
+  <div class="col m-4 p-0" style="width: 50%;">
+    <h1 style="text-align: center;">Non-creamy Layer Certificate </h1>
+
+    <div class="card mb-3">
+      <div style="border-style: solid; border-color: #0D6EFD; border-width: 5px; border-radius: 7px;">
+      <div class="card-header font-italic" style="font-weight: bold; ">
+        Data from Aadhaar
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
+        <div class="card-header font-italic" style="font-weight: bold;">
+          Document from Digilocker
+        </div>
+        <li>
+          <a class="btn btn-dark " href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/{{studoca.noncreamylayer}}" target="_blank">View Non-creamy layer in new tab</a>
+        </li>
+      </ul>
+      </div>
+    </div> 
+
+    <div class="align-items-right justify-content-right m-0">
+      <button value="incorrect" class="btn btn-dark mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
+      
+      </div>
+  </div>
+
+  <div class="col m-4 p-0">
+    <h1>10th Marksheet </h1>
+
+    <!-- <iframe style="height: 500px; width: 500px; " src="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/5_income_certificate.pdf" frameborder="10"></iframe> -->
+    
+    <div class="card mb-3">
+      <div style="border-style: solid; border-color: #0D6EFD; border-width: 5px; border-radius: 7px;">
+      <div class="card-header font-italic" style="font-weight: bold;">
+        Data from Aadhaar
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
+        <div class="card-header font-italic" style="font-weight: bold;">
+          Document from Digilocker
+        </div>
+        <li>
+          <a class="btn btn-dark " href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/{{studoca.marksheet10}}" target="_blank">View 10th Marksheet in new tab</a>
+        </li>
+      </ul>
+      </div>
+    </div> 
+
+
+      
+      <!-- <iframe style="height: 500px; width: 500px; " src="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/5_income_certificate.pdf" frameborder="10"></iframe> -->
+    
+      
+    
+    
+    
+      <div class="align-items-right justify-content-right m-0">
+      <button value="incorrect" class="btn btn-dark mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
+      
+      </div>
+    </div>
+
+    <li>
+      <a class="btn btn-success " href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/{{studoca.marksheet10}}" target="_blank">View 10th Marksheet in new tab</a>
+    </li>
+  </ul>
+</div> 
+  <div class="h-100 d-flex align-items-center justify-content-center m-0">
+  <input type="button" id="btn10" value="Verify 10th Marksheet" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=verify10th(this)>
+  {% comment %} <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button> {% endcomment %}
+  </div>
+  <input type="button" value="Submit"  onClick="handleSubmit()">
+</div>
+
+
+
+
 <script>
-let arrayverify = []
-function aadhaarVerify(verify){
-if (arrayverify.length==0){
-  arrayverify.push(verify.value)
+
+function aVerify(obj){
+if (obj.value == "Verify Aadhaar"){
+  obj.value = "Verified Aadhaar"
+  // obj.text = "Verified"
+}
+else{
+  obj.value = "Verify Aadhaar"
 }
 }
-function incVerify(objButton){
-  arrayverify.push(objButton.value)
+
+function incVerify(obj1){
+if (obj1.value == "Verify Income Certificate"){
+  obj1.value = "Income Certificate Verified"
+  // obj.text = "Verified"
 }
-console.log(arrayverify)
+else{
+  obj1.value = "Verify Income Certificate"
+}
+console.log(obj1.value)
+}
+function creamyVerify(obj2){
+if (obj2.value == "Verify Non-creamy layer"){
+  obj2.value = "Non-creamy layer Verified"
+  // obj.text = "Verified"
+}
+else{
+  obj2.value = "Verify Non-creamy layer"
+}
+}
+function verify10th(obj3){
+if (obj3.value == "Verify 10th Marksheet"){
+  obj3.value = "10th Marksheet Verified"
+  // obj.text = "Verified"
+}
+else{
+  obj3.value = "Verify 10th Marksheet"
+}
+}
+
+
+function handleSubmit(obj3){
+  
+  
+let aBtn = document.getElementById("aBtn").value
+let incBtn = document.getElementById("incBtn").value
+let creamyBtn = document.getElementById("creamyBtn").value
+let btn10 = document.getElementById("btn10").value
+ 
+
+console.log(aBtn,incBtn,creamyBtn,btn10);
+
+let submitarray = [];
+
+if(aBtn=="Verify Aadhaar"){
+  submitarray.push('Verify Aadhaar')
+}
+else{
+  {% with studoc.aadhaar_status as 'True'%}
+{% endwith %}
+}
+if(incBtn=="Verify Income Certificate"){
+  {% with studoc.inc_status as 'False'%}
+  {% endwith %}
+}
+else{
+  {% with studoc.inc_status as 'True'%}
+  {% endwith %}
+}
+if(creamyBtn=="Verify Non-creamy layer"){
+  {% with studoc.creamy_status as 'False'%}
+  {% endwith %}
+}
+else{
+  {% with studoc.creamy_status as 'True'%}
+  {% endwith %}
+}
+if(btn10=="Verify 10th Marksheet"){
+  {% with studoc.marksheet10_status as 'False'%}
+  {% endwith %}
+}
+else{
+  {% with studoc.marksheet10_status as 'True'%}
+  {% endwith %}
+}
+
+{%studoc.save()%}
+{%end%}
+}
+
+// function aVerify(obj){
+// if (obj.value == "Verify Aadhaar"){
+//   obj.value = "Verified Aadhaar"
+//   // obj.text = "Verified"
+// }
+// else{
+//   obj.value = "Verify Aadhaar"
+// }
+// }
+// onSubmit
+
+// console.log(obj.value)
+
+// function incVerify(objButton){
+//   arrayverify.push(objButton.value)
+// }
+// console.log(arrayverify)
 </script>
 
 {% endblock body %}
