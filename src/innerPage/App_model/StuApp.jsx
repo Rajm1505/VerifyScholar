@@ -7,6 +7,7 @@ import courses from "../../allCourses.json";
 import { Form, FormText } from "react-bootstrap";
 import $ from 'jquery';
 import Header from "../Header";
+import axios from "axios";
 
 // function StuApp(props: {sid : string}) {
 function StuApp() {
@@ -14,6 +15,8 @@ function StuApp() {
   const navigate = useNavigate();
   const [name, setName] = useState();
   const [aadhaar, setAadhaar] = useState();
+  const [redirect, setRedirect] = useState(false);
+
 
   useEffect(() => {
     (
@@ -41,10 +44,23 @@ function StuApp() {
     trigger,
   } = useForm();
 
-  const onSubmit = (data) => {
-    data.preventDefault();
-    console.table(data);
-    console.table(JSON.stringify(data));
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.table(e);
+    const Data = JSON.stringify(e);
+    console.log(Data);
+    
+    axios
+      .post("http://127.0.0.1:8000/api/formregister/", Data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    reset();
+    setRedirect(true);
+  
     // reset();
   };
 
