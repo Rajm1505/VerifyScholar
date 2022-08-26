@@ -29,7 +29,7 @@ urlpatterns = [
     path('userdoclist/', views.userdoclist),
     path('callback/', views.getRefreshToken),
     path('getfiles/', views.getFiles),
-    path('verify/', views.verify),
+    # path('verify/', views.verify),
 
     path('recaptcha/', views.recaptcha)
 ]

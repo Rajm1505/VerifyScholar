@@ -9,15 +9,10 @@ import ReactLoading from "react-loading";
 
 function StuDoc() {
     const navigate = useNavigate();
-    const bgc = { backgroundColor: "#f2f2f2" };
-    const [aadhar, setAadhar] = useState();
+    const bgc = { backgroundColor: "#f2f2f2" }
     const [rf_t, setRf_t] = useState();
     const [vpass, setVpass] = useState();
-
-    const doc1 = true;
-    const doc2 = true;
     const [aadhaar, setaadhaar] = useState();
-
     const [incomecertificate, setIncomecertificate] = useState();
     const {
         register,
@@ -36,7 +31,7 @@ function StuDoc() {
                 credentials: 'include',
             });
             let content = await response.json();
-            setAadhar(content.aadhar);
+            setaadhaar(content.aadhaar);
             setRf_t(content.refreshtoken);
             setVpass(content.vpass);
 
@@ -117,7 +112,7 @@ function StuDoc() {
     
 
     const onsubmit = (e) => {
-        if (adhaar == true && inc_certificate == true && adhaar == true && adhaar ==true && adhaar == true && adhaar == true )
+        if (aadhaar == true && aadhaar == true && aadhaar == true && aadhaar ==true && aadhaar == true && aadhaar == true )
         {
             return navigate('/profile');
         }
@@ -264,7 +259,7 @@ function StuDoc() {
                                                 </Form.Label>
                                             </td>
                                             <td className="pt-3">
-                                                { aadhar ? (
+                                                { aadhaar ? (
                                                     <Form.Label className="text-success">
                                                        <h2>&#10008;</h2> (Your document is successfully submitted)
                                                     </Form.Label>
