@@ -88,7 +88,8 @@ class StudentDetails(models.Model):
     pms_benificiary_id = models.CharField(max_length = 20, null=True)
     caste_category = models.CharField(max_length=20, choices=castecategory, default = '--Select--')
     name = models.CharField(max_length=50)
-    fname = models.CharField(max_length=50)  
+    fname = models.CharField(max_length=50) 
+    mobile_number = models.CharField(max_length=12, default=None)
     date_of_registration = models.DateTimeField(default=timezone.now)
     date_of_lastupdate = models.DateTimeField(auto_now=True)
 
@@ -152,6 +153,7 @@ class StuDocAdmin(models.Model):
     sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid') 
     incomecertificate = models.FileField(upload_to=use_directory_path,default=None)
     auid = models.SmallIntegerField(default=None)
+    aname = models.CharField(max_length = 50, default=None,null=True)
     agender = models.CharField(max_length=1,default=None,null=True)
     aaddress = models.CharField(max_length = 255, default=None,null=True)
     adob = models.DateField(default=None,null=True)
