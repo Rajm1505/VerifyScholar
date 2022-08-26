@@ -13,8 +13,7 @@ function StuApp() {
   const bgc = { backgroundColor: "#f2f2f2" };
   const navigate = useNavigate();
   const [name, setName] = useState();
-  const [gender, setGender] = useState();
-  const [phone, setPhone] = useState();
+  const [aadhaar, setAadhaar] = useState();
 
   useEffect(() => {
     (
@@ -25,8 +24,7 @@ function StuApp() {
         });
         const content = await response.json();
         setName(content.name);
-        setGender(content.gender);
-        setPhone(content.mobile_number);
+        setAadhaar(content.aadhaar);
         console.log(content);
         if (content.detail == "Unauthenticated") {
           return navigate('/login');
@@ -50,12 +48,6 @@ function StuApp() {
     // reset();
   };
 
-  const MStatus = [
-    { label: "Married", value: "Married" },
-    { label: "Unmarried", value: "Unmarried" },
-    { label: "Divorsed", value: "Divorsed" },
-    { label: "Seperated", value: "Seperated" },
-  ];
 
   const declarations = [
     {
@@ -68,36 +60,6 @@ function StuApp() {
     },
   ];
 
-  const [d_value, setDvalue] = useState("");
-  const [c_value, setCvalue] = useState("");
-  const [p_value, setPvalue] = useState("");
-  const [h_value, setHvalue] = useState("");
-
-  const [address, setAddress] = useState(false);
-  const [adl1, setAdl1] = useState();
-  const [adl2, setAdl2] = useState();
-  const [st, setSt] = useState();
-  const [dis, setDis] = useState();
-  const [pin, setPin] = useState();
-
-  if (address == true) {
-    //  setAdl1($('#caddress1').val());
-    //  setAdl2($('#caddress2').val());
-    //  setSt($('#cstate').val());
-    //  setDis($('#cdistrict').val());
-    //  setPin($('#cpin').val());
-  }
-  console.log("yesss : ", adl1);
-
-  const ScrSystems = [
-    { label: "CGPA/ OGPA", value: "CGPA/ OGPA" },
-    { label: "% Marks", value: "% Marks" },
-  ];
-
-  const benefits = [
-    { label: "Yes", value: "Yes" },
-    { label: "No", value: "No" },
-  ];
 
   return (
     <>
@@ -143,6 +105,8 @@ function StuApp() {
                   onKeyUp={() => {
                     trigger("aadhaar");
                   }}
+                  value={aadhaar}
+                  disabled
                 />
                 {errors.aadhaar && (
                   <small className="text-danger">
