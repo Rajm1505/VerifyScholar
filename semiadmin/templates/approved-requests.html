@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Approved Requests{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <h1 class="m-5">Approved Requests</h1>
+  
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Sr No.</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              {% comment %} <th scope="col">Verification Requests</th> {% endcomment %}
+  
+            </tr>
+          </thead>
+          <tbody>
+              {% for i in users %}
+              <tr>
+                  <th scope="row">1</th>
+                  <td>{{i.name}}</td>
+                  <td>{{i.email}}</td>
+                  {% comment %} <td><a class="btn btn-success " href="./getfiles/{{i.sid}}">View</a> </td> {% endcomment %}
+              </tr>
+              {% endfor %}
+          </tbody>
+        </table>
+  
+  
+  </div>
+
+
+{% endblock body %}
