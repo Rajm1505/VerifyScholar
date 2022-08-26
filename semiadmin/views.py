@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from api.models import StudentDetails, StudentDocuments, User
+from api.models import StuDocAdmin, StudentDetails, StudentDocuments, User
 from django.core import serializers 
 import jwt
 from rest_framework.exceptions import AuthenticationFailed
@@ -42,6 +42,11 @@ def verifypage(request):
         studoc = StudentDocuments.objects.get(sid=sid)
     except:
         studoc = None
+    try:
+        studoca = StuDocAdmin.objects.get(sid=sid)
+    except:
+        studoca = None
+
 
     list1 = []
     # for i in range(0,len(vpasslist)):
@@ -56,7 +61,7 @@ def verifypage(request):
     # for i in range(0,len(vpasslist)):
     #     print(vpasslist[i])
 
-    context = {'studoc':studoc,'user':user,'studentdetails':studentdetails,'studoc':studoc}
+    context = {'studoca':studoca,'user':user,'studentdetails':studentdetails,'studoc':studoc}
     
         # context['sid'+str(i)] = dict(str(vpasslist[i]))
         # print('hello')

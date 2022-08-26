@@ -150,13 +150,15 @@ def register_fetch(request):
             print(studentdetails)
         except(StudentDetails.DoesNotExist):
             return JsonResponse(studentdetails.errors, status=404)
-    
+        formdetails = FormDetails.objects.get(sid=sid)
+
         if request.method == 'GET':   
             serializer = StudentDetailsFetchSerializer(studentdetails)
             # serializer.data['email'] = user.email
             response = Response()
             response.data = serializer.data
             response.data['email'] = user.email
+            response.data['coaching_required'] = formdetails.coaching_required
             return response
 
 @csrf_exempt
