@@ -4,98 +4,125 @@
 
 {% block body %}
 
-<div class="container-fluid row h-100 d-flex align-items-center justify-content-center m-0 mt-5">
-  <h1>Aadhaar Data</h1>
-
-  <div class="card" style="width: 30rem;">
-    <div class="card-header font-italic" style="font-weight: bold;">
-      User-entered Data
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Aadhaar Number: xxxx xxxx {{studoca.auid}}</li>
-      <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
-      <li class="list-group-item">Gender: {{studoca.agender}}</li>
-      <li class="list-group-item">Date of Birth: {{studoca.adob}}</li>
-      <li class="list-group-item">Address: {{studoca.aaddress}}</li>
-    </ul>
-  </div> 
-    <div class="h-100 d-flex align-items-center justify-content-center m-0">
-    <button value="inccorrect" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
-    <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button>
-    </div>
-
-
-
-
-<h1>Income Certificate </h1>
-
-<!-- <iframe style="height: 500px; width: 500px; " src="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/5_income_certificate.pdf" frameborder="10"></iframe> -->
-
-<div class="card" style="width: 30rem;">
-  <div class="card-header font-italic" style="font-weight: bold;">
-    Data from Aadhaar
+<div class="row" style="width: 100%;">
+  <div class="col m-4 p-0" style="width: 50%;">
+    <h1 style="font-size: 30px; text-align: left-top;">Aadhaar Data</h1>
+  <div class="card text-white mb-3"  >
+    <div style="border-style: solid; border-color: #0D6EFD; border-width: 5px; border-radius: 7px;">
+  <div class="card-body text-white mb-3 p-0">
+    <h1 class="card-title p-0" style="font-size: 25px; color: black;">Aadhar card</h1>
   </div>
   <ul class="list-group list-group-flush">
+    <li class="list-group-item">Aadhaar Number: xxxx xxxx {{studoca.auid}}</li>
     <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
-    <div class="card-header font-italic" style="font-weight: bold;">
-      Document from Digilocker
-    </div>
-    <li>
-      <a class="btn btn-success " href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/{{studoca.incomecertificate}}" target="_blank">View Income Certificate in new tab</a>
-    </li>
+    <li class="list-group-item">Gender: {{studoca.agender}}</li>
+    <li class="list-group-item">Date of Birth: {{studoca.adob}}</li>
+    <li class="list-group-item">Address: {{studoca.aaddress}}</li>
   </ul>
-</div> 
-  <div class="h-100 d-flex align-items-center justify-content-center m-0">
-  <button value="inccorrect" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
-  <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button>
   </div>
-<h1>Non-creamy Layer Certificate </h1>
-
-<!-- <iframe style="height: 500px; width: 500px; " src="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/5_income_certificate.pdf" frameborder="10"></iframe> -->
-
-<div class="card" style="width: 30rem;">
-  <div class="card-header font-italic" style="font-weight: bold;">
-    Data from Aadhaar
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
-    <div class="card-header font-italic" style="font-weight: bold;">
-      Document from Digilocker
+  <div class="">
+    <button value="inccorrect" class="btn btn-dark mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
+  </div>
+  </div>
+
+  <div class="col m-4 p-0" style="width: 50%;">
+    <h1 style=" font-size:30px;">Income Certificate </h1>
+  
+    <!-- <iframe style="height: 500px; width: 500px; " src="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/5_income_certificate.pdf" frameborder="10"></iframe> -->
+    
+    <div class="card text-white mb-3" >
+      <div class="card-body p-0 ">
+
+        <div style="border-style: solid; border-color: #0D6EFD; border-width: 5px; border-radius: 7px;">
+        <h1 class="card-title" style="font-size: 25px; color: black; " >Data From Aadhar</h1>
+      
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
+        <div class="card-header font-italic" style="font-weight: bold;">
+          Document from Digilocker
+        </div>
+        <li>
+          <a class="btn btn-dark" href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/{{studoca.incomecertificate}}" target="_blank">View Income Certificate in new tab</a>
+        </li>
+      </ul>
     </div>
-    <li>
-      <a class="btn btn-success " href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/{{studoca.noncreamylayer}}" target="_blank">View Non-creamy layer in new tab</a>
-    </li>
-  </ul>
-</div> 
-  <div class="h-100 d-flex align-items-center justify-content-center m-0">
-  <button value="inccorrect" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
-  <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button>
-  </div>
-
-
-  <h1>10th Marksheet </h1>
-
-<!-- <iframe style="height: 500px; width: 500px; " src="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/5_income_certificate.pdf" frameborder="10"></iframe> -->
-
-<div class="card" style="width: 30rem;">
-  <div class="card-header font-italic" style="font-weight: bold;">
-    Data from Aadhaar
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
-    <div class="card-header font-italic" style="font-weight: bold;">
-      Document from Digilocker
     </div>
-    <li>
-      <a class="btn btn-success " href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/{{studoca.marksheet10}}" target="_blank">View 10th Marksheet in new tab</a>
-    </li>
-  </ul>
-</div> 
-  <div class="h-100 d-flex align-items-center justify-content-center m-0">
-  <button value="inccorrect" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
-  <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button>
+    </div> 
+  
+    <div class="align-items-right justify-content-right m-0">
+      <button value="inccorrect" class="btn btn-dark mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
+    </div>
   </div>
 </div>
+
+<div class="row" style="width: 100%;">
+  <div class="col m-4 p-0" style="width: 50%;">
+    <h1 style="text-align: center;">Non-creamy Layer Certificate </h1>
+
+    <div class="card mb-3">
+      <div style="border-style: solid; border-color: #0D6EFD; border-width: 5px; border-radius: 7px;">
+      <div class="card-header font-italic" style="font-weight: bold; ">
+        Data from Aadhaar
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
+        <div class="card-header font-italic" style="font-weight: bold;">
+          Document from Digilocker
+        </div>
+        <li>
+          <a class="btn btn-dark " href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/{{studoca.noncreamylayer}}" target="_blank">View Non-creamy layer in new tab</a>
+        </li>
+      </ul>
+      </div>
+    </div> 
+
+    <div class="align-items-right justify-content-right m-0">
+      <button value="incorrect" class="btn btn-dark mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
+      
+      </div>
+  </div>
+
+  <div class="col m-4 p-0">
+    <h1>10th Marksheet </h1>
+
+    <!-- <iframe style="height: 500px; width: 500px; " src="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/5_income_certificate.pdf" frameborder="10"></iframe> -->
+    
+    <div class="card mb-3">
+      <div style="border-style: solid; border-color: #0D6EFD; border-width: 5px; border-radius: 7px;">
+      <div class="card-header font-italic" style="font-weight: bold;">
+        Data from Aadhaar
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
+        <div class="card-header font-italic" style="font-weight: bold;">
+          Document from Digilocker
+        </div>
+        <li>
+          <a class="btn btn-dark " href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/{{studoca.marksheet10}}" target="_blank">View 10th Marksheet in new tab</a>
+        </li>
+      </ul>
+      </div>
+    </div> 
+
+
+      
+      <!-- <iframe style="height: 500px; width: 500px; " src="https://sihfilebucket.s3.ap-south-1.amazonaws.com/media/1/5_income_certificate.pdf" frameborder="10"></iframe> -->
+    
+      
+    
+    
+    
+      <div class="align-items-right justify-content-right m-0">
+      <button value="incorrect" class="btn btn-dark mx-5 my-2 incbuttonverify" onClick=incVerify(this)>Verify</button>
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 <script>
 let arrayverify = []
