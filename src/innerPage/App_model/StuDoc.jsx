@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import Header from "../Header";
 import ReactLoading from "react-loading";
+import swal from 'sweetalert';
+
 // import BootstrapSwitchButton from 'bootstrap-switch-button-react';
 
 function StuDoc() {
@@ -32,6 +34,7 @@ function StuDoc() {
         trigger,
     } = useForm();
     const [txtbox, setTxtbox] = useState(false);
+    const docerror = [];
 
     useEffect(() => {
         (async () => {
@@ -49,19 +52,58 @@ function StuDoc() {
             setMarksheet12_status(content.marksheet12_status)
             setDisability_status(content.disability_status)
 
-
             setIncomecertificate(content.incomecertificate)
             console.log("data : ", content);
+            // content.map((doc)=>{
+            //     if(doc == false) {
+            //         docerror.push(doc)
+            //     }
+            //     else if(content.disability_status == 'required'){
+            //         docerror.push('Disability Document is required')
+            //     }
+            // })
+
+
             if (content.detail == "Unauthenticated") {
                 return navigate('/login');
             }
+            // if(content.stuapp == false){
+            //     return navigate('/StuApp')
+            // }
         }
         )();
     });
+
+    if(vpass > 0){
+        swal({
+            title: "Oops! Please fix these:",
+            text: docerror,
+            icon: "error",
+            button: "Ok",
+            dangerMode: true,
+          });
+    }
     // onClick={loding}
     // const loding= () => {
     //     <ReactLoading type="spinningBubbles" color="#0000FF" height={100}  width={50} />
     // }
+let vpass1;
+
+    if(vpass<3){
+        vpass1 = (
+            <a href="http://127.0.0.1:8000/api/verify">
+                            <Button variant="info" >check Document</Button>
+                            </a>
+        )
+    }
+    else{
+        vpass1 = (
+            <a href="http://127.0.0.1:8000/api/getfiles">
+                            <Button variant="info" >Manual Verification</Button>
+                            </a>
+        )
+    }
+    
     let manu1;
     let manu2;
 
@@ -71,9 +113,8 @@ function StuDoc() {
                 <tr>
                     <td></td>
                     <td>
-                        <a href="http://127.0.0.1:8000/api/verify">
-                            <Button variant="info" >check Document</Button>
-                        </a></td>
+                        {vpass1}
+                        </td>
                 </tr>
             </>
         )
@@ -108,7 +149,7 @@ function StuDoc() {
                     </td>
                     <td>
                         {txtbox ? (
-                            <a href="https://api.digitallocker.gov.in/public/oauth2/1/authorize?response_type=code&client_id=2407FC9F&redirect_uri=http://127.0.0.1:8000/api/callback&state=hello">
+                            <a href=" ">
                                 {/* <img src={digi}></img><br /><span>please authorize digilocker account</span> */}
                                 <Button variant="info" >authorize digilocker</Button>
                             </a>) : (<a href="https://accounts.digilocker.gov.in/signup/smart_v2">

@@ -23,7 +23,7 @@ class StudentDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentDetails
         fields = ['sid','nsp_id','aadhaar_no',
-        'pms_benificiary_id','caste_category','name','fname']
+        'pms_benificiary_id','caste_category','name','fname','mobile_number']
         
         extra_kwargs = {
             'sid':{'write_only':True}
@@ -32,7 +32,7 @@ class StudentDetailsSerializer(serializers.ModelSerializer):
 class StudentDetailsFetchSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentDetails
-        fields = ['name','aadhaar_no','mobile_number',]
+        fields = ['name','aadhaar_no','mobile_number']
 
 
 class FormDetailsSerializer(serializers.ModelSerializer):
