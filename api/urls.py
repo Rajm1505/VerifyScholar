@@ -30,7 +30,5 @@ urlpatterns = [
     path('callback/', views.getRefreshToken),
     path('verify/', views.verify),
     path('getfiles/', views.getFiles),
-
-
     path('recaptcha/', views.recaptcha)
 ]
