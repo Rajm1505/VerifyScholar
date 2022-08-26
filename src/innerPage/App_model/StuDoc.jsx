@@ -25,7 +25,6 @@ function StuDoc() {
 
     const doc2 = true;
     const [aadhaar, setaadhaar] = useState();
-
     const [incomecertificate, setIncomecertificate] = useState();
     const {
         register,
@@ -52,6 +51,7 @@ function StuDoc() {
             setMarksheet10_status(content.marksheet10_status)
             setMarksheet12_status(content.marksheet12_status)
             setDisability_status(content.disability_status)
+
             setIncomecertificate(content.incomecertificate)
             console.log("data : ", content);
             // content.map((doc)=>{
@@ -167,7 +167,9 @@ let vpass1;
     
 
     const onsubmit = (e) => {
+
         if (aadhaar_status == true && inc_status == true && creamy_status == true && marksheet10_status ==true )
+
         {
             return navigate('/profile');
         }

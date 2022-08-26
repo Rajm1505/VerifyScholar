@@ -60,11 +60,11 @@ function StuApp() {
   const declarations = [
     {
       label: "Yes i declare all that points are correct.",
-      value: "Yes i declare all that points are correct.",
+      value: "Yes",
     },
     {
       label: "No all that points are not correct in my case.",
-      value: "No all that points are not correct in my case.",
+      value: "No",
     },
   ];
 

@@ -72,6 +72,7 @@ export default function PersonalProfile() {
                     <MDBRow className="pt-1">
                       <MDBCol size="6" className="mb-3">
                         <MDBTypography tag="h6" style={{color :"red"}}>Not Verified! Please proceed for manual verification </MDBTypography>
+
                         {/* <MDBCardText className="text-muted">info@example.com</MDBCardText> */}
                         <a href="http://127.0.0.1:8000/api/getfiles">
                             <Button variant="info" >Manual Verification</Button>
