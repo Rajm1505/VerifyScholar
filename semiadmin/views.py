@@ -25,7 +25,7 @@ def index(request):
     #     return redirect('login')
     #     raise AuthenticationFailed('Unauthenticated')
 
-    users = User.objects.filter(vpass=2)
+    users = User.objects.filter(vpass=3)
     context = {'users':users}
     return render(request,'semiadmin.html',context)
 

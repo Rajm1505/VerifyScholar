@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography, MDBIcon } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
+import { Form, FormLabel, Button } from "react-bootstrap";
+
 import Header from "../Header";
 
 export default function PersonalProfile() {
@@ -65,12 +67,17 @@ export default function PersonalProfile() {
                       </MDBCol>
                     </MDBRow>
 
-                    <MDBTypography tag="h6">Verifiction Status</MDBTypography>
+                    <MDBTypography tag="h6">Verification Status</MDBTypography>
                     <hr className="mt-0 mb-4" />
                     <MDBRow className="pt-1">
                       <MDBCol size="6" className="mb-3">
-                        <MDBTypography tag="h6" style={{color :"green"}}> </MDBTypography>
+                        <MDBTypography tag="h6" style={{color :"red"}}>Not Verified! Please proceed for manual verification </MDBTypography>
+
                         {/* <MDBCardText className="text-muted">info@example.com</MDBCardText> */}
+                        <a href="http://127.0.0.1:8000/api/getfiles">
+                            <Button variant="info" >Manual Verification</Button>
+                            </a>
+                        {/* <MDBCardTex\\ className="text-muted">info@example.com</MDBCardText> */}
                       </MDBCol>
                       {/* <MDBCol size="6" className="mb-3">
                         <MDBTypography tag="h6">Phone</MDBTypography>

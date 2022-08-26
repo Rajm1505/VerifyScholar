@@ -42,8 +42,8 @@ export default function Header() {
         <Navbar.Collapse id="responsive-navbar-nav ">
         <Nav className="me-auto nt">
 					<Nav.Link href="/StuApp" className="navlink hover-zoom nt">Student Application Form</Nav.Link>
-					<Nav.Link href="/StuDoc" className="navlink hover-zoom nt">Student Documente Form</Nav.Link>
-					<Nav.Link href="/profile" className="navlink hover-zoom nt">Profiles</Nav.Link>
+					<Nav.Link href="/StuDoc" className="navlink hover-zoom nt">Student Document Form</Nav.Link>
+					<Nav.Link href="/profile" className="navlink hover-zoom nt">Profile</Nav.Link>
 				</Nav>
 				<Nav>
 					<Nav.Link href="/login" className="text-dark text-gradient btn-warning nt px-4 text-decoration-none" onClick={logout}>Logout</Nav.Link>
