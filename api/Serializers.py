@@ -5,7 +5,7 @@ from .models import FormDetails, User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['sid','name','email','password']
+        fields = ['uid','name','email','password']
         extra_kwargs = {
             'password':{'write_only':True}
         }
@@ -22,11 +22,11 @@ class UserSerializer(serializers.ModelSerializer):
 class StudentDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentDetails
-        fields = ['sid','nsp_id','aadhaar_no',
+        fields = ['uid','nsp_id','aadhaar_no',
         'pms_benificiary_id','caste_category','name','fname','mobile_number']
         
         extra_kwargs = {
-            'sid':{'write_only':True}
+            'uid':{'write_only':True}
         }
         
 class StudentDetailsFetchSerializer(serializers.ModelSerializer):

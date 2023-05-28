@@ -91,10 +91,29 @@
     </li>
   </ul>
 </div> 
-  <div class="h-100 d-flex align-items-center justify-content-center m-0">
-  <input type="button" id="btn10" value="Verify 10th Marksheet" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=verify10th(this)>
-  {% comment %} <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button> {% endcomment %}
-  </div>
+<div class="h-100 d-flex align-items-center justify-content-center m-0">
+<input type="button" id="btn10" value="Verify 10th Marksheet" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=verify10th(this)>
+{% comment %} <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button> {% endcomment %}
+</div>
+<h1>Ration Card</h1>
+  <div class="card" style="width: 30rem;">
+    <div class="card-header font-italic" style="font-weight: bold;">
+      Data from Aadhaar
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Name of Student: {{studoca.aname}} </li>
+      <div class="card-header font-italic" style="font-weight: bold;">
+        Document from Digilocker
+      </div>
+      <li>
+        <a class="btn btn-success " href="https://sihfilebucket.s3.ap-south-1.amazonaws.com/{{studoca.rationcard}}" target="_blank">View 10th Marksheet in new tab</a>
+      </li>
+    </ul>
+  </div> 
+    <div class="h-100 d-flex align-items-center justify-content-center m-0">
+    <input type="button" id="btn10" value="Verify 10th Marksheet" class="btn btn-success mx-5 my-2 incbuttonverify" onClick=verify10th(this)>
+    {% comment %} <button value="incincorrect" class="btn btn-success incbuttonincorrect"  onClick=incVerify(this)>Incorrect</button> {% endcomment %}
+    </div>
   <input type="button" value="Submit"  onClick="handleSubmit()">
 </div>
 

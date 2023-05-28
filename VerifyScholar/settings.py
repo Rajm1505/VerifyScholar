@@ -95,10 +95,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'verifyscholar',
-        'USERNAME': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': config('PORT'),
+        'USER': config("MYSQL_USER"),
+        'PASSWORD': config("MYSQL_PASSWORD"),
+        'HOST': config("MYSQL_HOST"),
+        'PORT': config('MYSQL_PORT'),
     }
 }
 

@@ -67,7 +67,7 @@ qualification_status=(
 
 
 class User(AbstractUser):
-    sid = models.AutoField(primary_key=True)
+    uid = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     email = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
@@ -80,14 +80,14 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
     
     def __str__(self):
-        return str(self.sid)
+        return str(self.uid)
 
 class StudentDetails(models.Model):
-    sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
+    uid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='uid')
     nsp_id = models.CharField(max_length = 20, null=True)
     aadhaar_no = models.CharField(max_length=12,default=None)
     pms_benificiary_id = models.CharField(max_length = 20, null=True)
-    caste_category = models.CharField(max_length=20, choices=castecategory, default = '--Select--')
+    caste_category = models.CharField(max_length=20, choices=castecategory, default = None)
     name = models.CharField(max_length=50)
     fname = models.CharField(max_length=50) 
     mobile_number = models.CharField(max_length=12, default=None)
@@ -95,11 +95,11 @@ class StudentDetails(models.Model):
     date_of_lastupdate = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.sid)
+        return str(self.uid)
 
 class FormDetails(models.Model):
 
-    sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
+    uid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='uid')
     # plus18 = models.BooleanField(default=False)
     # aadhaar = models.CharField(max_length = 12)
     # minority_category = models.BooleanField(default=False)
@@ -115,7 +115,7 @@ class FormDetails(models.Model):
     
 # class family_income(models.Model):
 
-#     sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
+#     uid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='uid')
 #     relation = models.CharField(max_length=10)
 #     name = models.CharField(max_length=30)
 #     age = models.CharField(max_length=3)
@@ -132,7 +132,7 @@ class StudentDocuments(models.Model):
     def use_directory_path(instance,filename):
         return 'media/'+str(instance)+'/'+filename
 
-    sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid')
+    uid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='uid')
     inc_status = models.CharField(max_length=30,null=True,default=None)
     aadhaar_status = models.CharField(max_length=30,null=True, default=None)
     creamy_status = models.CharField(max_length=30,null=True,default=None)
@@ -144,19 +144,19 @@ class StudentDocuments(models.Model):
         return self.adob.date()
     
     def __str__(self):
-        return str(self.sid)
+        return str(self.uid)
 
 class StuDocAdmin(models.Model):
     def use_directory_path(instance,filename):
         return 'media/'+str(instance)+'/'+filename
 
-    sid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='sid') 
+    uid = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,default=None,db_column='uid') 
     incomecertificate = models.FileField(upload_to=use_directory_path,default=None)
     auid = models.SmallIntegerField(default=None)
     aname = models.CharField(max_length = 50, default=None,null=True)
     agender = models.CharField(max_length=1,default=None,null=True)
     aaddress = models.CharField(max_length = 255, default=None,null=True)
-    adob = models.DateField(default=None,null=True)
+    adob = models.DateField(default=None,null=True) 
     noncreamylayer = models.FileField(upload_to=use_directory_path,default=None)
     marksheet10 = models.FileField(upload_to=use_directory_path,default=None)
     marksheet12 = models.FileField(upload_to=use_directory_path,default=None)
@@ -164,5 +164,5 @@ class StuDocAdmin(models.Model):
     rationcard = models.FileField(upload_to=use_directory_path,default=None)
     
     def __str__(self):
-        return str(self.sid)
+        return str(self.uid)
     

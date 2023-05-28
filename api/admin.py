@@ -16,7 +16,7 @@ admin.site.register(User)
 
 class AdminStudentDetails(admin.ModelAdmin):
     readonly_fields = ('date_of_registration','date_of_lastupdate')
-    list_display = ('sid','name')
+    list_display = ('uid','name')
 admin.site.register(StudentDetails, AdminStudentDetails)
 
 # class CustomUserAdmin(UserAdmin):

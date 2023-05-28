@@ -10,7 +10,7 @@ from rest_framework.response import Response
 
 def index(request):
     
-
+    
     users = User.objects.filter(vpass=3)
     context = {'users':users}
     return render(request,'semiadmin.html',context)
